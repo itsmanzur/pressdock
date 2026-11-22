@@ -1,0 +1,12 @@
+.git/
+.github/
+.gitignore
+.distignore
+tests/
+docs/
+node_modules/
+vendor/
+composer.*
+phpcs.xml.dist
+phpunit.xml.dist
+.wp-env.json

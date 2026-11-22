@@ -1,0 +1,6 @@
+{
+	"core": null,
+	"phpVersion": "8.1",
+	"plugins": [ ".", "../hejazer-kafela", "../pothik-pro" ],
+	"config": { "WP_DEBUG": true, "WP_ENVIRONMENT_TYPE": "local" }
+}
