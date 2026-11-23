@@ -11,6 +11,7 @@ export type View =
   | { name: 'form'; key: string; uuid: string | null }
   | { name: 'conflicts' }
   | { name: 'history' }
+  | { name: 'import'; key: string | null }
   | { name: 'settings' }
   | { name: 'about' };
 

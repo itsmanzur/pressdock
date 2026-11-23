@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { VisibilityState } from '@tanstack/react-table';
-import { Columns3, Pencil, Plus, Search, Trash2, X } from 'lucide-react';
+import { Columns3, Download, Pencil, Plus, Search, Trash2, Upload, X } from 'lucide-react';
 import { useApp } from '../state/app';
 import { platform } from '../platform';
-import { fieldLabel, type LocalRecord, type RecordData, type FieldDef } from '../schema/types';
-import { validateRecord } from '../schema/validate';
-import DataGrid from './DataGrid';
-import FieldInput from './fields/FieldInput';
-import { FieldWrap, Modal } from './ui';
+import { fieldLabel, type Entity, type LocalRecord } from '../schema/types';
+import DataGrid, { type GridView } from './DataGrid';
+import BulkDialogs, { BulkDeleteDialog } from './BulkDialogs';
+import { exportEntity, type ExportFormat, type ExportKind } from '../io/save';
+import { useRef } from 'react';
 
 export default function EntityView({ entityKey }: { entityKey: string }) {
   const { t } = useTranslation();
@@ -22,6 +22,9 @@ export default function EntityView({ entityKey }: { entityKey: string }) {
   const [visibility, setVisibility] = useState<VisibilityState>({});
   const [colMenu, setColMenu] = useState(false);
   const [bulk, setBulk] = useState(false);
+  const [confirmDel, setConfirmDel] = useState(false);
+  const [exportMenu, setExportMenu] = useState(false);
+  const viewRef = useRef<GridView | null>(null);
   const [shown, setShown] = useState(0);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -92,11 +95,16 @@ export default function EntityView({ entityKey }: { entityKey: string }) {
 
   if (!entity || !repo) return null;
 
-  async function bulkDelete() {
-    if (!window.confirm(t('grid.confirmDelete', { count: selected.size }))) return;
-    const n = await repo!.deleteRecords([...selected]);
-    setSelected(new Set());
-    toast(t('grid.deleted', { count: n }), 'success');
+  async function doExport(kind: ExportKind, format: ExportFormat) {
+    setExportMenu(false);
+    try {
+      const all = kind === 'template' ? [] : await repo!.listRecords(entityKey, false);
+      const v = viewRef.current;
+      const ok = await exportEntity({ entity: entity as Entity, kind, format, records: all, view: v ? { uuids: v.uuids(), columns: v.columns() } : undefined });
+      if (ok) toast(t('export.done'), 'success');
+    } catch (e) {
+      toast(e instanceof Error ? e.message : String(e), 'error');
+    }
   }
 
   return (
@@ -131,6 +139,42 @@ export default function EntityView({ entityKey }: { entityKey: string }) {
             </div>
           )}
         </div>
+        <div className="relative">
+          <button className="btn" onClick={() => setExportMenu((o) => !o)}>
+            <Download size={14} /> {t('export.button')}
+          </button>
+          {exportMenu && (
+            <div className="card absolute right-0 z-40 mt-1 w-64 space-y-0.5 p-1.5 text-sm shadow-lg">
+              {(
+                [
+                  ['view', t('export.view')],
+                  ['all', t('export.all')],
+                  ['template', t('export.template')],
+                ] as [ExportKind, string][]
+              ).map(([kind, label]) => (
+                <div key={kind} className="flex items-center justify-between rounded px-2 py-1 hover:bg-slate-100 dark:hover:bg-slate-800">
+                  <span>{label}</span>
+                  <span className="flex gap-1">
+                    <button className="btn px-2 py-0.5 text-xs" onClick={() => void doExport(kind, 'csv')}>
+                      CSV
+                    </button>
+                    <button className="btn px-2 py-0.5 text-xs" onClick={() => void doExport(kind, 'xlsx')}>
+                      XLSX
+                    </button>
+                  </span>
+                </div>
+              ))}
+              <button className="btn btn-ghost w-full" onClick={() => setExportMenu(false)}>
+                {t('common.close')}
+              </button>
+            </div>
+          )}
+        </div>
+        {(entity.actions.create || entity.actions.update) && (
+          <button className="btn" onClick={() => navigate({ name: 'import', key: entityKey })}>
+            <Upload size={14} /> {t('import.button')}
+          </button>
+        )}
         {import.meta.env.DEV && (
           <button
             className="btn"
@@ -159,7 +203,7 @@ export default function EntityView({ entityKey }: { entityKey: string }) {
             </button>
           )}
           {entity.actions.delete && (
-            <button className="btn" onClick={() => void bulkDelete()}>
+            <button className="btn" onClick={() => setConfirmDel(true)}>
               <Trash2 size={14} /> {t('common.delete')}
             </button>
           )}
@@ -185,84 +229,23 @@ export default function EntityView({ entityKey }: { entityKey: string }) {
             globalFilter={search}
             onCount={setShown}
             errors={errors}
+            viewRef={viewRef}
           />
         )}
       </div>
 
-      {bulk && (
-        <BulkEdit
-          fields={writableFields}
-          count={selected.size}
-          onClose={() => setBulk(false)}
-          onApply={async (patch) => {
-            const errs = validateRecord(entity.schema, patch, { partial: true });
-            if (Object.keys(errs).length) {
-              const [k, e] = Object.entries(errs)[0];
-              toast(`${k}: ${t(`validation.${e.key}`, { ...(e.params ?? {}) })}`, 'error');
-              return;
-            }
-            const n = await repo.updateMany(entity, [...selected], patch);
-            toast(t('grid.bulkDone', { count: n }), 'success');
-            setBulk(false);
+      {bulk && <BulkDialogs entity={entity} records={rows.filter((r) => selected.has(r.uuid))} onClose={() => setBulk(false)} onDone={() => { setBulk(false); setSelected(new Set()); }} />}
+      {confirmDel && (
+        <BulkDeleteDialog
+          entity={entity}
+          records={rows.filter((r) => selected.has(r.uuid))}
+          onClose={() => setConfirmDel(false)}
+          onDone={() => {
+            setConfirmDel(false);
             setSelected(new Set());
           }}
         />
       )}
     </div>
-  );
-}
-
-function BulkEdit({
-  fields,
-  count,
-  onClose,
-  onApply,
-}: {
-  fields: [string, FieldDef][];
-  count: number;
-  onClose: () => void;
-  onApply: (patch: RecordData) => Promise<void>;
-}) {
-  const { t } = useTranslation();
-  const [key, setKey] = useState(fields[0][0]);
-  const [value, setValue] = useState<unknown>(fields[0][1].type === 'bool' ? false : '');
-  const def = fields.find(([k]) => k === key)![1];
-  return (
-    <Modal
-      title={t('grid.bulkEditTitle', { count })}
-      onClose={onClose}
-      footer={
-        <>
-          <button className="btn" onClick={onClose}>
-            {t('common.cancel')}
-          </button>
-          <button className="btn btn-primary" onClick={() => void onApply({ [key]: value })}>
-            {t('grid.apply')}
-          </button>
-        </>
-      }
-    >
-      <div className="space-y-3">
-        <FieldWrap label={t('grid.field')}>
-          <select
-            className="input"
-            value={key}
-            onChange={(e) => {
-              setKey(e.target.value);
-              setValue(fields.find(([k]) => k === e.target.value)![1].type === 'bool' ? false : '');
-            }}
-          >
-            {fields.map(([k, d]) => (
-              <option key={k} value={k}>
-                {fieldLabel(k, d)}
-              </option>
-            ))}
-          </select>
-        </FieldWrap>
-        <FieldWrap label={t('grid.newValue')}>
-          <FieldInput def={def} value={value} onChange={setValue} />
-        </FieldWrap>
-      </div>
-    </Modal>
   );
 }

@@ -21,6 +21,8 @@ desktop/
    ├─ sites/siteStore.ts       site list (plugin-store, no secrets) + password in keychain + per-site DB
    ├─ schema/                  types.ts (field types) · validate.ts (required/types/enums)
    ├─ sync/                    ← NEXT STEP. Today: interface only (index.ts)
+   ├─ io/                      parse (CSV/XLSX) · mapping · coerce · plan (validate + match, pure) ·
+   │                           export · bulk (pure planners) · worker + run (Web Worker w/ fallback) · save
    ├─ state/app.tsx            React context: sites, current repo, entities, online, pending N
    ├─ components/              Shell (sidebar/top bar) · SitesView · EntityView · DataGrid
    │                           RecordForm · fields/* (RichEditor, RelationPicker, MediaPicker…)
@@ -70,3 +72,11 @@ If this ever proves fragile on a platform, the fallback is a small Rust command 
 * Application Passwords: OS keychain only (`keyring` crate: Windows Credential Manager, macOS Keychain, Secret Service). Never in SQLite, the plugin-store file or logs.
 * HTML from the site is sanitized before entering the editor; app CSP forbids inline scripts.
 * HTTP permission scope is wide (`http(s)://*`) because users add arbitrary WordPress sites.
+
+## Import / export
+
+`io/` is pure (no DB access): `parseFile` → `autoMap`/`applyTemplate` → `buildPlan` (per-row coercion, matching,
+relation resolution, validation; yields every 500 rows) → `SiteRepo.importItems` (500-row transactions; updates go through
+the same `buildUpdate` as the form, so edits fold into pending creates and frozen ops are never rewritten).
+Bulk edit uses `planBulk` for the preview and `SiteRepo.updateEach` to apply. Update imports send only changed
+writable fields; `create_only` and read-only fields are never patched.

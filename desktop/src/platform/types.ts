@@ -34,5 +34,7 @@ export interface Platform {
   secrets: Secrets;
   fetch: typeof fetch;
   openUrl(url: string): Promise<void>;
+  /** Ask where to save (native dialog in the desktop app, download in the browser) and write the bytes. Returns false if cancelled. */
+  saveFile(defaultName: string, bytes: Uint8Array, mime: string): Promise<boolean>;
   setWindowTitle(title: string): Promise<void>;
 }

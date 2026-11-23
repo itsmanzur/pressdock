@@ -118,6 +118,17 @@ export const webPlatform: Platform = {
     },
   },
   fetch: (...args) => fetch(...args),
+  async saveFile(defaultName, bytes, mime) {
+    const url = URL.createObjectURL(new Blob([bytes as BlobPart], { type: mime }));
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = defaultName;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 10_000);
+    return true;
+  },
   async openUrl(url) {
     window.open(url, '_blank', 'noopener');
   },

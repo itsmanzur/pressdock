@@ -71,6 +71,13 @@ interface Props {
   onCount?: (n: number) => void;
   /** uuid -> last push error */
   errors?: Record<string, string>;
+  /** filled with getters for the current (filtered + sorted) rows and visible columns, for export */
+  viewRef?: { current: GridView | null };
+}
+
+export interface GridView {
+  uuids: () => string[];
+  columns: () => string[];
 }
 
 interface EditingCell {
@@ -78,7 +85,7 @@ interface EditingCell {
   key: string;
 }
 
-function DataGridInner({ entity, rows, selected, onSelect, onOpen, onInlineEdit, visibility, onVisibility, globalFilter, onCount, errors }: Props) {
+function DataGridInner({ entity, rows, selected, onSelect, onOpen, onInlineEdit, visibility, onVisibility, globalFilter, onCount, errors, viewRef }: Props) {
   const { t } = useTranslation();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [colFilters, setColFilters] = useState<ColumnFiltersState>([]);
@@ -135,6 +142,8 @@ function DataGridInner({ entity, rows, selected, onSelect, onOpen, onInlineEdit,
   const modelRows = table.getRowModel().rows;
   const visibleCols = table.getVisibleLeafColumns();
   const totalWidth = W_SELECT + W_STATUS + W_OPEN + visibleCols.reduce((s, c) => s + c.getSize(), 0);
+
+  if (viewRef) viewRef.current = { uuids: () => modelRows.map((r) => r.id), columns: () => visibleCols.map((c) => c.id) };
 
   const shownCount = modelRows.length;
   useEffect(() => {

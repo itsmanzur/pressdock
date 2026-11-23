@@ -54,6 +54,20 @@ cd src-tauri; cargo check
 2. Set `bundle.createUpdaterArtifacts` to `true`, then build with `TAURI_SIGNING_PRIVATE_KEY_PATH` set.
 3. Publish the `.sig`-signed bundles and a `latest.json` at the endpoint.
 
+## Import / export / bulk edit
+
+* **Import** (grid toolbar → Import): CSV or XLSX (SheetJS) → column mapping (auto-match by key or label, Bengali
+  headers and digits supported, mapping templates saved per site + entity) → mode (create / update / upsert, matched by
+  remote ID, UUID or a chosen field) → preview with per-row validation → rows become local records + outbox ops.
+  Nothing reaches the site until the next sync. Relation columns match by ID, UUID, name or a chosen field; ambiguous
+  matches are errors. Parsing and validation run in a Web Worker (main-thread fallback) and are chunked, so 10k+ rows
+  do not freeze the UI.
+* **Export**: current grid view (filters, sort, visible columns), all records, or an import template
+  (headers, example row and, in XLSX, an Instructions sheet). CSV is UTF-8 with BOM; "ID"/"UUID" columns make an
+  export re-importable as an update.
+* **Bulk edit** (select rows): set a value, find & replace in text fields, or clear a field, with a before/after
+  preview; bulk delete shows the exact count first.
+
 ## Layout of local data
 
 * Settings and the site list: `pressdock-settings.json` (plugin-store; **no secrets**).
@@ -63,6 +77,7 @@ cd src-tauri; cargo check
 
 ## Known limitations
 
-* No sync yet. Removing a site wipes its tables but the (empty) `.db` file remains (no filesystem plugin).
 * Relation cells show `#id`; the form picker shows record labels from local data.
-* Media files chosen offline are stored in `media_pending` and uploaded by the future sync engine.
+* Media files chosen offline are stored in `media_pending` and uploaded by the sync engine.
+* Import/export file dialogs (`plugin-dialog` + `plugin-fs`) and the worker bundle are verified in the browser build only, not in a Tauri window.
+* XLSX reading is in-memory: very large workbooks (hundreds of thousands of rows) may need a lot of RAM.

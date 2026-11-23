@@ -381,6 +381,61 @@ export class SiteRepo {
     return recs.length;
   }
 
+  /** Per-record patches (bulk find/replace). Chunked transactions; returns records actually changed. */
+  async updateEach(entity: Entity, items: { uuid: string; patch: RecordData }[], onProgress?: (done: number, total: number) => void): Promise<number> {
+    let changed = 0;
+    for (let i = 0; i < items.length; i += 500) {
+      const part = items.slice(i, i + 500);
+      const recs = new Map((await this.getMany(part.map((p) => p.uuid))).map((r) => [r.uuid, r]));
+      const frozen = await this.frozenUuids([...recs.keys()]);
+      const stmts: Stmt[] = [];
+      for (const p of part) {
+        const rec = recs.get(p.uuid);
+        if (!rec || rec.status === 'deleted') continue;
+        const s = this.buildUpdate(entity, rec, p.patch, frozen);
+        if (s.length) changed++;
+        stmts.push(...s);
+      }
+      if (stmts.length) await this.db.batch(stmts);
+      onProgress?.(Math.min(items.length, i + 500), items.length);
+    }
+    this.emit();
+    return changed;
+  }
+
+  /** Import planned rows as local records + outbox ops. Nothing reaches the server until sync. Chunked transactions. */
+  async importItems(
+    entity: Entity,
+    items: { action: 'create' | 'update'; uuid?: string; data: RecordData }[],
+    onProgress?: (done: number, total: number) => void,
+  ): Promise<{ created: number; updated: number }> {
+    let created = 0;
+    let updated = 0;
+    for (let i = 0; i < items.length; i += 500) {
+      const part = items.slice(i, i + 500);
+      const upd = part.filter((p) => p.action === 'update' && p.uuid);
+      const recs = new Map((await this.getMany(upd.map((p) => p.uuid as string))).map((r) => [r.uuid, r]));
+      const frozen = await this.frozenUuids([...recs.keys()]);
+      const stmts: Stmt[] = [];
+      for (const p of part) {
+        if (p.action === 'create') {
+          stmts.push(...this.buildCreate(entity, p.data, p.uuid).stmts);
+          created++;
+        } else {
+          const rec = p.uuid ? recs.get(p.uuid) : undefined;
+          if (!rec || rec.status === 'deleted') continue;
+          const s = this.buildUpdate(entity, rec, p.data, frozen);
+          if (s.length) updated++;
+          stmts.push(...s);
+        }
+      }
+      if (stmts.length) await this.db.batch(stmts);
+      onProgress?.(Math.min(items.length, i + 500), items.length);
+    }
+    this.emit();
+    return { created, updated };
+  }
+
   // ------------------------------------------------------- relation lookups
 
   /** Resolve a relation value (remote_id number or uuid string) to a local record. */

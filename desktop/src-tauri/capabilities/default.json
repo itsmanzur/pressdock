@@ -11,6 +11,8 @@
     "store:default",
     "opener:default",
     "process:allow-restart",
+    "dialog:allow-save",
+    "fs:allow-write-file",
     "updater:default",
     {
       "identifier": "http:default",

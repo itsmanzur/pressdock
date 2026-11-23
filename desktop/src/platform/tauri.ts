@@ -4,6 +4,8 @@ import Database from '@tauri-apps/plugin-sql';
 import { fetch as tauriFetch } from '@tauri-apps/plugin-http';
 import { load, type Store } from '@tauri-apps/plugin-store';
 import { openUrl } from '@tauri-apps/plugin-opener';
+import { save } from '@tauri-apps/plugin-dialog';
+import { writeFile } from '@tauri-apps/plugin-fs';
 import { transactionScript } from '../db/inline';
 import type { Platform, SqlDb, SqlValue, Stmt } from './types';
 
@@ -67,5 +69,11 @@ export const tauriPlatform: Platform = {
   },
   fetch: tauriFetch as typeof fetch,
   openUrl: (url) => openUrl(url),
+  async saveFile(defaultName, bytes) {
+    const path = await save({ defaultPath: defaultName });
+    if (!path) return false;
+    await writeFile(path, bytes);
+    return true;
+  },
   setWindowTitle: (t) => getCurrentWindow().setTitle(t),
 };
