@@ -183,7 +183,7 @@ abstract class AbstractTableAdapter implements EntityAdapter, EnumerableAdapter 
 		$table        = $this->full_table();
 		$pk           = $this->primary_key();
 		$placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
-		$rows         = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM `{$table}` WHERE `{$pk}` IN ({$placeholders})", $ids ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber
+		$rows         = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM `{$table}` WHERE `{$pk}` IN ({$placeholders})", $ids ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- IN() placeholders are built above.
 		$out          = array();
 		foreach ( (array) $rows as $row ) {
 			$record               = $this->build( $row );

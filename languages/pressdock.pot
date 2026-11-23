@@ -1,0 +1,1079 @@
+# Copyright (C) 2026 thereadscope
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Pressdock Connector 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pressdock\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-11-23 17:55+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Domain: pressdock\n"
+
+#: adapters/core/PostAdapter.php:32
+msgid "Posts"
+msgstr ""
+
+#: adapters/core/PostAdapter.php:39
+msgid "WordPress core"
+msgstr ""
+
+#: adapters/core/PostAdapter.php:56
+msgid "Title"
+msgstr ""
+
+#: adapters/core/PostAdapter.php:62
+msgid "Content"
+msgstr ""
+
+#: adapters/core/PostAdapter.php:67 adapters/hejazer-kafela/InquiryAdapter.php:200 adapters/hejazer-kafela/pro/DepartureAdapter.php:88 src/Admin/SettingsPage.php:866
+msgid "Status"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:54
+msgid "Inquiries"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:55 adapters/hejazer-kafela/PackageAdapter.php:66 adapters/hejazer-kafela/ReceiptAdapter.php:34 adapters/hejazer-kafela/SettingsAdapter.php:34
+msgid "Hejazer Kafela"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:117
+msgid "ID"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:122
+msgid "Date (GMT)"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:127 adapters/hejazer-kafela/pro/DepartureAdapter.php:74 adapters/hejazer-kafela/pro/LedgerAdapter.php:127 adapters/hejazer-kafela/pro/PilgrimAdapter.php:72
+msgid "Name"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:133 adapters/hejazer-kafela/PackageAdapter.php:227
+msgid "Phone"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:139 adapters/hejazer-kafela/PackageAdapter.php:228 adapters/hejazer-kafela/SettingsAdapter.php:86
+msgid "WhatsApp"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:144
+msgid "City"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:149
+msgid "Share"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:154
+msgid "Adults"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:160
+msgid "Children"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:166
+msgid "Infants"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:172
+msgid "Trip Type"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:177 adapters/hejazer-kafela/ReceiptAdapter.php:88 adapters/hejazer-kafela/pro/LedgerAdapter.php:132 adapters/hejazer-kafela/pro/PaymentAdapter.php:191
+msgid "Note"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:183
+msgid "Package ID"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:189 adapters/hejazer-kafela/pro/DepartureAdapter.php:85
+msgid "Package ID (Kafela string)"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:195
+msgid "Package Title"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:206
+msgid "Replied"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:210 adapters/hejazer-kafela/ReceiptAdapter.php:93
+msgid "Demo"
+msgstr ""
+
+#: adapters/hejazer-kafela/InquiryAdapter.php:215
+msgid "Ref"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:65
+msgid "Umrah packages"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:176
+msgid "Package id"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:183
+msgid "Position"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:188
+msgid "Published"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:191
+msgid "Package name"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:192
+msgid "Eyebrow"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:193
+msgid "Flight direction"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:194
+msgid "Group note"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:195
+msgid "Total days"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:196
+msgid "Makkah nights"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:197
+msgid "Madinah nights"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:198
+msgid "Departure month"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:201
+msgid "Ramadan departure"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:203
+msgid "Makkah hotel"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:204
+msgid "Makkah: or similar"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:205
+msgid "Makkah stars"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:206
+msgid "Distance to the Haram (m)"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:207
+msgid "Madinah hotel"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:208
+msgid "Madinah: or similar"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:209
+msgid "Madinah stars"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:210
+msgid "Distance to the Prophet's Mosque (m)"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:213
+msgid "Prices per person (BDT)"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:216
+msgid "Food note"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:217
+msgid "Included"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:218
+msgid "Not included"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:219
+msgid "Day by day"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:220
+msgid "Documents"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:223
+msgid "Cancellation"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:226
+msgid "Agency name"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:231
+msgid "Demo row"
+msgstr ""
+
+#: adapters/hejazer-kafela/PackageAdapter.php:236 adapters/hejazer-kafela/pro/DepartureAdapter.php:110 adapters/hejazer-kafela/pro/PilgrimAdapter.php:86
+msgid "Bangla overlay"
+msgstr ""
+
+#: adapters/hejazer-kafela/ReceiptAdapter.php:33
+msgid "Receipt"
+msgstr ""
+
+#: adapters/hejazer-kafela/ReceiptAdapter.php:61
+msgid "Paid by"
+msgstr ""
+
+#: adapters/hejazer-kafela/ReceiptAdapter.php:66
+msgid "Amount received"
+msgstr ""
+
+#: adapters/hejazer-kafela/ReceiptAdapter.php:72 adapters/hejazer-kafela/pro/PaymentAdapter.php:177
+msgid "Payment channel"
+msgstr ""
+
+#: adapters/hejazer-kafela/ReceiptAdapter.php:77 adapters/hejazer-kafela/pro/PaymentAdapter.php:184
+msgid "Transaction ID"
+msgstr ""
+
+#: adapters/hejazer-kafela/ReceiptAdapter.php:82 adapters/hejazer-kafela/pro/PaymentAdapter.php:164
+msgid "Date"
+msgstr ""
+
+#: adapters/hejazer-kafela/SettingsAdapter.php:33
+msgid "Agency settings"
+msgstr ""
+
+#: adapters/hejazer-kafela/SettingsAdapter.php:74
+msgid "Agency name · English"
+msgstr ""
+
+#: adapters/hejazer-kafela/SettingsAdapter.php:78
+msgid "Agency name · বাংলা"
+msgstr ""
+
+#: adapters/hejazer-kafela/SettingsAdapter.php:82
+msgid "Office phone"
+msgstr ""
+
+#: adapters/hejazer-kafela/SettingsAdapter.php:91
+msgid "Hajj / Umrah license number"
+msgstr ""
+
+#: adapters/hejazer-kafela/SettingsAdapter.php:95
+msgid "Logo (attachment id)"
+msgstr ""
+
+#: adapters/hejazer-kafela/SettingsAdapter.php:99
+msgid "Logo URL"
+msgstr ""
+
+#: adapters/hejazer-kafela/SettingsAdapter.php:103
+msgid "Send to"
+msgstr ""
+
+#: adapters/hejazer-kafela/SettingsAdapter.php:108
+msgid "Default country code"
+msgstr ""
+
+#: adapters/hejazer-kafela/SettingsAdapter.php:112
+msgid "Spam guard (submissions per hour)"
+msgstr ""
+
+#: adapters/hejazer-kafela/SettingsAdapter.php:118
+msgid "Delete everything on uninstall"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:29
+msgid "Groups / departures (read only)"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:30 adapters/hejazer-kafela/pro/LedgerAdapter.php:53 adapters/hejazer-kafela/pro/PaymentAdapter.php:59 adapters/hejazer-kafela/pro/PilgrimAdapter.php:29
+msgid "Hejazer Kafela Pro"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:75
+msgid "Name (বাংলা)"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:76
+msgid "Type"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:80
+msgid "Package"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:89
+msgid "Leaves"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:90
+msgid "Returns"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:91
+msgid "Route"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:92
+msgid "Origin airport"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:93
+msgid "Airline"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:94
+msgid "Flight"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:95
+msgid "Seats"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:96
+msgid "Held seats"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:97
+msgid "Saudi company"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:98
+msgid "Program"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:99
+msgid "Group leader"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:100
+msgid "Leader phone"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:101
+msgid "Guide"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:102
+msgid "Guide phone"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:103
+msgid "Visa opens"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:104
+msgid "Visa last day"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:105
+msgid "Last entry"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:106
+msgid "Last departure"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:107
+msgid "Colour"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/DepartureAdapter.php:112 adapters/hejazer-kafela/pro/LedgerAdapter.php:135 adapters/hejazer-kafela/pro/PilgrimAdapter.php:90
+msgid "Sort order"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/LedgerAdapter.php:52
+msgid "Pilgrim ledger (read only)"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/LedgerAdapter.php:124
+msgid "Ledger row id"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/LedgerAdapter.php:125 adapters/hejazer-kafela/pro/PilgrimAdapter.php:70
+msgid "Group"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/LedgerAdapter.php:126
+msgid "Pilgrim"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/LedgerAdapter.php:128
+msgid "Due (BDT)"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/LedgerAdapter.php:129
+msgid "Paid (BDT, from payments)"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/LedgerAdapter.php:130
+msgid "Last channel"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/LedgerAdapter.php:131
+msgid "Last transaction id"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/LedgerAdapter.php:133
+msgid "USD note"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/LedgerAdapter.php:134
+msgid "SAR note"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PaymentAdapter.php:58
+msgid "Payments & receipts"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PaymentAdapter.php:156
+msgid "Ledger row"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PaymentAdapter.php:160
+msgid "Group (from the ledger row)"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PaymentAdapter.php:161
+msgid "Pilgrim (from the ledger row)"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PaymentAdapter.php:170
+msgid "Amount (BDT)"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PaymentAdapter.php:197
+msgid "Accept more than the balance"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PaymentAdapter.php:201
+msgid "Receipt number"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PaymentAdapter.php:202
+msgid "Opening balance"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PaymentAdapter.php:203
+msgid "Received by (user id)"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PaymentAdapter.php:204
+msgid "Received by"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PaymentAdapter.php:205 adapters/hejazer-kafela/pro/PilgrimAdapter.php:98
+msgid "Created (GMT)"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PaymentAdapter.php:208
+msgid "Voided"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PaymentAdapter.php:213
+msgid "Void reason"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PaymentAdapter.php:217
+msgid "Voided at (GMT)"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PaymentAdapter.php:218
+msgid "Voided by (user id)"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PilgrimAdapter.php:28
+msgid "Pilgrims (read only)"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PilgrimAdapter.php:73
+msgid "Gender"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PilgrimAdapter.php:74
+msgid "Date of birth"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PilgrimAdapter.php:75
+msgid "Passport number"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PilgrimAdapter.php:76
+msgid "Passport expires"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PilgrimAdapter.php:77
+msgid "Room share"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PilgrimAdapter.php:78
+msgid "Family"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PilgrimAdapter.php:79
+msgid "Family link"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PilgrimAdapter.php:80
+msgid "Visa status"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PilgrimAdapter.php:81
+msgid "Biometric"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PilgrimAdapter.php:82
+msgid "Vaccine"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PilgrimAdapter.php:83
+msgid "Insurance"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PilgrimAdapter.php:94
+msgid "Agent id (Pro agent)"
+msgstr ""
+
+#: adapters/hejazer-kafela/pro/PilgrimAdapter.php:97
+msgid "District"
+msgstr ""
+
+#: src/Admin/Devices.php:34
+msgid "Browser session"
+msgstr ""
+
+#: src/Admin/Devices.php:41
+msgid "Application Password"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:67 src/Admin/SettingsPage.php:68 src/Admin/SettingsPage.php:83
+msgid "Pressdock"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:77 src/Admin/SettingsPage.php:110 src/Admin/SettingsPage.php:408
+msgid "Dashboard"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:78 src/Admin/SettingsPage.php:409 src/Admin/SettingsPage.php:494 src/Admin/SettingsPage.php:753
+msgid "Data sources"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:79 src/Admin/SettingsPage.php:410
+msgid "Devices & activity"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:80 src/Admin/SettingsPage.php:111 src/Admin/SettingsPage.php:411
+msgid "Settings"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:154
+msgid "You do not have permission to do this."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:232
+msgid "Other"
+msgstr ""
+
+#. translators: %s: human time difference, e.g. "5 mins".
+#: src/Admin/SettingsPage.php:315
+msgid "%s ago"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:343
+msgid "Pressdock Connector"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:344
+msgid "Work on your WordPress plugin data offline in the Pressdock app — then sync it back safely."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:349
+msgid "Ready to connect"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:349
+msgid "Needs attention"
+msgstr ""
+
+#. translators: %s: plugin version.
+#: src/Admin/SettingsPage.php:354
+msgid "v%s"
+msgstr ""
+
+#. translators: %s: API version.
+#: src/Admin/SettingsPage.php:360
+msgid "API %s"
+msgstr ""
+
+#. translators: 1: restored count, 2: failed count.
+#: src/Admin/SettingsPage.php:386
+msgid "Undo finished: %1$d restored, %2$d failed."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:394
+msgid "Settings saved."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:413
+msgid "Pressdock sections"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:461
+msgid "Copy"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:462
+msgid "Copied"
+msgstr ""
+
+#. translators: 1: entity types, 2: plugins.
+#: src/Admin/SettingsPage.php:497
+msgid "%1$d entity type from %2$d plugin"
+msgid_plural "%1$d entity types from %2$d plugins"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Admin/SettingsPage.php:501
+msgid "Devices"
+msgstr ""
+
+#. translators: %d: devices active in the last 7 days.
+#: src/Admin/SettingsPage.php:504
+msgid "%d active in the last 7 days"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:508
+msgid "Syncs (7 days)"
+msgstr ""
+
+#. translators: %d: applied changes.
+#: src/Admin/SettingsPage.php:511
+msgid "%d change applied"
+msgid_plural "%d changes applied"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Admin/SettingsPage.php:515
+msgid "Conflicts (7 days)"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:517
+msgid "Resolved in the app, nothing overwritten"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:517
+msgid "No edits collided"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:527
+msgid "Connect a device"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:532
+msgid "Create an Application Password"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:533
+msgid "In your profile, name it after the device (e.g. \"Office laptop\"). Each device gets its own, so you can revoke one without touching the others."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:535
+msgid "Create Application Password"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:539
+msgid "Open the Pressdock app"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:540
+msgid "Desktop app for Windows, macOS and Linux, or the installable web app."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:542
+msgid "Get the app"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:546
+msgid "Add this site"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:547
+msgid "Paste these into \"Add site\", together with your username and the Application Password."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:549
+msgid "Site URL"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:550
+msgid "Username"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:560
+msgid "Connected plugins"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:561
+msgid "Manage"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:565
+msgid "No plugin data is available yet. Activate a supported plugin or register an adapter."
+msgstr ""
+
+#. translators: 1: enabled count, 2: total count.
+#: src/Admin/SettingsPage.php:579 src/Admin/SettingsPage.php:777
+msgid "%1$d of %2$d syncing"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:620
+msgid "Secure connection (HTTPS)"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:620
+msgid "Passwords and data travel encrypted."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:622
+msgid "Local HTTP allowed"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:622
+msgid "Fine for a local test site. Use HTTPS on a live site."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:624
+msgid "HTTPS required"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:624
+msgid "The API refuses plain-HTTP connections. Enable HTTPS, or allow local HTTP in Settings on a development site."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:628
+msgid "Application Passwords available"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:628
+msgid "Devices sign in without your main password."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:629
+msgid "Application Passwords unavailable"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:629
+msgid "They are turned off on this site (often by a security plugin or because HTTPS is missing)."
+msgstr ""
+
+#. translators: %d: number of entity types.
+#: src/Admin/SettingsPage.php:635
+msgid "%d data source enabled"
+msgid_plural "%d data sources enabled"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Admin/SettingsPage.php:636
+msgid "WordPress capabilities are still checked on every request."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:638
+msgid "No data source enabled"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:638
+msgid "Enable at least one in Data sources."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:649
+msgid "Connection health"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:660
+msgid "API endpoint"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:678
+msgid "Recent syncs"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:679
+msgid "View all"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:682
+msgid "No sync yet. Changes made in the app show up here."
+msgstr ""
+
+#. translators: %d: number of changes.
+#: src/Admin/SettingsPage.php:696
+msgid "%d change"
+msgid_plural "%d changes"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of conflicts.
+#: src/Admin/SettingsPage.php:702
+msgid "%d conflict"
+msgid_plural "%d conflicts"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Admin/SettingsPage.php:727
+msgid "Connect any plugin"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:730
+msgid "Pressdock is universal: any plugin can expose its data with a small adapter that describes fields and maps reads and writes. Custom post types and custom tables have ready-made base classes."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:756
+msgid "Choose which data the Pressdock app can see. Switching a source off hides it from every device; WordPress capabilities still decide what each user may read or change."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:759
+msgid "No entities are registered."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:764
+msgid "Sync"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:765
+msgid "Data"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:766
+msgid "Key"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:767
+msgid "Fields"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:768
+msgid "You can"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:802
+msgid "no access"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:817
+msgid "Save data sources"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:833
+msgid "view"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:834
+msgid "add"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:835
+msgid "edit"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:836
+msgid "delete"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:853
+msgid "Connected devices"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:854
+msgid "Manage Application Passwords"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:857
+msgid "No device has connected yet."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:862
+msgid "Device"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:863 src/Admin/SettingsPage.php:916
+msgid "User"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:864
+msgid "Last download"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:865
+msgid "Last upload"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:881
+msgid "Active"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:881
+msgid "Idle"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:894
+msgid "Sync history"
+msgstr ""
+
+#. translators: %d: days snapshots are kept.
+#: src/Admin/SettingsPage.php:902
+msgid "Each upload from a device is one batch. \"Undo\" restores every record the batch changed, using snapshots kept for %d days."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:910
+msgid "No sync activity yet."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:915
+msgid "When"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:917
+msgid "Changes"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:918
+msgid "Applied"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:919
+msgid "Conflicts"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:920
+msgid "Batch"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:941
+msgid "Restore every record this batch changed?"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:945
+msgid "Undo"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:978
+msgid "Connection"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:982
+msgid "Allow HTTP on local development hosts"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:983
+msgid "Only for localhost, 127.0.0.1, *.local, *.test and *.localhost. Live sites always need HTTPS."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:985
+msgid "This site is not a local host — the option has no effect here."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:998
+msgid "Safety & storage"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:1002
+msgid "Keep undo snapshots for"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:1003
+msgid "How long a sync batch can be undone. Older snapshots are removed daily."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:1007
+msgid "days"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:1012
+msgid "Delete data on uninstall"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:1013
+msgid "Removes all Pressdock tables and settings when the plugin is deleted. Your plugin data itself is never touched."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:1021
+msgid "Save settings"
+msgstr ""
+
+#: src/Rest/Controller.php:170
+msgid "Pressdock requires HTTPS."
+msgstr ""
+
+#: src/Rest/Controller.php:173
+msgid "Authentication is required. Use an Application Password."
+msgstr ""
+
+#: src/Rest/Controller.php:189
+msgid "Administrators only."
+msgstr ""
+
+#: src/Rest/Controller.php:205
+msgid "You are not allowed to upload files."
+msgstr ""
+
+#: src/Rest/Controller.php:299
+msgid "Unknown or disabled entity."
+msgstr ""
+
+#: src/Rest/Controller.php:302
+msgid "You are not allowed to read this entity."
+msgstr ""
+
+#: src/Rest/Controller.php:411
+msgid "batch_id must be 8-36 characters of letters, digits and dashes."
+msgstr ""
+
+#: src/Rest/Controller.php:414
+msgid "ops must be a non-empty array."
+msgstr ""
+
+#: src/Rest/Controller.php:417
+msgid "A batch may hold at most 100 operations."
+msgstr ""
+
+#: src/Rest/Controller.php:443
+msgid "batch_id is required."
+msgstr ""
+
+#: src/Rest/Controller.php:447
+msgid "No snapshots found for this batch. It may have been undone or pruned."
+msgstr ""
+
+#: src/Rest/Controller.php:464
+msgid "Attachment not found."
+msgstr ""
+
+#: src/Rest/Controller.php:467
+msgid "You are not allowed to read this attachment."
+msgstr ""
+
+#: src/Rest/Controller.php:480
+msgid "Send the file as multipart field \"file\"."
+msgstr ""

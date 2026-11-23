@@ -134,7 +134,8 @@ final class Support {
 			'kafela_settings' => array( 'saved' => 'pothik_settings_saved' ),
 		);
 		if ( isset( $hooks[ $entity ][ $event ] ) ) {
-			do_action_ref_array( $hooks[ $entity ][ $event ], $args );
+			// Fires Hejazer Kafela's own hooks (fixed list above), so its add-ons react to synced changes.
+			do_action_ref_array( $hooks[ $entity ][ $event ], $args ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound
 		}
 	}
 

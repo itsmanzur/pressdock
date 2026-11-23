@@ -34,7 +34,8 @@ abstract class AbstractPostAdapter implements EntityAdapter, RestorableAdapter, 
 	 */
 	public function ids_after( $after, $limit ) {
 		global $wpdb;
-		$ids = $wpdb->get_col(
+		// Paging by ID over one post type; WP_Query cannot express "ID > n" cheaply. Values are prepared.
+		$ids = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$wpdb->prepare(
 				"SELECT ID FROM {$wpdb->posts} WHERE post_type = %s AND ID > %d AND post_status NOT IN ('trash','auto-draft','inherit') ORDER BY ID ASC LIMIT %d", // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				$this->post_type(),

@@ -69,7 +69,7 @@ final class SettingsPage {
 			'manage_options',
 			self::SLUG,
 			$render,
-			self::menu_icon(),
+			'dashicons-database',
 			81
 		);
 
@@ -82,17 +82,6 @@ final class SettingsPage {
 		foreach ( $subs as $slug => $title ) {
 			self::$hooks[] = add_submenu_page( self::SLUG, $title . ' ‹ ' . __( 'Pressdock', 'pressdock' ), $title, 'manage_options', $slug, $render );
 		}
-	}
-
-	/**
-	 * Menu icon: a monochrome SVG (WordPress recolours it to match the admin scheme).
-	 *
-	 * @return string
-	 */
-	private static function menu_icon() {
-		$svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="black" d="M10 1.5c-4.1 0-7 1.3-7 3v11c0 1.7 2.9 3 7 3s7-1.3 7-3v-11c0-1.7-2.9-3-7-3zm0 1.6c3.3 0 5.3 1 5.3 1.4S13.3 6 10 6 4.7 4.9 4.7 4.5 6.7 3.1 10 3.1zM4.7 6.7C6 7.3 7.9 7.6 10 7.6s4-.3 5.3-.9V10c0 .4-2 1.4-5.3 1.4S4.7 10.4 4.7 10V6.7zm9.9 8.2-2.3 2.3v-1.5H8.4v-1.6h3.9v-1.5l2.3 2.3zm-8.9-1.4 2.3-2.3v1.5h3.9v1.6H8v1.5l-2.3-2.3z"/></svg>';
-		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode -- data URI for the menu icon.
-		return 'data:image/svg+xml;base64,' . base64_encode( $svg );
 	}
 
 	/**

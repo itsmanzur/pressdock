@@ -2,13 +2,13 @@
 Contributors: itsmanzur
 Tags: sync, rest-api, offline, desktop app, application passwords
 Requires at least: 6.0
-Tested up to: 6.7
+Tested up to: 7.1
 Requires PHP: 7.4
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-A secure REST sync API for the Pressdock desktop app: pull, create, edit and delete plugin data offline, then sync it with conflict detection and undo.
+Edit your WordPress plugin data offline in the Pressdock app, then sync it back safely with conflict detection and undo.
 
 == Description ==
 
@@ -31,8 +31,19 @@ Pressdock Connector turns supported WordPress data into a sync-ready REST API. T
 
 **Included**
 
-* A demo adapter for core posts (title, content, status).
+* An adapter for core posts (title, content, status).
+* Adapters for Hejazer Kafela and Hejazer Kafela Pro. They load only while those plugins are active.
 * Base classes for post-type entities and custom-table entities, so other plugins can add an adapter in a few lines.
+* An admin dashboard (Pressdock menu) with connection health, data sources, connected devices and sync history with undo.
+
+**Companion apps**
+
+This plugin is the server side. You edit the data in a separate Pressdock client:
+
+* Pressdock desktop app for Windows, macOS and Linux.
+* Pressdock web app (installable PWA) for any modern browser, including phones.
+
+Both talk only to your own site, using the Application Password you create. No Pressdock server sits in between. Downloads and documentation: https://thereadscope.com/pressdock
 
 **For developers**
 
@@ -70,6 +81,13 @@ Yes. Administrators can undo a whole batch from Pressdock → Devices & activity
 = What is removed when I delete the plugin? =
 
 Nothing, unless you tick "Delete all Pressdock tables and settings when the plugin is deleted" first.
+
+== Screenshots ==
+
+1. Dashboard: connect a device in three steps, connection health and recent syncs.
+2. Data sources: choose which plugin data the apps can see, grouped by plugin.
+3. Devices & activity: connected devices and sync history with one-click undo.
+4. Settings: local HTTP for development sites, undo retention and uninstall behaviour.
 
 == Changelog ==
 
