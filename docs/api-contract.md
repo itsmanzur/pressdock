@@ -6,7 +6,7 @@ Namespace: `pressdock/v1` · API version: `1.0` · Base URL: `https://<site>/wp-
 
 **Authentication.** WordPress Application Passwords (HTTP Basic: `username:application-password`). Cookie sessions also work but need the usual REST nonce. All routes require a signed-in user.
 
-**Transport.** The API refuses non-HTTPS requests with `403 pdock_insecure_transport`, unless one of these holds: `WP_DEBUG` is on, or *Allow HTTP on local development hosts* is enabled in Tools → Pressdock and the site host is `localhost`, `127.0.0.1`, `::1`, `*.localhost`, `*.local` or `*.test`.
+**Transport.** The API refuses non-HTTPS requests with `403 pdock_insecure_transport`, unless one of these holds: `WP_DEBUG` is on, or *Allow HTTP on local development hosts* is enabled in Pressdock → Settings and the site host is `localhost`, `127.0.0.1`, `::1`, `*.localhost`, `*.local` or `*.test`.
 
 **Content type.** Requests with a body are JSON (`Content-Type: application/json`). Exception: `POST /media` is `multipart/form-data`.
 

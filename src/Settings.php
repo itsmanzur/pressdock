@@ -63,21 +63,36 @@ final class Settings {
 		$input = is_array( $input ) ? $input : array();
 		$keys  = array_keys( Registry::all( true ) );
 
-		$enabled  = isset( $input['enabled_entities'] ) && is_array( $input['enabled_entities'] )
-			? array_map( 'sanitize_key', $input['enabled_entities'] )
-			: array();
-		$disabled = array_values( array_diff( $keys, $enabled ) );
+		if ( isset( $input['enabled_entities'] ) && is_array( $input['enabled_entities'] ) ) {
+			$disabled = array_values( array_diff( $keys, array_map( 'sanitize_key', $input['enabled_entities'] ) ) );
+		} elseif ( ! isset( $input['_section'] ) && isset( $input['disabled_entities'] ) && is_array( $input['disabled_entities'] ) ) {
+			// Already-sanitized shape. WordPress runs this callback a second time when the option is first
+			// created (update_option → add_option), so it must be idempotent.
+			$disabled = array_values( array_map( 'sanitize_key', $input['disabled_entities'] ) );
+		} else {
+			// Form posted with every box unchecked.
+			$disabled = $keys;
+		}
 
 		$days = isset( $input['snapshot_days'] ) ? absint( $input['snapshot_days'] ) : 14;
 		if ( $days < 1 || $days > 365 ) {
 			$days = 14;
 		}
 
-		return array(
+		$out = array(
 			'disabled_entities'   => $disabled,
 			'allow_local_http'    => empty( $input['allow_local_http'] ) ? 0 : 1,
 			'snapshot_days'       => $days,
 			'delete_on_uninstall' => empty( $input['delete_on_uninstall'] ) ? 0 : 1,
 		);
+
+		// The admin screens save one section at a time; keep the values of the other section.
+		$section = isset( $input['_section'] ) ? sanitize_key( $input['_section'] ) : '';
+		if ( 'sources' === $section ) {
+			$out = array_merge( self::all(), array( 'disabled_entities' => $disabled ) );
+		} elseif ( 'options' === $section ) {
+			$out['disabled_entities'] = (array) self::get( 'disabled_entities' );
+		}
+		return $out;
 	}
 }

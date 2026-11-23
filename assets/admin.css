@@ -1,0 +1,299 @@
+/* Pressdock Connector admin. Scoped to .pdock so nothing leaks into other screens. */
+.pdock {
+	--pd-brand: #4f46e5;
+	--pd-brand-600: #4338ca;
+	--pd-brand-50: #eef2ff;
+	--pd-ink: #0f172a;
+	--pd-muted: #64748b;
+	--pd-line: #e2e8f0;
+	--pd-card: #fff;
+	--pd-bg: #f8fafc;
+	--pd-ok: #059669;
+	--pd-ok-50: #ecfdf5;
+	--pd-warn: #b45309;
+	--pd-warn-50: #fffbeb;
+	--pd-bad: #dc2626;
+	--pd-bad-50: #fef2f2;
+	--pd-radius: 12px;
+	margin: 0 20px 0 0;
+	color: var(--pd-ink);
+	max-width: 1180px;
+}
+
+.pdock * { box-sizing: border-box; }
+
+/* Header -------------------------------------------------------------- */
+.pdock-hero {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 16px;
+	margin: 20px 0 0;
+	padding: 22px 24px;
+	border-radius: var(--pd-radius);
+	background: linear-gradient(120deg, #312e81 0%, #4f46e5 55%, #6366f1 100%);
+	color: #fff;
+}
+.pdock-hero__logo {
+	display: grid;
+	place-items: center;
+	width: 48px;
+	height: 48px;
+	border-radius: 12px;
+	background: rgba(255, 255, 255, 0.15);
+	flex: none;
+}
+.pdock-hero__logo svg { width: 28px; height: 28px; }
+.pdock-hero h1 {
+	margin: 0;
+	padding: 0;
+	color: #fff;
+	font-size: 22px;
+	font-weight: 600;
+	line-height: 1.3;
+}
+.pdock-hero p { margin: 2px 0 0; color: rgba(255, 255, 255, 0.82); font-size: 13px; }
+.pdock-hero__meta { margin-left: auto; display: flex; flex-wrap: wrap; gap: 8px; }
+.pdock-hero .pdock-pill { background: rgba(255, 255, 255, 0.16); color: #fff; }
+
+/* Tabs ---------------------------------------------------------------- */
+.pdock-tabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	margin: 16px 0 20px;
+	border-bottom: 1px solid var(--pd-line);
+}
+.pdock-tabs a {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 10px 14px;
+	margin-bottom: -1px;
+	border-bottom: 2px solid transparent;
+	color: var(--pd-muted);
+	font-weight: 500;
+	text-decoration: none;
+}
+.pdock-tabs a:hover { color: var(--pd-ink); }
+.pdock-tabs a:focus { box-shadow: none; outline: 2px solid var(--pd-brand); outline-offset: -2px; border-radius: 6px 6px 0 0; }
+.pdock-tabs a.is-active { color: var(--pd-brand); border-bottom-color: var(--pd-brand); }
+.pdock-tabs .dashicons { font-size: 17px; width: 17px; height: 17px; }
+.pdock-tabs .pdock-count {
+	min-width: 20px;
+	padding: 0 6px;
+	border-radius: 10px;
+	background: var(--pd-line);
+	color: var(--pd-ink);
+	font-size: 11px;
+	line-height: 18px;
+	text-align: center;
+}
+
+/* Layout -------------------------------------------------------------- */
+.pdock-grid { display: grid; gap: 16px; }
+.pdock-grid--stats { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); margin-bottom: 16px; }
+.pdock-grid--2 { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; }
+@media (max-width: 1100px) { .pdock-grid--2 { grid-template-columns: 1fr; } }
+
+.pdock-card {
+	background: var(--pd-card);
+	border: 1px solid var(--pd-line);
+	border-radius: var(--pd-radius);
+	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+	margin-bottom: 16px;
+}
+.pdock-card__head {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 14px 18px;
+	border-bottom: 1px solid var(--pd-line);
+}
+.pdock-card__head h2 { margin: 0; font-size: 15px; font-weight: 600; }
+.pdock-card__head .pdock-link { margin-left: auto; }
+.pdock-card__body { padding: 16px 18px; }
+.pdock-card__body > :first-child { margin-top: 0; }
+.pdock-card__body > :last-child { margin-bottom: 0; }
+.pdock-card__foot { padding: 12px 18px; border-top: 1px solid var(--pd-line); background: var(--pd-bg); border-radius: 0 0 var(--pd-radius) var(--pd-radius); }
+
+/* Stats --------------------------------------------------------------- */
+.pdock-stat { padding: 16px 18px; margin: 0; }
+.pdock-stat__label { display: flex; align-items: center; gap: 6px; color: var(--pd-muted); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
+.pdock-stat__label .dashicons { font-size: 16px; width: 16px; height: 16px; color: var(--pd-brand); }
+.pdock-stat__value { margin-top: 6px; font-size: 28px; font-weight: 600; line-height: 1.1; }
+.pdock-stat__hint { margin-top: 4px; color: var(--pd-muted); font-size: 12px; }
+
+/* Pills / badges ------------------------------------------------------ */
+.pdock-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 3px 10px;
+	border-radius: 999px;
+	background: var(--pd-line);
+	color: var(--pd-ink);
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 18px;
+	white-space: nowrap;
+}
+.pdock-pill .dashicons { font-size: 14px; width: 14px; height: 14px; }
+.pdock-pill--ok { background: var(--pd-ok-50); color: var(--pd-ok); }
+.pdock-pill--warn { background: var(--pd-warn-50); color: var(--pd-warn); }
+.pdock-pill--bad { background: var(--pd-bad-50); color: var(--pd-bad); }
+.pdock-pill--brand { background: var(--pd-brand-50); color: var(--pd-brand-600); }
+.pdock-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* Health checklist ---------------------------------------------------- */
+.pdock-checks { margin: 0; padding: 0; list-style: none; }
+.pdock-checks li { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--pd-line); margin: 0; }
+.pdock-checks li:last-child { border-bottom: 0; padding-bottom: 0; }
+.pdock-checks li:first-child { padding-top: 0; }
+.pdock-checks .dashicons { flex: none; margin-top: 1px; }
+.pdock-checks .is-ok .dashicons { color: var(--pd-ok); }
+.pdock-checks .is-warn .dashicons { color: var(--pd-warn); }
+.pdock-checks .is-bad .dashicons { color: var(--pd-bad); }
+.pdock-checks strong { display: block; font-weight: 600; }
+.pdock-checks span.pdock-muted { display: block; }
+
+/* Steps --------------------------------------------------------------- */
+.pdock-steps { counter-reset: pdstep; margin: 0; padding: 0; list-style: none; }
+.pdock-steps > li { position: relative; padding: 0 0 16px 40px; margin: 0; }
+.pdock-steps > li:last-child { padding-bottom: 0; }
+.pdock-steps > li::before {
+	counter-increment: pdstep;
+	content: counter(pdstep);
+	position: absolute;
+	left: 0;
+	top: -1px;
+	display: grid;
+	place-items: center;
+	width: 26px;
+	height: 26px;
+	border-radius: 50%;
+	background: var(--pd-brand-50);
+	color: var(--pd-brand-600);
+	font-weight: 600;
+	font-size: 13px;
+}
+.pdock-steps strong { display: block; margin-bottom: 2px; }
+
+/* Copy fields --------------------------------------------------------- */
+.pdock-copy { display: flex; gap: 6px; align-items: stretch; margin-top: 6px; }
+.pdock-copy input[type="text"] {
+	flex: 1;
+	min-width: 0;
+	margin: 0;
+	border-color: var(--pd-line);
+	background: var(--pd-bg);
+	font-family: Consolas, Monaco, monospace;
+	font-size: 12px;
+}
+.pdock-copy .button { display: inline-flex; align-items: center; gap: 4px; }
+.pdock-copy .button .dashicons { font-size: 16px; width: 16px; height: 16px; }
+.pdock-field-label { display: block; margin-top: 12px; font-size: 12px; font-weight: 600; color: var(--pd-muted); }
+.pdock-field-label:first-child { margin-top: 0; }
+
+/* Integrations -------------------------------------------------------- */
+.pdock-sources { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.pdock-source { padding: 14px 16px; border: 1px solid var(--pd-line); border-radius: 10px; background: var(--pd-card); }
+.pdock-source__head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.pdock-source__icon {
+	display: grid;
+	place-items: center;
+	width: 34px;
+	height: 34px;
+	border-radius: 9px;
+	background: var(--pd-brand-50);
+	color: var(--pd-brand-600);
+	font-weight: 700;
+	font-size: 15px;
+	flex: none;
+}
+.pdock-source__name { font-weight: 600; }
+.pdock-source__sub { color: var(--pd-muted); font-size: 12px; }
+
+/* Tables -------------------------------------------------------------- */
+.pdock-table { width: 100%; border-collapse: collapse; }
+.pdock-table th {
+	padding: 10px 18px;
+	border-bottom: 1px solid var(--pd-line);
+	background: var(--pd-bg);
+	color: var(--pd-muted);
+	font-size: 12px;
+	font-weight: 600;
+	text-align: left;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+}
+.pdock-table td { padding: 12px 18px; border-bottom: 1px solid var(--pd-line); vertical-align: middle; }
+.pdock-table tr:last-child td { border-bottom: 0; }
+.pdock-table tbody tr:hover td { background: #fbfcfe; }
+.pdock-table .pdock-num { text-align: right; font-variant-numeric: tabular-nums; }
+.pdock-table code { font-size: 12px; background: var(--pd-bg); padding: 2px 6px; border-radius: 4px; }
+.pdock-table-wrap { overflow-x: auto; }
+.pdock-group-row td {
+	padding: 10px 18px;
+	background: var(--pd-bg);
+	font-weight: 600;
+	border-bottom: 1px solid var(--pd-line);
+}
+
+/* Toggle switch ------------------------------------------------------- */
+.pdock-switch { position: relative; display: inline-flex; align-items: center; cursor: pointer; }
+.pdock-switch input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+.pdock-switch__ui { position: relative; width: 36px; height: 20px; border-radius: 999px; background: #cbd5e1; transition: background 0.15s; }
+.pdock-switch__ui::after {
+	content: "";
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: #fff;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+	transition: transform 0.15s;
+}
+.pdock-switch input:checked + .pdock-switch__ui { background: var(--pd-brand); }
+.pdock-switch input:checked + .pdock-switch__ui::after { transform: translateX(16px); }
+.pdock-switch input:focus-visible + .pdock-switch__ui { outline: 2px solid var(--pd-brand); outline-offset: 2px; }
+
+/* Settings rows ------------------------------------------------------- */
+.pdock-setting { display: flex; gap: 16px; align-items: flex-start; padding: 16px 18px; border-bottom: 1px solid var(--pd-line); }
+.pdock-setting:last-child { border-bottom: 0; }
+.pdock-setting__text { flex: 1; }
+.pdock-setting__text strong { display: block; margin-bottom: 2px; }
+.pdock-setting input[type="number"] { width: 80px; }
+
+/* Misc ---------------------------------------------------------------- */
+.pdock-muted { color: var(--pd-muted); }
+.pdock-small { font-size: 12px; }
+.pdock-empty { padding: 28px 18px; text-align: center; color: var(--pd-muted); }
+.pdock-empty .dashicons { display: block; margin: 0 auto 6px; font-size: 28px; width: 28px; height: 28px; color: #cbd5e1; }
+.pdock-link { color: var(--pd-brand); text-decoration: none; font-weight: 500; }
+.pdock-link:hover { text-decoration: underline; }
+.pdock-code {
+	margin: 10px 0 0;
+	padding: 12px 14px;
+	border-radius: 8px;
+	background: #0f172a;
+	color: #e2e8f0;
+	font-family: Consolas, Monaco, monospace;
+	font-size: 12px;
+	line-height: 1.6;
+	overflow-x: auto;
+	white-space: pre;
+}
+.pdock-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.pdock-actions .button { display: inline-flex; align-items: center; gap: 4px; }
+.pdock-actions .button .dashicons { font-size: 16px; width: 16px; height: 16px; }
+.pdock-savebar { display: flex; align-items: center; gap: 12px; margin: 0 0 16px; }
+.pdock-savebar .submit { margin: 0; padding: 0; }
+.pdock .notice { margin: 16px 0 0; }
+.pdock .button .dashicons,
+.pdock-pill .dashicons,
+.pdock-tabs .dashicons { line-height: 1; }
+.pdock-toast {margin-left: 6px; color: var(--pd-ok); font-size: 12px; opacity: 0; transition: opacity 0.2s; }
+.pdock-toast.is-shown { opacity: 1; }

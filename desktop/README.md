@@ -43,7 +43,7 @@ cd src-tauri; cargo check
 1. Install and activate the Pressdock Connector (and, for the bundled adapters, Hejazer Kafela).
 2. WordPress → Users → Profile → **Application Passwords** → create one.
 3. In Pressdock: **Add site** → URL, username, Application Password → **Test connection**.
-   The Connector requires HTTPS; for local hosts enable *Allow HTTP on local development hosts* in Tools → Pressdock (or `WP_DEBUG`).
+   The Connector requires HTTPS; for local hosts enable *Allow HTTP on local development hosts* in Pressdock → Settings (or `WP_DEBUG`).
 
 ## Auto-update
 

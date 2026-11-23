@@ -57,4 +57,30 @@ class RegressionTest extends Pdock_Test_Case {
 		$this->assertCount( 1, $mine );
 		$this->assertSame( 'C', $mine[0]['data']['title'] );
 	}
+
+	/**
+	 * Saving settings for the first time runs sanitize twice (update_option then add_option); the second pass must not disable everything.
+	 */
+	public function test_settings_sanitize_is_idempotent() {
+		$once  = Pressdock\Settings::sanitize( array( '_section' => 'sources', 'enabled_entities' => array( 'post' ) ) );
+		$twice = Pressdock\Settings::sanitize( $once );
+		$this->assertNotContains( 'post', $twice['disabled_entities'] );
+		$this->assertSame( $once, $twice );
+	}
+
+	/**
+	 * Each admin screen saves its own section and keeps the other one.
+	 */
+	public function test_settings_sections_keep_each_other() {
+		update_option( Pressdock\Settings::OPTION, array( 'allow_local_http' => 1, 'snapshot_days' => 30, 'disabled_entities' => array() ) );
+		$out = Pressdock\Settings::sanitize( array( '_section' => 'sources' ) );
+		$this->assertSame( 1, (int) $out['allow_local_http'] );
+		$this->assertSame( 30, (int) $out['snapshot_days'] );
+		$this->assertContains( 'post', $out['disabled_entities'] );
+
+		update_option( Pressdock\Settings::OPTION, array( 'disabled_entities' => array( 'post' ) ) );
+		$out = Pressdock\Settings::sanitize( array( '_section' => 'options', 'snapshot_days' => 7 ) );
+		$this->assertSame( array( 'post' ), $out['disabled_entities'] );
+		$this->assertSame( 7, $out['snapshot_days'] );
+	}
 }

@@ -20,7 +20,7 @@ Pressdock Connector turns supported WordPress data into a sync-ready REST API. T
 * Every change, including edits made in the normal WordPress admin, is written to a change log. The app asks for everything that changed since its last cursor.
 * Every record has a revision number. If a record changed on the server while you were offline, the push is not applied. You get a conflict with the current server version instead of silent data loss.
 * Every batch is idempotent. A retried upload never applies twice.
-* A snapshot is taken before each update or delete, so an administrator can undo a whole batch from Tools → Pressdock.
+* A snapshot is taken before each update or delete, so an administrator can undo a whole batch from Pressdock → Devices & activity.
 
 **Built for safety**
 
@@ -47,7 +47,7 @@ An adapter implements `Pressdock\Contracts\EntityAdapter` or extends `Pressdock\
 1. Upload the plugin and activate it.
 2. Go to Users → Profile and create an Application Password named "Pressdock".
 3. Open the Pressdock desktop app (https://thereadscope.com/pressdock) and enter your site URL, your username and the Application Password.
-4. Review which entities are shared under Tools → Pressdock.
+4. Review which entities are shared under Pressdock → Data sources.
 
 == Frequently Asked Questions ==
 
@@ -57,7 +57,7 @@ No. The plugin makes no outgoing requests. Only a client you authenticate with a
 
 = Why does it say my site needs HTTPS? =
 
-Application Passwords travel in an HTTP header, so the API refuses unencrypted connections. On a local development site you can enable "Allow HTTP on local development hosts" under Tools → Pressdock.
+Application Passwords travel in an HTTP header, so the API refuses unencrypted connections. On a local development site you can enable "Allow HTTP on local development hosts" under Pressdock → Settings.
 
 = What happens when two people edit the same record? =
 
@@ -65,7 +65,7 @@ The second push is not applied. The app receives a conflict that contains the cu
 
 = Can I undo a sync? =
 
-Yes. Administrators can undo a whole batch from Tools → Pressdock while its snapshots are kept (14 days by default).
+Yes. Administrators can undo a whole batch from Pressdock → Devices & activity while its snapshots are kept (14 days by default).
 
 = What is removed when I delete the plugin? =
 
