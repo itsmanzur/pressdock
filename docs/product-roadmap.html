@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pressdock Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f6f7fb; --card: #ffffff; --ink: #0f172a; --muted: #64748b; --line: #e2e8f0; --soft: #f1f5f9;
+  --brand: #4f46e5; --brand-soft: #eef2ff; --brand-ink: #3730a3;
+  --ok: #059669; --ok-soft: #ecfdf5; --warn: #b45309; --warn-soft: #fffbeb; --bad: #dc2626; --bad-soft: #fef2f2;
+  --info: #0369a1; --info-soft: #f0f9ff; --gray-soft: #f1f5f9;
+  --shadow: 0 1px 2px rgba(15,23,42,.05), 0 4px 16px rgba(15,23,42,.04);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1020; --card: #121a2e; --ink: #e5e9f2; --muted: #94a3b8; --line: #243049; --soft: #18223a;
+    --brand: #818cf8; --brand-soft: #1e2350; --brand-ink: #c7d2fe;
+    --ok: #34d399; --ok-soft: #0b2b22; --warn: #fbbf24; --warn-soft: #2d2410; --bad: #f87171; --bad-soft: #2d1416;
+    --info: #38bdf8; --info-soft: #0c2233; --gray-soft: #1c2741;
+    --shadow: 0 1px 2px rgba(0,0,0,.3);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b1020; --card: #121a2e; --ink: #e5e9f2; --muted: #94a3b8; --line: #243049; --soft: #18223a;
+  --brand: #818cf8; --brand-soft: #1e2350; --brand-ink: #c7d2fe;
+  --ok: #34d399; --ok-soft: #0b2b22; --warn: #fbbf24; --warn-soft: #2d2410; --bad: #f87171; --bad-soft: #2d1416;
+  --info: #38bdf8; --info-soft: #0c2233; --gray-soft: #1c2741;
+  --shadow: 0 1px 2px rgba(0,0,0,.3);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 15px/1.65 "Inter", "Noto Sans Bengali", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--brand); }
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 16px 64px; }
+header.top {
+  position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+}
+header.top .wrap { display: flex; align-items: center; gap: 12px; padding-top: 10px; padding-bottom: 10px; flex-wrap: wrap; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+.logo svg { width: 28px; height: 28px; }
+nav.toc { display: flex; gap: 4px; flex-wrap: wrap; margin-left: auto; }
+nav.toc a { padding: 4px 10px; border-radius: 8px; color: var(--muted); text-decoration: none; font-size: 13px; }
+nav.toc a:hover { background: var(--soft); color: var(--ink); }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 9px; border: 1px solid var(--line);
+  background: var(--card); color: var(--ink); font: inherit; font-size: 13px; font-weight: 500; cursor: pointer;
+}
+.btn:hover { border-color: var(--brand); }
+.btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+.btn:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+.hero { padding: 36px 0 12px; }
+.hero h1 { margin: 0 0 6px; font-size: clamp(24px, 4vw, 34px); line-height: 1.25; }
+.hero p { margin: 0; color: var(--muted); max-width: 760px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.chip { display: inline-flex; align-items: center; gap: 5px; padding: 2px 10px; border-radius: 999px; background: var(--soft); color: var(--muted); font-size: 12px; font-weight: 500; white-space: nowrap; }
+.chip.brand { background: var(--brand-soft); color: var(--brand-ink); }
+.chip.ok { background: var(--ok-soft); color: var(--ok); }
+.chip.warn { background: var(--warn-soft); color: var(--warn); }
+.chip.bad { background: var(--bad-soft); color: var(--bad); }
+.chip.info { background: var(--info-soft); color: var(--info); }
+
+section { margin-top: 36px; scroll-margin-top: 70px; }
+section > h2 { font-size: 21px; margin: 0 0 4px; }
+section > .lead { color: var(--muted); margin: 0 0 16px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
+.pad { padding: 18px 20px; }
+.grid { display: grid; gap: 14px; }
+.g4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.g3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.g2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+
+.stat .label { color: var(--muted); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.stat .value { font-size: 30px; font-weight: 700; line-height: 1.15; margin-top: 4px; }
+.stat .hint { color: var(--muted); font-size: 12.5px; }
+.bar { height: 8px; border-radius: 99px; background: var(--soft); overflow: hidden; margin-top: 10px; display: flex; }
+.bar > span { display: block; height: 100%; }
+.bar .done { background: var(--ok); } .bar .prog { background: var(--brand); } .bar .plan { background: var(--info); opacity: .55; }
+.legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; font-size: 12px; color: var(--muted); }
+.legend i { display: inline-block; width: 9px; height: 9px; border-radius: 3px; margin-right: 5px; vertical-align: middle; }
+
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+thead th { background: var(--soft); color: var(--muted); font-size: 12px; font-weight: 600; position: sticky; top: 0; }
+tbody tr:last-child td { border-bottom: 0; }
+td.c, th.c { text-align: center; }
+th.us, td.us { background: color-mix(in srgb, var(--brand-soft) 60%, transparent); }
+.y { color: var(--ok); font-weight: 700; } .p { color: var(--warn); font-weight: 700; } .n { color: var(--muted); } .q { color: var(--muted); font-style: italic; }
+
+.comp h3 { margin: 0; font-size: 16px; }
+.comp .cat { color: var(--muted); font-size: 12px; margin-bottom: 8px; }
+.comp ul { margin: 8px 0 0; padding-left: 18px; }
+.comp li { margin: 3px 0; }
+.comp .lbl { font-size: 12px; font-weight: 700; margin-top: 10px; }
+.comp .lbl.love { color: var(--ok); } .comp .lbl.pain { color: var(--bad); } .comp .lbl.take { color: var(--brand); }
+.comp .src { margin-top: 10px; font-size: 12px; }
+.comp .src a { margin-right: 8px; word-break: break-all; }
+
+.diff .card { padding: 16px 18px; }
+.diff h3 { margin: 0 0 4px; font-size: 15px; }
+.diff p { margin: 0; color: var(--muted); font-size: 14px; }
+
+/* roadmap */
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
+.toolbar input[type=search] { flex: 1 1 220px; min-width: 0; }
+select, input[type=search], textarea {
+  font: inherit; font-size: 13.5px; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 9px; padding: 7px 10px;
+}
+.feat { padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; border-left: 4px solid var(--line); }
+.feat[data-status="done"] { border-left-color: var(--ok); }
+.feat[data-status="progress"] { border-left-color: var(--brand); }
+.feat[data-status="planned"] { border-left-color: var(--info); }
+.feat[data-status="dropped"] { opacity: .6; }
+.feat .row { display: flex; gap: 8px; align-items: flex-start; flex-wrap: wrap; }
+.feat h3 { margin: 0; font-size: 15.5px; flex: 1 1 200px; }
+.feat .id { color: var(--muted); font-size: 12px; font-family: ui-monospace, Consolas, monospace; }
+.feat p { margin: 0; font-size: 14px; }
+.feat .why { color: var(--muted); }
+.feat details { font-size: 14px; }
+.feat summary { cursor: pointer; color: var(--brand); font-weight: 600; font-size: 13px; }
+.feat ol { margin: 6px 0 0; padding-left: 20px; }
+.feat li { margin: 2px 0; }
+.feat code { font-size: 12px; background: var(--soft); padding: 1px 5px; border-radius: 4px; }
+.feat textarea { width: 100%; min-height: 38px; resize: vertical; }
+.feat .controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.pr-P0 { background: var(--bad-soft); color: var(--bad); }
+.pr-P1 { background: var(--warn-soft); color: var(--warn); }
+.pr-P2 { background: var(--info-soft); color: var(--info); }
+.pr-P3 { background: var(--gray-soft); color: var(--muted); }
+.st-done { background: var(--ok-soft); color: var(--ok); }
+.empty { padding: 30px; text-align: center; color: var(--muted); }
+.theme-group { margin: 22px 0 10px; display: flex; align-items: baseline; gap: 10px; }
+.theme-group h3 { margin: 0; font-size: 16px; }
+.theme-group span { color: var(--muted); font-size: 12.5px; }
+.note { font-size: 13px; color: var(--muted); }
+footer { margin-top: 40px; color: var(--muted); font-size: 12.5px; }
+.toast { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 8px 14px; border-radius: 10px; font-size: 13px; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 50; }
+.toast.show { opacity: 1; }
+
+@media (max-width: 640px) {
+  nav.toc { display: none; }
+  .pad { padding: 14px; }
+  th, td { padding: 8px; }
+}
+@media print {
+  header.top, .toolbar, .noprint { display: none !important; }
+  body { background: #fff; }
+  .card { box-shadow: none; break-inside: avoid; }
+  .feat textarea { border: 0; }
+  details { display: block; } details > * { display: block; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7.5" ry="3"/><path d="M4.5 5.5v6c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-6"/><path d="M4.5 11.5v7c0 1.7 3.4 3 7.5 3"/><path d="m16 16 3 3-3 3"/><path d="M13 19h6"/></svg>
+      Pressdock Roadmap
+    </div>
+    <nav class="toc" aria-label="সূচি">
+      <a href="#summary">সারসংক্ষেপ</a>
+      <a href="#market">বাজার</a>
+      <a href="#compare">তুলনা</a>
+      <a href="#edge">আমাদের সুবিধা</a>
+      <a href="#roadmap">রোডম্যাপ</a>
+    </nav>
+    <button class="btn" id="themeBtn" type="button" title="Theme">◐</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="hero">
+    <h1>Pressdock: আরও ভালো করার পরিকল্পনা</h1>
+    <p>Connector প্লাগিন, ডেস্কটপ অ্যাপ ও PWA নিয়ে বাজার গবেষণা, প্রতিযোগীদের যে ফিচার ব্যবহারকারীরা পছন্দ করে, আর আমাদের প্রোডাক্টে কী কী কীভাবে যোগ করা যায় — স্ট্যাটাস বদলে অগ্রগতি ট্র্যাক করা যায়।</p>
+    <div class="meta">
+      <span class="chip brand">গবেষণা: নভেম্বর ২০২৬</span>
+      <span class="chip">স্ট্যাটাস এই ব্রাউজারে সেভ হয়</span>
+      <span class="chip">শেয়ার করতে Export JSON</span>
+    </div>
+  </div>
+
+  <!-- ======================== SUMMARY ======================== -->
+  <section id="summary">
+    <h2>সারসংক্ষেপ</h2>
+    <p class="lead">মূল কথা: বাজারে <b>বাল্ক এডিট, ইমপোর্ট/এক্সপোর্ট, শিট-সিঙ্ক, মোবাইল অ্যাপ</b> আলাদা আলাদা পণ্যে আছে — কিন্তু <b>যেকোনো প্লাগিনের ডেটা অফলাইনে এডিট করে নিরাপদে (conflict + undo সহ) সিঙ্ক</b> করার একক পণ্য খুঁজে পাইনি। এটাই Pressdock-এর জায়গা।</p>
+    <div class="grid g4">
+      <div class="card pad stat"><div class="label">মোট ফিচার</div><div class="value" id="sTotal">0</div><div class="hint" id="sTotalHint"></div></div>
+      <div class="card pad stat"><div class="label">শেষ হয়েছে</div><div class="value" id="sDone">0</div><div class="hint" id="sDoneHint"></div></div>
+      <div class="card pad stat"><div class="label">চলছে</div><div class="value" id="sProg">0</div><div class="hint">In progress</div></div>
+      <div class="card pad stat"><div class="label">P0 বাকি</div><div class="value" id="sP0">0</div><div class="hint">সবার আগে যা দরকার</div></div>
+    </div>
+    <div class="card pad" style="margin-top:14px">
+      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>সামগ্রিক অগ্রগতি</b><span class="note" id="pctText"></span></div>
+      <div class="bar" id="barAll"></div>
+      <div class="legend"><span><i style="background:var(--ok)"></i>Done</span><span><i style="background:var(--brand)"></i>In progress</span><span><i style="background:var(--info);opacity:.55"></i>Planned</span></div>
+      <div class="grid g3" style="margin-top:16px" id="partBars"></div>
+    </div>
+  </section>
+
+  <!-- ======================== MARKET ======================== -->
+  <section id="market">
+    <h2>বাজারে যা আছে</h2>
+    <p class="lead">প্রতিটি বিভাগের প্রধান পণ্য, ব্যবহারকারীরা কী পছন্দ করে, কী অভিযোগ আছে, আর আমাদের জন্য শিক্ষা। তথ্য মূলত ভেন্ডরের পেজ, WordPress.org লিস্টিং ও রিভিউ সাইট থেকে; যেখানে নিশ্চিত হতে পারিনি সেখানে তা লেখা আছে।</p>
+    <div class="grid g2" id="competitors"></div>
+  </section>
+
+  <!-- ======================== COMPARE ======================== -->
+  <section id="compare">
+    <h2>ফিচার তুলনা</h2>
+    <p class="lead"><span class="y">●</span> আছে &nbsp; <span class="p">◐</span> আংশিক/অ্যাড-অনে &nbsp; <span class="n">—</span> নেই/খুঁজে পাইনি &nbsp; <span class="q">?</span> নিশ্চিত নই। Pressdock কলাম রিপোর কোড থেকে যাচাই করা।</p>
+    <div class="card tablewrap"><table id="cmp"></table></div>
+  </section>
+
+  <!-- ======================== EDGE ======================== -->
+  <section id="edge" class="diff">
+    <h2>আমাদের আলাদা সুবিধা (এগুলোকেই সামনে রাখতে হবে)</h2>
+    <p class="lead">মার্কেটিং ও ফিচার-অগ্রাধিকার এই চারটি জিনিসকে কেন্দ্র করে হওয়া উচিত।</p>
+    <div class="grid g2">
+      <div class="card"><h3>১. সত্যিকারের অফলাইন-ফার্স্ট</h3><p>শুধু "ড্রাফট সেভ" নয়; পুরো ডেটাবেস লোকাল SQLite/IndexedDB-তে, নেট ছাড়াই খোঁজা, এডিট, বাল্ক এডিট, ইমপোর্ট। প্রতিযোগী মোবাইল অ্যাপগুলোতে অফলাইন সাধারণত সীমিত (যেমন WCPOS-এ পেমেন্ট অনলাইন লাগে)।</p></div>
+      <div class="card"><h3>২. Conflict-safe সিঙ্ক + Undo</h3><p>revision-ভিত্তিক conflict detection, পাশাপাশি diff, ফিল্ড-ধরে মার্জ, আর সার্ভারে পুরো batch Undo। শিট-সিঙ্ক টুলগুলোর conflict নিয়ে পরিষ্কার ডকুমেন্টেশন পাইনি।</p></div>
+      <div class="card"><h3>৩. ইউনিভার্সাল adapter</h3><p>একটা ফিল্টার (<code>pdock_register_entities</code>) দিয়ে যেকোনো প্লাগিন — CPT, কাস্টম টেবিল, সেটিংস — যুক্ত হয়। বেশিরভাগ বাল্ক এডিটর শুধু posts/WooCommerce-এ ভালো।</p></div>
+      <div class="card"><h3>৪. Self-hosted, কোনো SaaS নেই</h3><p>ডেটা সরাসরি সাইট ↔ ডিভাইস; তৃতীয় পক্ষের সার্ভার নেই, রেকর্ড-লিমিট নেই (Whalesync-এর মতো প্ল্যান-ভিত্তিক সীমা নেই)। বাংলা-প্রথম UI।</p></div>
+    </div>
+  </section>
+
+  <!-- ======================== ROADMAP ======================== -->
+  <section id="roadmap">
+    <h2>ফিচার রোডম্যাপ</h2>
+    <p class="lead">প্রতিটি কার্ডে স্ট্যাটাস বদলান ও নোট লিখুন — এই ব্রাউজারে সেভ থাকে। অন্য কম্পিউটারে নিতে Export/Import JSON ব্যবহার করুন।</p>
+
+    <div class="toolbar noprint">
+      <input type="search" id="q" placeholder="খুঁজুন… (নাম, বিবরণ, ফাইল)" aria-label="খুঁজুন">
+      <select id="fPart" aria-label="অংশ"><option value="">সব অংশ</option><option>Plugin</option><option>App</option><option>PWA</option></select>
+      <select id="fStatus" aria-label="স্ট্যাটাস"><option value="">সব স্ট্যাটাস</option></select>
+      <select id="fPri" aria-label="অগ্রাধিকার"><option value="">সব অগ্রাধিকার</option><option>P0</option><option>P1</option><option>P2</option><option>P3</option></select>
+      <select id="sort" aria-label="সাজানো"><option value="theme">থিম অনুযায়ী</option><option value="pri">অগ্রাধিকার অনুযায়ী</option><option value="status">স্ট্যাটাস অনুযায়ী</option></select>
+      <button class="btn" id="exportBtn" type="button">⬇ Export JSON</button>
+      <label class="btn" for="importFile">⬆ Import JSON</label>
+      <input type="file" id="importFile" accept="application/json,.json" hidden>
+      <button class="btn" id="resetBtn" type="button">Reset</button>
+      <button class="btn" id="printBtn" type="button">Print</button>
+    </div>
+    <div id="list"></div>
+  </section>
+
+  <footer>
+    <p>উৎস ও নোট: প্রতিযোগীদের তথ্য নভেম্বর ২০২৬-এ ওয়েব সার্চ থেকে সংগ্রহ করা, বেশিরভাগ ভেন্ডরের নিজস্ব দাবি — স্বাধীনভাবে যাচাই নয়। দাম ও ফিচার বদলাতে পারে; সিদ্ধান্তের আগে মূল সাইট দেখে নিন। Pressdock-এর "আছে" তথ্য রিপোর কোড ও README থেকে।</p>
+  </footer>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+'use strict';
+
+/* ---------------------------------------------------------------- data */
+const COMPETITORS = [
+  {
+    name: 'WP Sheet Editor', cat: 'স্প্রেডশিট-ধাঁচের বাল্ক এডিটর (প্লাগিন)',
+    love: ['পোস্ট/প্রোডাক্ট স্প্রেডশিটে, পেজ রিলোড ছাড়া শত শত এডিট', 'search & replace ও ফিল্টার দিয়ে বাল্ক কাজ', 'প্রিমিয়ামে যেকোনো CPT'],
+    pain: ['ইন্টারফেস শিখতে সময় লাগে বলে রিভিউ', 'ফ্রি সংস্করণে WooCommerce ফিল্ড সীমিত', 'অনলাইন-নির্ভর, অফলাইন নেই'],
+    take: 'স্প্রেডশিট গ্রিড + find/replace জনপ্রিয় — আমাদের আছে। শেখার বাধা কমাতে onboarding ও সহজ UI দরকার।',
+    src: ['https://wordpress.org/plugins/wp-sheet-editor-bulk-spreadsheet-editor-for-posts-and-pages/', 'https://wordpress.org/support/plugin/woo-bulk-edit-products/reviews/']
+  },
+  {
+    name: 'Admin Columns Pro', cat: 'অ্যাডমিন লিস্ট টেবিল (প্লাগিন)',
+    love: ['যেকোনো লিস্ট টেবিলে inline edit', 'চেকবক্স দিয়ে বাছাই করে bulk edit, কাস্টম ফিল্ডসহ', 'স্মার্ট ফিল্টার + বাল্ক এডিট একসাথে', 'কলাম সাজানো ও সেভ করা ভিউ'],
+    pain: ['পেইড (প্রায় $79/বছর থেকে)', 'প্রতিটি কলামে এডিটিং আলাদা করে চালু করতে হয়', 'অনলাইন wp-admin-এর ভেতরেই'],
+    take: 'সেভ করা ভিউ ও স্মার্ট ফিল্টার আমাদের অ্যাপে যোগ করা উচিত।',
+    src: ['https://www.admincolumns.com/bulk-editing', 'https://docs.admincolumns.com/article/27-how-to-use-inline-editing']
+  },
+  {
+    name: 'WP All Import / Export', cat: 'ইমপোর্ট/এক্সপোর্ট (প্লাগিন)',
+    love: ['WordPress.org-এ ৪.৭/৫, প্রায় ২০০০ রিভিউ', 'ড্র্যাগ-ড্রপ ম্যাপিং; CSV, XML, Excel, Google Sheets', 'cron দিয়ে নির্ধারিত সময়ে ইমপোর্ট (create/update/delete)', 'URL থেকে ছবি নামিয়ে মিডিয়ায় রাখা'],
+    pain: ['অনেক কাজ অ্যাড-অন বা Pro-তে', 'বড় ফাইলে সার্ভার টাইমআউটের ঝুঁকি (সার্ভার-সাইড)'],
+    take: 'আমাদের ইমপোর্ট লোকালে হয় (টাইমআউট নেই) — এটা প্রচার করা উচিত। নির্ধারিত ইমপোর্ট ও URL থেকে ছবি যোগ করা যায়।',
+    src: ['https://wordpress.org/support/plugin/wp-all-import/reviews/', 'https://www.wpallimport.com/documentation/cron/']
+  },
+  {
+    name: 'WPSyncSheets', cat: 'Google Sheets সিঙ্ক (প্লাগিন সিরিজ)',
+    love: ['শিটে বাল্ক এডিট করে WordPress-এ ফেরত পাঠানো (Core সংস্করণে)', 'ফর্ম এন্ট্রি রিয়েল-টাইমে শিটে', 'Pro-তে কলাম ম্যাপিং'],
+    pain: ['৯+ আলাদা প্লাগিন — প্রতিটির আচরণ আলাদা', 'বেশিরভাগ ফর্ম অ্যাড-অন একমুখী', 'conflict কীভাবে সামলায় স্পষ্ট নয়'],
+    take: 'অনেকে স্প্রেডশিটে কাজ করতে চায় — Google Sheets দুই-মুখী সিঙ্ক আমাদের adapter মডেলে একবারেই সব প্লাগিনের জন্য দেওয়া যায়।',
+    src: ['https://wordpress.org/plugins/wpsyncsheets-wpforms/', 'https://wordpress.org/plugins/wpsyncsheets-gravity-forms/']
+  },
+  {
+    name: 'Whalesync', cat: 'No-code দুই-মুখী সিঙ্ক (SaaS)',
+    love: ['WordPress ↔ Airtable/Notion রিয়েল-টাইম দুই-মুখী সিঙ্ক', 'ফিল্ড ধরে একমুখী বা দুই-মুখী ঠিক করা যায়', 'Notion-এ স্ট্যাটাস বদলালে পোস্ট পাবলিশ'],
+    pain: ['SaaS — ডেটা তৃতীয় পক্ষের মাধ্যমে যায়', 'প্ল্যানে রেকর্ড-লিমিট (Starter-এ দুই-মুখী ২০০০)', 'অফলাইন নয়'],
+    take: 'ফিল্ড-ভিত্তিক সিঙ্ক দিক (one-way/two-way) ও "স্ট্যাটাস দিয়ে অ্যাকশন" আইডিয়া নেওয়া যায়; আমাদের self-hosted ও সীমাহীন — বড় সুবিধা।',
+    src: ['https://whalesync.com/connector/wordpress', 'https://www.whalesync.com/connect/wordpress-airtable', 'https://whalesync.com/changelog']
+  },
+  {
+    name: 'WooCommerce app / WCPOS / Hippoo', cat: 'মোবাইল অ্যাপ (WooCommerce)',
+    love: ['প্রোডাক্ট যোগ, অর্ডার তৈরি, দ্রুত পেমেন্ট, রিয়েল-টাইম সেলস নোটিফিকেশন', 'WCPOS: নেট গেলে প্রোডাক্ট দেখা ও কার্ট বানানো যায়'],
+    pain: ['অফিসিয়াল অ্যাপে অফলাইন অর্ডারের কথা পাইনি', 'WCPOS-এ পেমেন্ট এখনো অনলাইন লাগে; মোবাইল অ্যাপ beta', 'শুধু WooCommerce'],
+    take: 'পুশ নোটিফিকেশন ও "আজকের সারাংশ" ড্যাশবোর্ড ব্যবহারকারীরা পছন্দ করে — PWA/অ্যাপে আনা উচিত।',
+    src: ['https://apps.apple.com/app/id1389130815', 'https://wordpress.org/plugins/?p=29233', 'https://eu.wordpress.org/plugins/hippoo/']
+  },
+  {
+    name: 'Jetpack / WordPress app', cat: 'অফিসিয়াল মোবাইল অ্যাপ',
+    love: ['চলার পথে লেখা, ড্রাফট, শিডিউল', 'স্ট্যাটস, নোটিফিকেশন, অ্যাক্টিভিটি লগ, ব্যাকআপ রিস্টোর'],
+    pain: ['মূলত পোস্ট/পেজ — প্লাগিনের নিজস্ব ডেটা নয়', 'অনেক ফিচারের জন্য Jetpack কানেকশন লাগে', 'অফলাইন আচরণের বর্তমান বিস্তারিত স্পষ্ট নয়'],
+    take: 'অ্যাক্টিভিটি লগ ও নোটিফিকেশন জনপ্রিয়; আমাদের প্লাগিন-ডেটা ফোকাস আলাদা বাজার।',
+    src: ['https://jetpack.com/app', 'https://make.wordpress.org/mobile/2022/07/27/refocusing-the-wordpress-app-on-core-features/']
+  },
+  {
+    name: 'MainWP / ManageWP', cat: 'মাল্টি-সাইট ম্যানেজমেন্ট',
+    love: ['এক ড্যাশবোর্ড থেকে অনেক সাইট', 'MainWP: self-hosted, REST API, WP-CLI, অনেক hook', 'G2-তে MainWP ৪.৭, ManageWP ৪.২'],
+    pain: ['ডেটা এডিট নয় — আপডেট/ব্যাকআপ/মনিটরিং ফোকাস', 'ManageWP-এ সাইট ও ফিচার অনুযায়ী খরচ বাড়ে'],
+    take: 'এজেন্সিরা অনেক ক্লায়েন্ট সাইট চালায় — "সব সাইট এক জায়গায়" ভিউ আমাদের অ্যাপে আছে (মাল্টি-সাইট), এটাকে এজেন্সি প্ল্যান বানানো যায়।',
+    src: ['https://www.g2.com/compare/mainwp-vs-managewp', 'https://www.malcare.com/blog/managewp-vs-mainwp/']
+  },
+  {
+    name: 'wpDataTables', cat: 'টেবিল + ফ্রন্ট-এন্ড এডিটিং (প্লাগিন)',
+    love: ['পপআপ ও inline এডিটিং, Excel-এর মতো এডিটিং', 'চার্ট ও রিপোর্ট', 'রোল দিয়ে কে এডিট করবে ঠিক করা'],
+    pain: ['এক সময়ে একটাই MySQL টেবিল এডিট', 'সম্প্রতি SQL injection ও XSS ঠিক করতে হয়েছে — নিরাপত্তা ঝুঁকি', '"Everyone" এডিটিং বিপজ্জনক'],
+    take: 'চার্ট/রিপোর্ট চাহিদা আছে; আর নিরাপত্তা (capability check, স্যানিটাইজেশন, অডিট) আমাদের বিক্রির পয়েন্ট হতে পারে।',
+    src: ['https://wpdatatables.com/documentation/front-end-editing/inline-editing/', 'https://wordpress.org/plugins/wpdatatables/']
+  },
+  {
+    name: 'JetEngine / Pods / ACF', cat: 'CPT ও কাস্টম ফিল্ড ফ্রেমওয়ার্ক',
+    love: ['কোড ছাড়া CPT, ফিল্ড, রিলেশন', 'JetEngine ও Pods-এ REST endpoint চালু করা যায়'],
+    pain: ['REST-এ ফিল্ড দেখাতে আলাদা করে চালু করতে হয়; ACF ফিল্ড প্রায়ই REST-এ আসে না', 'মোবাইল/অফলাইন এডিটিং-এর জন্য তৈরি সমাধান পাইনি'],
+    take: 'বড় সুযোগ: এই ফ্রেমওয়ার্কগুলোর জন্য auto-adapter দিলে হাজার হাজার সাইট এক ক্লিকে Pressdock ব্যবহার করতে পারবে।',
+    src: ['https://crocoblock.com/knowledge-base/features/rest-api-overview/', 'https://docs.pods.io/?p=225', 'https://wordpress.org/plugins/rest-api-manager-for-acf/']
+  }
+];
+
+// feature rows for the comparison table; values: y / p / n / q
+const CMP_COLS = ['Pressdock', 'WP Sheet Editor', 'Admin Columns Pro', 'WP All Import', 'WPSyncSheets', 'Whalesync', 'Woo app / WCPOS', 'MainWP'];
+const CMP_ROWS = [
+  ['অফলাইনে পূর্ণ এডিট (read + write)', 'y', 'n', 'n', 'n', 'n', 'n', 'p', 'n'],
+  ['ডেস্কটপ অ্যাপ', 'y', 'n', 'n', 'n', 'n', 'n', 'p', 'n'],
+  ['মোবাইল / PWA', 'p', 'n', 'n', 'n', 'n', 'n', 'y', 'n'],
+  ['স্প্রেডশিট-ধাঁচের গ্রিড', 'y', 'y', 'p', 'n', 'p', 'p', 'n', 'n'],
+  ['বাল্ক এডিট / find & replace', 'y', 'y', 'y', 'p', 'p', 'n', 'n', 'n'],
+  ['CSV/XLSX ইমপোর্ট-এক্সপোর্ট', 'y', 'p', 'p', 'y', 'p', 'n', 'n', 'n'],
+  ['নির্ধারিত সময়ে ইমপোর্ট', 'n', 'q', 'n', 'y', 'q', 'y', 'n', 'n'],
+  ['বাইরের টুলের সাথে দুই-মুখী সিঙ্ক', 'n', 'n', 'n', 'n', 'p', 'y', 'n', 'n'],
+  ['Conflict detection ও সমাধান UI', 'y', 'n', 'n', 'n', 'q', 'q', 'q', 'n'],
+  ['ব্যাচ Undo / রিস্টোর', 'y', 'q', 'n', 'n', 'n', 'n', 'n', 'p'],
+  ['যেকোনো প্লাগিন / কাস্টম টেবিল', 'y', 'p', 'p', 'p', 'p', 'n', 'n', 'n'],
+  ['ACF / JetEngine / Pods ফিল্ড', 'n', 'p', 'y', 'p', 'q', 'q', 'n', 'n'],
+  ['মাল্টি-সাইট এক অ্যাপে', 'y', 'n', 'n', 'n', 'n', 'p', 'n', 'y'],
+  ['চার্ট / রিপোর্ট', 'n', 'n', 'n', 'n', 'n', 'n', 'y', 'p'],
+  ['পুশ নোটিফিকেশন', 'n', 'n', 'n', 'n', 'n', 'n', 'y', 'p'],
+  ['Self-hosted (কোনো SaaS নেই)', 'y', 'y', 'y', 'y', 'y', 'n', 'p', 'y'],
+  ['বাংলা UI', 'y', 'q', 'q', 'q', 'q', 'n', 'q', 'q']
+];
+
+const STATUSES = [
+  ['idea', 'Idea'], ['planned', 'Planned'], ['progress', 'In progress'], ['done', 'Done'], ['dropped', 'Dropped']
+];
+const PRI_ORDER = { P0: 0, P1: 1, P2: 2, P3: 3 };
+const ST_ORDER = { progress: 0, planned: 1, idea: 2, done: 3, dropped: 4 };
+
+// [id, theme, title, parts, priority, size, defaultStatus, what, why, how[]]
+const FEATURES = [
+  // --- Foundation (already shipped) -------------------------------------------------
+  ['F-01', 'ভিত্তি (হয়ে গেছে)', 'Adapter registry ও REST sync API', ['Plugin'], 'P0', 'L', 'done',
+    'pull/push/undo, idempotent batch, revision, tombstone।', 'সবকিছুর ভিত্তি।',
+    ['<code>src/Registry.php</code>, <code>src/Rest/Controller.php</code>', 'API: <code>docs/api-contract.md</code>']],
+  ['F-02', 'ভিত্তি (হয়ে গেছে)', 'ডেস্কটপ অ্যাপ: লোকাল SQLite, schema-চালিত গ্রিড ও ফর্ম', ['App'], 'P0', 'XL', 'done',
+    'Tauri 2 + React, প্রতি সাইটে আলাদা ডাটাবেস, OS keychain-এ পাসওয়ার্ড।', 'অফলাইন-ফার্স্ট অভিজ্ঞতা।',
+    ['<code>desktop/src/db/repo.ts</code>, <code>desktop/src/components/DataGrid.tsx</code>']],
+  ['F-03', 'ভিত্তি (হয়ে গেছে)', 'সিঙ্ক ইঞ্জিন, conflict স্ক্রিন, সিঙ্ক হিস্ট্রি ও Undo', ['App', 'PWA'], 'P0', 'XL', 'done',
+    'op collapse, dependency order, retry, diff দেখে ফিল্ড-ধরে মার্জ।', 'ডেটা হারানো ঠেকায় — মূল বৈশিষ্ট্য।',
+    ['<code>desktop/src/sync/</code>, <code>client/sync.js</code>']],
+  ['F-04', 'ভিত্তি (হয়ে গেছে)', 'CSV/XLSX ইমপোর্ট-এক্সপোর্ট ও বাল্ক এডিট', ['App'], 'P0', 'L', 'done',
+    'কলাম ম্যাপিং টেমপ্লেট, upsert, রিলেশন মেলানো, worker-এ ১০k+ সারি।', 'প্রতিযোগীদের প্রধান ফিচারের সমান।',
+    ['<code>desktop/src/io/</code>']],
+  ['F-05', 'ভিত্তি (হয়ে গেছে)', 'প্লাগিন অ্যাডমিন ড্যাশবোর্ড', ['Plugin'], 'P1', 'M', 'done',
+    'টপ-লেভেল মেনু, ডেটা সোর্স সুইচ, ডিভাইস, অ্যাক্টিভিটি, হেলথ চেক।', 'প্রথম ধারণা ও সেটআপ সহজ।',
+    ['<code>src/Admin/SettingsPage.php</code>, <code>assets/admin.css</code>']],
+
+  // --- Universal ------------------------------------------------------------------------
+  ['U-01', 'ইউনিভার্সাল হওয়া', 'Generic CPT adapter (কোড ছাড়া যেকোনো post type)', ['Plugin'], 'P0', 'M', 'planned',
+    'অ্যাডমিনে যেকোনো রেজিস্টার্ড post type বেছে নিলে তার title/content/status/taxonomy/meta নিয়ে adapter তৈরি হবে।',
+    'আজ প্রতিটি প্লাগিনের জন্য কোড লাগে; এটা হলে প্রথম দিন থেকেই "ইউনিভার্সাল"।',
+    ['<code>AbstractPostAdapter</code> থেকে <code>GenericPostAdapter</code> বানান; কনফিগ <code>Settings</code>-এ (post type + বাছাই করা meta key)।',
+     'Data sources পেজে "Add post type" বোতাম; registered meta (<code>get_registered_meta_keys</code>) থেকে schema অনুমান।',
+     'নিরাপত্তা: post type-এর <code>cap</code> দিয়েই capability; private meta (<code>_</code>) ডিফল্টে বাদ।']],
+  ['U-02', 'ইউনিভার্সাল হওয়া', 'ACF / JetEngine / Pods / Meta Box auto-adapter', ['Plugin'], 'P0', 'L', 'idea',
+    'এই ফ্রেমওয়ার্কের ফিল্ড-গ্রুপ পড়ে schema-তে টাইপ ম্যাপ (text, number, select→enum, relationship→relation, repeater→list/object, image→media)।',
+    'এগুলোতে REST-এ ফিল্ড আনা কঠিন — আমরা সমাধান দিলে বিশাল বাজার।',
+    ['<code>adapters/acf/</code>: <code>acf_get_field_groups()</code> + <code>acf_get_fields()</code> → schema; লেখা <code>update_field()</code> দিয়ে।',
+     '<code>adapters/jetengine/</code>: CPT ও CCT (কাস্টম টেবিল) দুটোই; CCT-তে <code>AbstractTableAdapter</code>।',
+     'প্রতিটি adapter শুধু সেই প্লাগিন সক্রিয় থাকলে রেজিস্টার হবে (Hejazer Kafela-র মতো)।',
+     'টেস্ট: প্রতিটি ফিল্ড টাইপের round-trip PHPUnit।']],
+  ['U-03', 'ইউনিভার্সাল হওয়া', 'WooCommerce adapter (products, orders, customers)', ['Plugin'], 'P1', 'L', 'idea',
+    'প্রোডাক্ট (দাম, স্টক, ভ্যারিয়েশন), অর্ডার (স্ট্যাটাস, নোট), কাস্টমার।', 'সবচেয়ে বড় ইউজারবেস; বাল্ক দাম/স্টক এডিট সবচেয়ে চাওয়া ফিচার।',
+    ['WC CRUD (<code>wc_get_product</code>, <code>WC_Order</code>) দিয়ে লেখা — HPOS সামঞ্জস্য।', 'স্টকের জন্য conflict নিয়ম: সংখ্যা হলে delta-merge বিবেচনা।', 'অর্ডারে সীমিত এডিট (স্ট্যাটাস, নোট, শিপিং) — পেমেন্ট নয়।']],
+  ['U-04', 'ইউনিভার্সাল হওয়া', 'Adapter Builder (no-code কাস্টম টেবিল)', ['Plugin'], 'P2', 'L', 'idea',
+    'যেকোনো <code>$wpdb</code> টেবিল বেছে primary key, কলাম টাইপ, লেবেল সেট করে adapter।', 'পুরোনো/কাস্টম প্লাগিনের ডেটাও যুক্ত করা যাবে।',
+    ['<code>TableScanner</code> (Kafela adapter-এ আছে) সাধারণ করে <code>src/</code>-এ আনুন।', 'শুধু admin, শুধু প্রিফিক্সড টেবিল; WP core টেবিল নিষিদ্ধ।']],
+  ['U-05', 'ইউনিভার্সাল হওয়া', 'Adapter SDK, ডকুমেন্টেশন ও উদাহরণ', ['Plugin'], 'P1', 'M', 'planned',
+    'ডেভেলপার গাইড, স্টার্টার adapter, টেস্ট হেল্পার, "Pressdock compatible" ব্যাজ।', 'অন্য প্লাগিন নির্মাতারা নিজেরাই যুক্ত করবে — ইকোসিস্টেম।',
+    ['<code>docs/adapter-guide.md</code> + <code>examples/</code> ফোল্ডার।', 'WP-CLI: <code>wp pressdock scaffold-adapter</code>।', 'adapter validation কমান্ড: schema ও capability চেক।']],
+
+  // --- App UX -------------------------------------------------------------------------------
+  ['A-01', 'অ্যাপের অভিজ্ঞতা', 'সেভ করা ভিউ (ফিল্টার + কলাম + সর্ট)', ['App', 'PWA'], 'P1', 'M', 'planned',
+    'যেমন "এই মাসের পেন্ডিং ইনকোয়ারি" — এক ক্লিকে।', 'Admin Columns-এর জনপ্রিয় ফিচার; প্রতিদিনের কাজ দ্রুত।',
+    ['<code>DataGrid</code>-এ <code>columnFilters</code>, sorting, visibility kv-তে নামসহ সেভ।', 'সাইডবারে entity-র নিচে ভিউ তালিকা।']],
+  ['A-02', 'অ্যাপের অভিজ্ঞতা', 'গ্রুপিং ও সারাংশ সারি (sum, count, avg)', ['App'], 'P2', 'M', 'idea',
+    'স্ট্যাটাস/মাস ধরে গ্রুপ, সংখ্যার কলামে মোট।', 'হিসাব (পেমেন্ট, লেজার) দেখতে দরকার।',
+    ['TanStack Table <code>getGroupedRowModel</code> + aggregation।']],
+  ['A-03', 'অ্যাপের অভিজ্ঞতা', 'রিপোর্ট ও চার্ট ড্যাশবোর্ড', ['App', 'PWA'], 'P2', 'L', 'idea',
+    'entity অনুযায়ী কার্ড ও চার্ট (দিন/মাস ধরে গণনা, মোট টাকা)।', 'প্রতিযোগীদের অ্যাপে (Woo, wpDataTables) ব্যবহারকারীরা পছন্দ করে।',
+    ['লোকাল SQLite-এ SQL aggregation — অফলাইনেও চলবে।', 'হালকা চার্ট লাইব্রেরি; রিপোর্ট সংজ্ঞা kv-তে।']],
+  ['A-04', 'অ্যাপের অভিজ্ঞতা', 'প্রিন্ট / PDF টেমপ্লেট (রসিদ, ভাউচার, তালিকা)', ['App'], 'P1', 'M', 'idea',
+    'রেকর্ড থেকে ব্র্যান্ডেড PDF — যেমন হজ/উমরাহ রসিদ।', 'অফলাইনে অফিসে প্রিন্ট — বাস্তব চাহিদা।',
+    ['HTML টেমপ্লেট + <code>{{field}}</code> placeholder; Tauri-তে প্রিন্ট ডায়ালগ।', 'Adapter টেমপ্লেট সাজেস্ট করতে পারে (Kafela রসিদ)।']],
+  ['A-05', 'অ্যাপের অভিজ্ঞতা', 'গ্লোবাল সার্চ ও কমান্ড প্যালেট (Ctrl+K)', ['App', 'PWA'], 'P2', 'S', 'idea',
+    'সব entity জুড়ে খোঁজা, দ্রুত নেভিগেশন।', 'অনেক ডেটায় দ্রুত কাজ।',
+    ['SQLite FTS5 ইনডেক্স <code>records.data_json</code>-এ; PWA-তে IndexedDB-তে সাধারণ ইনডেক্স।']],
+  ['A-06', 'অ্যাপের অভিজ্ঞতা', 'কম্পিউটেড/ফর্মুলা কলাম (শুধু লোকাল)', ['App'], 'P3', 'M', 'idea',
+    'যেমন বাকি = মোট − পরিশোধিত; সার্ভারে পাঠানো হয় না।', 'স্প্রেডশিট ব্যবহারকারীরা এটা আশা করে।',
+    ['নিরাপদ এক্সপ্রেশন পার্সার (eval নয়); ভিউ সংজ্ঞায় সেভ।']],
+  ['A-07', 'অ্যাপের অভিজ্ঞতা', 'রেকর্ড হিস্ট্রি (কে, কখন, কী বদলেছে)', ['Plugin', 'App'], 'P1', 'M', 'idea',
+    'প্রতিটি রেকর্ডে টাইমলাইন — লোকাল এডিট ও সার্ভার revision।', 'বিশ্বাস ও জবাবদিহিতা; টিমে কাজের জন্য জরুরি।',
+    ['প্লাগিন: snapshots/ops থেকে <code>GET /history?entity&id</code> endpoint।', 'অ্যাপ: ফর্মে "History" ট্যাব।']],
+  ['A-08', 'অ্যাপের অভিজ্ঞতা', 'Onboarding ও ডেমো ডেটা', ['App', 'PWA', 'Plugin'], 'P1', 'S', 'planned',
+    'প্রথমবার ধাপে ধাপে গাইড, ডেমো সাইট দিয়ে চেষ্টা।', 'বাল্ক এডিটরের "শিখতে কঠিন" অভিযোগ এড়ানো।',
+    ['অ্যাপে প্রথম রান উইজার্ড; প্লাগিন ড্যাশবোর্ডে QR/লিংক দিয়ে সাইট যোগ (URL + username আগে থেকে পূরণ)।']],
+
+  // --- Sync & safety ------------------------------------------------------------------------
+  ['S-01', 'সিঙ্ক, নিরাপত্তা ও টিম', 'ফিল্ড-লেভেল অনুমতি ও রোল ম্যাপিং', ['Plugin'], 'P1', 'M', 'idea',
+    'কোন রোল কোন entity/ফিল্ড দেখবে বা এডিট করবে।', 'টিম ব্যবহার (স্টাফ বনাম ম্যানেজার) — ব্যবসায়িক ক্রেতারা চায়।',
+    ['Data sources পেজে প্রতিটি entity-র জন্য রোল × অ্যাকশন ম্যাট্রিক্স।', '<code>Registry::user_can</code> ও Presenter-এ ফিল্ড ফিল্টার; schema-তে readonly চিহ্ন।']],
+  ['S-02', 'সিঙ্ক, নিরাপত্তা ও টিম', 'ডিভাইস revoke ও রিমোট wipe ফ্ল্যাগ', ['Plugin', 'App', 'PWA'], 'P1', 'S', 'idea',
+    'Devices পেজ থেকে এক ক্লিকে Application Password বাতিল; পরের কানেকশনে লোকাল ডেটা মুছে ফেলার নির্দেশ।', 'হারানো ল্যাপটপ/ফোন — নিরাপত্তা।',
+    ['<code>WP_Application_Passwords::delete_application_password</code>; wipe তালিকা option-এ, <code>/handshake</code>-এ ফ্ল্যাগ।']],
+  ['S-03', 'সিঙ্ক, নিরাপত্তা ও টিম', 'অডিট লগ এক্সপোর্ট', ['Plugin'], 'P2', 'S', 'idea',
+    'ops টেবিল থেকে CSV: কে, কোন ডিভাইস, কোন রেকর্ড, কী বদলেছে।', 'হিসাব/কমপ্লায়েন্স।',
+    ['Activity পেজে তারিখ-ফিল্টার + CSV ডাউনলোড; ops ধরে রাখার মেয়াদ সেটিং।']],
+  ['S-04', 'সিঙ্ক, নিরাপত্তা ও টিম', 'সংখ্যার জন্য smart merge (স্টক, ব্যালান্স)', ['Plugin', 'App'], 'P2', 'M', 'idea',
+    'দুজন একই সংখ্যা বদলালে conflict না দেখিয়ে delta যোগ (ঐচ্ছিক, ফিল্ড-ভিত্তিক)।', 'অপ্রয়োজনীয় conflict কমে।',
+    ['schema-তে <code>merge: "delta"</code>; push-এ <code>base</code> মান পাঠানো; সার্ভারে <code>current + (new − base)</code>।']],
+  ['S-05', 'সিঙ্ক, নিরাপত্তা ও টিম', 'ডিফারেনশিয়াল/কম্প্রেসড সিঙ্ক ও বড় সাইটের পারফরম্যান্স', ['Plugin', 'App', 'PWA'], 'P2', 'M', 'idea',
+    'gzip, শুধু বদলানো ফিল্ড, বড় pull-এ প্যারালাল পেজ।', 'ধীর ইন্টারনেটে (মোবাইল ডেটা) দ্রুত সিঙ্ক।',
+    ['pull-এ <code>fields</code> ও <code>since</code> সাপোর্ট; সার্ভারে gzip; লোড টেস্ট ১ লাখ রেকর্ড।']],
+  ['S-06', 'সিঙ্ক, নিরাপত্তা ও টিম', 'লোকাল ব্যাকআপ ও রিস্টোর (এনক্রিপ্টেড)', ['App'], 'P2', 'S', 'idea',
+    'সাইটের লোকাল ডাটাবেস + আউটবক্স এক ফাইলে এক্সপোর্ট/ইমপোর্ট।', 'কম্পিউটার বদলালে বা ক্র্যাশে না-পাঠানো এডিট হারাবে না।',
+    ['SQLite ফাইল কপি + পাসওয়ার্ড দিয়ে AES; keychain-এ পাসওয়ার্ড কখনো ব্যাকআপে নয়।']],
+
+  // --- Mobile / PWA --------------------------------------------------------------------------
+  ['M-01', 'মোবাইল ও PWA', 'PWA-কে ডেস্কটপের সমান করা (বাল্ক এডিট, ইমপোর্ট, ফিল্ড-মার্জ)', ['PWA'], 'P1', 'L', 'planned',
+    'আজ PWA-তে conflict-এ শুধু Keep mine/Use server; মিডিয়া আপলোড UI নেই; মাল্টি-সাইট নেই।', 'ফোনে পুরো কাজ।',
+    ['ডেস্কটপের <code>src/io</code> ও <code>src/sync</code> লজিক শেয়ারড প্যাকেজে আনা, PWA-তে ব্যবহার।', 'অথবা PWA-কে ডেস্কটপের React কোডবেস থেকে বিল্ড করা (web platform seam আগেই আছে)।']],
+  ['M-02', 'মোবাইল ও PWA', 'ক্যামেরা: ছবি/ডকুমেন্ট তোলা ও অফলাইন আপলোড কিউ', ['PWA', 'App'], 'P1', 'M', 'idea',
+    'পাসপোর্ট/রসিদের ছবি তুলে রেকর্ডে যুক্ত; নেট এলে আপলোড।', 'মাঠপর্যায়ের কাজের জন্য সবচেয়ে কাজের ফিচার।',
+    ['<code>&lt;input capture&gt;</code> + ছবি ছোট করা; <code>media_pending</code> কিউ → <code>POST /media</code> → ফিল্ডে attachment id।']],
+  ['M-03', 'মোবাইল ও PWA', 'পুশ নোটিফিকেশন (নতুন ইনকোয়ারি, conflict, সিঙ্ক ব্যর্থ)', ['Plugin', 'PWA', 'App'], 'P2', 'M', 'idea',
+    'সাইটে নতুন রেকর্ড এলে ফোনে নোটিফিকেশন।', 'Woo/Hippoo অ্যাপের সবচেয়ে প্রশংসিত ফিচার।',
+    ['Web Push (VAPID) — প্লাগিনে subscription সংরক্ষণ, adapter hook থেকে ট্রিগার; ডেস্কটপে OS নোটিফিকেশন।']],
+  ['M-04', 'মোবাইল ও PWA', 'নেটিভ মোবাইল অ্যাপ (Tauri mobile / Capacitor)', ['App'], 'P3', 'XL', 'idea',
+    'Android/iOS স্টোরে অ্যাপ।', 'স্টোরে থাকলে বিশ্বাস ও আবিষ্কারযোগ্যতা বাড়ে।',
+    ['প্রথমে PWA পরিণত করুন; তারপর Tauri 2 mobile দিয়ে একই কোড।']],
+
+  // --- Data & integrations --------------------------------------------------------------------
+  ['D-01', 'ডেটা ও ইন্টিগ্রেশন', 'Google Sheets দুই-মুখী সিঙ্ক', ['App', 'Plugin'], 'P2', 'L', 'idea',
+    'যেকোনো entity একটা শিটে মিরর; শিটে এডিট → আউটবক্স → সাইট।', 'WPSyncSheets/Whalesync-এর চাহিদা প্রমাণিত; আমরা সব adapter-এর জন্য একবারে দিতে পারি।',
+    ['অ্যাপ-সাইড কানেক্টর (OAuth) — সাইটে কোনো Google key নয়।', 'শিটের সারি → import plan (আছে) → outbox; conflict নিয়ম একই।']],
+  ['D-02', 'ডেটা ও ইন্টিগ্রেশন', 'নির্ধারিত/ফোল্ডার-ওয়াচ ইমপোর্ট ও অটো-এক্সপোর্ট', ['App'], 'P2', 'M', 'idea',
+    'একটা ফোল্ডারে CSV এলে সেভ করা ম্যাপিং দিয়ে ইমপোর্ট; প্রতিদিন রিপোর্ট এক্সপোর্ট।', 'WP All Import-এর cron ফিচার জনপ্রিয়।',
+    ['মাপিং টেমপ্লেট আছে; Tauri fs watch + শিডিউলার।']],
+  ['D-03', 'ডেটা ও ইন্টিগ্রেশন', 'Webhooks ও Zapier/Make/n8n', ['Plugin'], 'P3', 'M', 'idea',
+    'রেকর্ড তৈরি/বদল হলে URL-এ POST।', 'অটোমেশন ব্যবহারকারীদের জন্য।',
+    ['Tracker থেকে ইভেন্ট; সাইন করা payload; রিট্রাই কিউ (Action Scheduler)।']],
+  ['D-04', 'ডেটা ও ইন্টিগ্রেশন', 'URL থেকে ছবি ইমপোর্ট', ['App', 'Plugin'], 'P3', 'S', 'idea',
+    'CSV-এ ছবির লিংক থাকলে মিডিয়ায় এনে ফিল্ডে বসানো।', 'WP All Import-এর প্রিয় ফিচার।',
+    ['অ্যাপ ডাউনলোড করে <code>POST /media</code>; বড় ফাইলে কিউ।']],
+
+  // --- Business -------------------------------------------------------------------------------
+  ['B-01', 'ব্যবসা ও বিতরণ', 'Free বনাম Pro ভাগ ও লাইসেন্স', ['Plugin', 'App'], 'P1', 'M', 'idea',
+    'Free: ১টি সাইট, core + ১-২ adapter, সাধারণ সিঙ্ক। Pro: মাল্টি-সাইট, ACF/Woo adapter, রিপোর্ট, শিট সিঙ্ক, টিম অনুমতি।', 'টেকসই আয়।',
+    ['লাইসেন্স কী প্লাগিনে (সাইট-ভিত্তিক); অ্যাপ সাইটের <code>/handshake</code> থেকে ফিচার ফ্ল্যাগ পড়ে — অ্যাপে আলাদা লাইসেন্স লাগবে না।']],
+  ['B-02', 'ব্যবসা ও বিতরণ', 'WordPress.org-এ প্রকাশ', ['Plugin'], 'P1', 'M', 'planned',
+    'readme, স্ক্রিনশট, ব্যানার, অনুবাদ-প্রস্তুত (bn_BD)।', 'আবিষ্কারযোগ্যতা ও বিশ্বাস।',
+    ['Plugin Check টুল পাস; <code>.distignore</code> আছে; bn_BD .po ফাইল।']],
+  ['B-03', 'ব্যবসা ও বিতরণ', 'অ্যাপ সাইনিং, অটো-আপডেট ও রিলিজ পাইপলাইন', ['App'], 'P0', 'M', 'planned',
+    'Windows কোড সাইনিং, macOS নোটারাইজেশন, GitHub Actions-এ বিল্ড, updater endpoint।', 'SmartScreen সতর্কতা ছাড়া ইনস্টল — ব্যবহারকারীর আস্থা।',
+    ['<code>desktop/src-tauri/tauri.conf.json</code> updater আছে; CI-তে <code>tauri-action</code>; <code>latest.json</code> হোস্ট।', 'প্রথমে MSVC দিয়ে <code>tauri build</code> যাচাই (এখনো হয়নি)।']],
+  ['B-04', 'ব্যবসা ও বিতরণ', 'এজেন্সি প্ল্যান: অনেক ক্লায়েন্ট সাইট', ['App', 'Plugin'], 'P3', 'M', 'idea',
+    'সাইট গ্রুপ, সব সাইটে একসাথে সিঙ্ক স্ট্যাটাস।', 'MainWP/ManageWP-এর ক্রেতারা এজেন্সি।',
+    ['অ্যাপের সাইট তালিকায় ফোল্ডার/ট্যাগ; সব সাইটের pending/conflict এক স্ক্রিনে।']],
+  ['B-05', 'ব্যবসা ও বিতরণ', 'বাংলা-প্রথম ও আরও ভাষা', ['Plugin', 'App', 'PWA'], 'P2', 'S', 'planned',
+    'প্লাগিন অ্যাডমিনের বাংলা অনুবাদ; অ্যাপে বাংলা আছে।', 'বাংলাদেশি ব্যবসা আমাদের প্রথম বাজার।',
+    ['<code>languages/pressdock-bn_BD.po</code>; PWA-তে i18n।']],
+
+  // --- Quality ----------------------------------------------------------------------------------
+  ['Q-01', 'মান ও নির্ভরযোগ্যতা', 'Tauri বিল্ড ও keychain/dialog রানটাইম যাচাই', ['App'], 'P0', 'S', 'planned',
+    'এখনো Rust কম্পাইল ও Tauri উইন্ডোতে টেস্ট হয়নি।', 'রিলিজের আগে বাধ্যতামূলক।',
+    ['MSVC Build Tools ইনস্টল → <code>npm run tauri build</code>; keychain, plugin-sql স্ক্রিপ্ট, save dialog হাতে টেস্ট।']],
+  ['Q-02', 'মান ও নির্ভরযোগ্যতা', 'End-to-end টেস্ট (প্লাগিন + অ্যাপ)', ['Plugin', 'App'], 'P1', 'M', 'idea',
+    'আসল WordPress (wp-env) + অ্যাপের ওয়েব বিল্ড দিয়ে Playwright টেস্ট।', 'রিগ্রেশন ঠেকানো।',
+    ['CI-তে wp-env চালু, অ্যাপ ওয়েব মোডে, সিঙ্ক/conflict/undo পরিস্থিতি।']],
+  ['Q-03', 'মান ও নির্ভরযোগ্যতা', 'ক্র্যাশ/এরর রিপোর্টিং (opt-in)', ['App', 'PWA'], 'P3', 'S', 'idea',
+    'ব্যবহারকারীর অনুমতিতে এরর লগ পাঠানো, ব্যক্তিগত ডেটা ছাড়া।', 'বাস্তব সমস্যা দ্রুত ধরা।',
+    ['Settings-এ টগল; লগ লোকালে, "Send report" বোতাম দিয়ে পাঠানো।']]
+];
+
+/* ---------------------------------------------------------------- storage */
+const KEY = 'pressdock-roadmap-v1';
+function load() {
+  try { const raw = localStorage.getItem(KEY); return raw ? JSON.parse(raw) : {}; } catch (e) { return {}; }
+}
+function save(state) {
+  try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* storage unavailable: still works for this session */ }
+}
+let state = load(); // { id: { status, note } }
+const statusOf = (f) => (state[f[0]] && state[f[0]].status) || f[6];
+const noteOf = (f) => (state[f[0]] && state[f[0]].note) || '';
+
+/* ---------------------------------------------------------------- helpers */
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const bnNum = (n) => String(n).replace(/\d/g, (d) => '০১২৩৪৫৬৭৮৯'[d]);
+function toast(msg) {
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 1600);
+}
+
+/* ---------------------------------------------------------------- theme */
+const themeKey = 'pressdock-roadmap-theme';
+function applyTheme(v) { if (v) document.documentElement.setAttribute('data-theme', v); else document.documentElement.removeAttribute('data-theme'); }
+try { applyTheme(localStorage.getItem(themeKey)); } catch (e) {}
+$('#themeBtn').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const dark = cur ? cur === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  const next = dark ? 'light' : 'dark';
+  applyTheme(next);
+  try { localStorage.setItem(themeKey, next); } catch (e) {}
+});
+
+/* ---------------------------------------------------------------- render: competitors + table */
+$('#competitors').innerHTML = COMPETITORS.map((c) => `
+  <article class="card pad comp">
+    <h3>${esc(c.name)}</h3>
+    <div class="cat">${esc(c.cat)}</div>
+    <div class="lbl love">ব্যবহারকারীরা যা পছন্দ করে</div>
+    <ul>${c.love.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
+    <div class="lbl pain">অভিযোগ / সীমাবদ্ধতা</div>
+    <ul>${c.pain.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
+    <div class="lbl take">আমাদের জন্য শিক্ষা</div>
+    <p style="margin:4px 0 0">${esc(c.take)}</p>
+    <div class="src">উৎস: ${c.src.map((u) => `<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(new URL(u).hostname.replace(/^www\./, ''))}</a>`).join('')}</div>
+  </article>`).join('');
+
+const SYM = { y: '<span class="y" title="আছে">●</span>', p: '<span class="p" title="আংশিক">◐</span>', n: '<span class="n" title="নেই">—</span>', q: '<span class="q" title="নিশ্চিত নই">?</span>' };
+$('#cmp').innerHTML = `<thead><tr><th>ফিচার</th>${CMP_COLS.map((c, i) => `<th class="c${i === 0 ? ' us' : ''}">${esc(c)}</th>`).join('')}</tr></thead>
+<tbody>${CMP_ROWS.map((r) => `<tr><td>${esc(r[0])}</td>${r.slice(1).map((v, i) => `<td class="c${i === 0 ? ' us' : ''}">${SYM[v]}</td>`).join('')}</tr>`).join('')}</tbody>`;
+
+/* ---------------------------------------------------------------- render: roadmap */
+$('#fStatus').innerHTML += STATUSES.map(([v, l]) => `<option value="${v}">${l}</option>`).join('');
+
+function summary() {
+  const live = FEATURES.filter((f) => statusOf(f) !== 'dropped');
+  const n = (s) => live.filter((f) => statusOf(f) === s).length;
+  const total = live.length, done = n('done'), prog = n('progress'), plan = n('planned');
+  $('#sTotal').textContent = bnNum(total);
+  $('#sTotalHint').textContent = `${bnNum(FEATURES.length - total)}টি dropped বাদে`;
+  $('#sDone').textContent = bnNum(done);
+  $('#sDoneHint').textContent = total ? `${bnNum(Math.round((done / total) * 100))}% সম্পূর্ণ` : '';
+  $('#sProg').textContent = bnNum(prog);
+  $('#sP0').textContent = bnNum(live.filter((f) => f[4] === 'P0' && statusOf(f) !== 'done').length);
+  const pct = (x) => (total ? (x / total) * 100 : 0);
+  $('#barAll').innerHTML = `<span class="done" style="width:${pct(done)}%"></span><span class="prog" style="width:${pct(prog)}%"></span><span class="plan" style="width:${pct(plan)}%"></span>`;
+  $('#pctText').textContent = `${bnNum(done)} / ${bnNum(total)} Done · ${bnNum(prog)} চলছে · ${bnNum(plan)} পরিকল্পিত`;
+  $('#partBars').innerHTML = ['Plugin', 'App', 'PWA'].map((p) => {
+    const items = live.filter((f) => f[3].includes(p));
+    const d = items.filter((f) => statusOf(f) === 'done').length;
+    const g = items.filter((f) => statusOf(f) === 'progress').length;
+    const w = (x) => (items.length ? (x / items.length) * 100 : 0);
+    return `<div><div style="display:flex;justify-content:space-between"><b>${p}</b><span class="note">${bnNum(d)}/${bnNum(items.length)}</span></div>
+      <div class="bar"><span class="done" style="width:${w(d)}%"></span><span class="prog" style="width:${w(g)}%"></span></div></div>`;
+  }).join('');
+}
+
+function card(f) {
+  const [id, , title, parts, pri, size, , what, why, how] = f;
+  const st = statusOf(f);
+  return `<article class="card feat" data-status="${st}" data-id="${id}">
+    <div class="row"><h3>${esc(title)}</h3><span class="id">${id}</span></div>
+    <div class="row">
+      <span class="chip pr-${pri}">${pri}</span>
+      ${parts.map((p) => `<span class="chip brand">${p}</span>`).join('')}
+      <span class="chip" title="কাজের আকার">Size ${size}</span>
+      ${st === 'done' ? '<span class="chip st-done">✓ Done</span>' : ''}
+    </div>
+    <p>${what}</p>
+    <p class="why"><b>কেন:</b> ${why}</p>
+    <details><summary>কীভাবে করব</summary><ol>${how.map((h) => `<li>${h}</li>`).join('')}</ol></details>
+    <div class="controls noprint">
+      <label class="note" for="st-${id}">স্ট্যাটাস</label>
+      <select id="st-${id}" data-act="status" data-id="${id}">${STATUSES.map(([v, l]) => `<option value="${v}"${v === st ? ' selected' : ''}>${l}</option>`).join('')}</select>
+    </div>
+    <textarea data-act="note" data-id="${id}" placeholder="নোট (কে করছে, লিংক, সিদ্ধান্ত…)" aria-label="${esc(title)} নোট">${esc(noteOf(f))}</textarea>
+  </article>`;
+}
+
+function render() {
+  const q = $('#q').value.trim().toLowerCase();
+  const part = $('#fPart').value, fst = $('#fStatus').value, pri = $('#fPri').value, sort = $('#sort').value;
+  let items = FEATURES.filter((f) =>
+    (!part || f[3].includes(part)) && (!fst || statusOf(f) === fst) && (!pri || f[4] === pri) &&
+    (!q || [f[0], f[1], f[2], f[7], f[8], f[9].join(' '), noteOf(f)].join(' ').toLowerCase().includes(q)));
+  if (sort === 'pri') items = items.slice().sort((a, b) => PRI_ORDER[a[4]] - PRI_ORDER[b[4]] || a[0].localeCompare(b[0]));
+  if (sort === 'status') items = items.slice().sort((a, b) => ST_ORDER[statusOf(a)] - ST_ORDER[statusOf(b)] || PRI_ORDER[a[4]] - PRI_ORDER[b[4]]);
+
+  if (!items.length) { $('#list').innerHTML = '<div class="card empty">কিছু পাওয়া যায়নি — ফিল্টার বদলান।</div>'; summary(); return; }
+  let html = '';
+  if (sort === 'theme') {
+    const groups = [];
+    items.forEach((f) => { let g = groups.find((x) => x.name === f[1]); if (!g) groups.push((g = { name: f[1], items: [] })); g.items.push(f); });
+    groups.forEach((g) => {
+      const d = g.items.filter((f) => statusOf(f) === 'done').length;
+      html += `<div class="theme-group"><h3>${esc(g.name)}</h3><span>${bnNum(d)}/${bnNum(g.items.length)} Done</span></div><div class="grid g2">${g.items.map(card).join('')}</div>`;
+    });
+  } else {
+    html = `<div class="grid g2">${items.map(card).join('')}</div>`;
+  }
+  $('#list').innerHTML = html;
+  summary();
+}
+
+/* ---------------------------------------------------------------- events */
+['#q', '#fPart', '#fStatus', '#fPri', '#sort'].forEach((s) => $(s).addEventListener('input', render));
+
+$('#list').addEventListener('change', (e) => {
+  const el = e.target; const id = el.dataset.id;
+  if (el.dataset.act === 'status') {
+    state[id] = Object.assign({}, state[id], { status: el.value, updated: new Date().toISOString() });
+    save(state); render(); toast('স্ট্যাটাস সেভ হয়েছে');
+  }
+});
+let noteTimer;
+$('#list').addEventListener('input', (e) => {
+  const el = e.target;
+  if (el.dataset.act !== 'note') return;
+  const id = el.dataset.id;
+  state[id] = Object.assign({}, state[id], { note: el.value, updated: new Date().toISOString() });
+  clearTimeout(noteTimer); noteTimer = setTimeout(() => { save(state); toast('নোট সেভ হয়েছে'); }, 500);
+});
+
+$('#exportBtn').addEventListener('click', () => {
+  const data = { app: 'pressdock-roadmap', version: 1, exported: new Date().toISOString(), state };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = `pressdock-roadmap-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+$('#importFile').addEventListener('change', async (e) => {
+  const file = e.target.files && e.target.files[0]; e.target.value = '';
+  if (!file) return;
+  try {
+    const data = JSON.parse(await file.text());
+    if (!data || data.app !== 'pressdock-roadmap' || typeof data.state !== 'object') throw new Error('bad');
+    const ids = new Set(FEATURES.map((f) => f[0]));
+    const okStatus = new Set(STATUSES.map((s) => s[0]));
+    const clean = {};
+    Object.keys(data.state).forEach((id) => {
+      const v = data.state[id];
+      if (!ids.has(id) || !v || typeof v !== 'object') return;
+      clean[id] = {};
+      if (okStatus.has(v.status)) clean[id].status = v.status;
+      if (typeof v.note === 'string') clean[id].note = v.note.slice(0, 5000);
+      if (typeof v.updated === 'string') clean[id].updated = v.updated;
+    });
+    state = clean; save(state); render(); toast('ইমপোর্ট হয়েছে');
+  } catch (err) { toast('ফাইলটি পড়া যায়নি'); }
+});
+$('#resetBtn').addEventListener('click', () => {
+  if (!confirm('সব স্ট্যাটাস ও নোট ডিফল্টে ফিরবে। আগে Export করে রাখতে পারেন। চালিয়ে যাবেন?')) return;
+  state = {}; save(state); render(); toast('রিসেট হয়েছে');
+});
+$('#printBtn').addEventListener('click', () => { document.querySelectorAll('details').forEach((d) => (d.open = true)); window.print(); });
+
+render();
+})();
+</script>
+</body>
+</html>
