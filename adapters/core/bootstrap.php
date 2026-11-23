@@ -23,3 +23,13 @@ add_filter(
 		return $adapters;
 	}
 );
+
+// Post types an administrator added under Pressdock → Data sources (no code needed).
+// Priority 30: dedicated adapters registered earlier win for the same post type.
+add_filter(
+	'pdock_register_entities',
+	static function ( $adapters ) {
+		return array_merge( (array) $adapters, Pressdock\Adapters\PostTypes::adapters( (array) $adapters ) );
+	},
+	30
+);

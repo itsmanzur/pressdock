@@ -25,6 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *   array( 'post_field' => 'post_title' )  a column of the posts table
  *   array( 'meta' => '_my_key' )           a single postmeta value
  *   array( 'thumbnail' => true )           the featured image id
+ *   array( 'taxonomy' => 'category' )      term names of a taxonomy (field type "list")
  * Fields without "storage" are stored as postmeta under the field name.
  */
 abstract class AbstractPostAdapter implements EntityAdapter, RestorableAdapter, EnumerableAdapter {
@@ -216,6 +217,9 @@ abstract class AbstractPostAdapter implements EntityAdapter, RestorableAdapter, 
 				$value = $post->{$storage['post_field']};
 			} elseif ( ! empty( $storage['thumbnail'] ) ) {
 				$value = (int) get_post_thumbnail_id( $post->ID );
+			} elseif ( isset( $storage['taxonomy'] ) ) {
+				$terms = wp_get_object_terms( $post->ID, $storage['taxonomy'], array( 'fields' => 'names' ) );
+				$value = is_wp_error( $terms ) ? array() : array_values( $terms );
 			} else {
 				$value = get_post_meta( $post->ID, $storage['meta'], true );
 			}
@@ -252,6 +256,10 @@ abstract class AbstractPostAdapter implements EntityAdapter, RestorableAdapter, 
 				return '' === $value || null === $value ? 0.0 : (float) $value;
 			case 'bool':
 				return (bool) $value;
+			case 'list':
+				return is_array( $value ) ? array_values( array_map( 'strval', array_filter( $value, 'is_scalar' ) ) ) : array();
+			case 'object':
+				return is_array( $value ) ? $value : array();
 			default:
 				return is_scalar( $value ) ? (string) $value : '';
 		}
@@ -261,12 +269,13 @@ abstract class AbstractPostAdapter implements EntityAdapter, RestorableAdapter, 
 	 * Split clean data into post columns and writers for meta and thumbnail.
 	 *
 	 * @param array $data Clean data.
-	 * @return array array( postarr, meta, thumbnail|null )
+	 * @return array array( postarr, meta, thumbnail|null, terms )
 	 */
 	protected function split( array $data ) {
 		$postarr   = array();
 		$meta      = array();
 		$thumbnail = null;
+		$terms     = array();
 		$fields    = $this->fields();
 		foreach ( $data as $name => $value ) {
 			if ( ! isset( $fields[ $name ] ) ) {
@@ -277,11 +286,13 @@ abstract class AbstractPostAdapter implements EntityAdapter, RestorableAdapter, 
 				$postarr[ $storage['post_field'] ] = $value;
 			} elseif ( ! empty( $storage['thumbnail'] ) ) {
 				$thumbnail = (int) $value;
+			} elseif ( isset( $storage['taxonomy'] ) ) {
+				$terms[ $storage['taxonomy'] ] = is_array( $value ) ? $value : array();
 			} else {
 				$meta[ $storage['meta'] ] = $value;
 			}
 		}
-		return array( $postarr, $meta, $thumbnail );
+		return array( $postarr, $meta, $thumbnail, $terms );
 	}
 
 	/**
@@ -290,9 +301,13 @@ abstract class AbstractPostAdapter implements EntityAdapter, RestorableAdapter, 
 	 * @param int      $id        Post id.
 	 * @param array    $meta      Meta key => value.
 	 * @param int|null $thumbnail Featured image id, 0 to remove, null to leave alone.
+	 * @param array    $terms     Taxonomy => term names.
 	 * @return void
 	 */
-	protected function write_extras( $id, array $meta, $thumbnail ) {
+	protected function write_extras( $id, array $meta, $thumbnail, array $terms = array() ) {
+		foreach ( $terms as $taxonomy => $names ) {
+			$this->write_terms( $id, $taxonomy, $names );
+		}
 		foreach ( $meta as $key => $value ) {
 			if ( null === $value ) {
 				delete_post_meta( $id, $key );
@@ -315,8 +330,8 @@ abstract class AbstractPostAdapter implements EntityAdapter, RestorableAdapter, 
 	 * @throws \RuntimeException When WordPress refuses the insert.
 	 */
 	public function create( array $data ) {
-		list( $postarr, $meta, $thumbnail ) = $this->split( $data );
-		$postarr['post_type']               = $this->post_type();
+		list( $postarr, $meta, $thumbnail, $terms ) = $this->split( $data );
+		$postarr['post_type']                       = $this->post_type();
 		if ( empty( $postarr['post_status'] ) ) {
 			$postarr['post_status'] = 'draft';
 		}
@@ -324,7 +339,7 @@ abstract class AbstractPostAdapter implements EntityAdapter, RestorableAdapter, 
 		if ( is_wp_error( $id ) ) {
 			throw new \RuntimeException( esc_html( $id->get_error_message() ) );
 		}
-		$this->write_extras( (int) $id, $meta, $thumbnail );
+		$this->write_extras( (int) $id, $meta, $thumbnail, $terms );
 		return (int) $id;
 	}
 
@@ -334,7 +349,7 @@ abstract class AbstractPostAdapter implements EntityAdapter, RestorableAdapter, 
 	 * @throws \RuntimeException When WordPress refuses the update.
 	 */
 	public function update( $id, array $data ) {
-		list( $postarr, $meta, $thumbnail ) = $this->split( $data );
+		list( $postarr, $meta, $thumbnail, $terms ) = $this->split( $data );
 		if ( array() !== $postarr ) {
 			$postarr['ID'] = (int) $id;
 			$result        = wp_update_post( wp_slash( $postarr ), true );
@@ -342,7 +357,43 @@ abstract class AbstractPostAdapter implements EntityAdapter, RestorableAdapter, 
 				throw new \RuntimeException( esc_html( $result->get_error_message() ) );
 			}
 		}
-		$this->write_extras( (int) $id, $meta, $thumbnail );
+		$this->write_extras( (int) $id, $meta, $thumbnail, $terms );
+	}
+
+	/**
+	 * Set the terms of one taxonomy by name. Users who may not create terms can only pick existing ones.
+	 *
+	 * @param int    $id       Post id.
+	 * @param string $taxonomy Taxonomy.
+	 * @param array  $names    Term names.
+	 * @return void
+	 */
+	protected function write_terms( $id, $taxonomy, array $names ) {
+		$tax = get_taxonomy( $taxonomy );
+		if ( ! $tax || ! current_user_can( $tax->cap->assign_terms ) ) {
+			return;
+		}
+		$can_create = current_user_can( $tax->cap->edit_terms );
+		$ids        = array();
+		foreach ( $names as $name ) {
+			$name = trim( (string) $name );
+			if ( '' === $name ) {
+				continue;
+			}
+			$term = get_term_by( 'name', $name, $taxonomy );
+			if ( ! $term ) {
+				$term = get_term_by( 'slug', sanitize_title( $name ), $taxonomy );
+			}
+			if ( $term ) {
+				$ids[] = (int) $term->term_id;
+			} elseif ( $can_create ) {
+				$made = wp_insert_term( $name, $taxonomy );
+				if ( ! is_wp_error( $made ) ) {
+					$ids[] = (int) $made['term_id'];
+				}
+			}
+		}
+		wp_set_object_terms( $id, $ids, $taxonomy );
 	}
 
 	/**

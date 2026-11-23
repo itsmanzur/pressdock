@@ -297,3 +297,10 @@
 .pdock-tabs .dashicons { line-height: 1; }
 .pdock-toast {margin-left: 6px; color: var(--pd-ok); font-size: 12px; opacity: 0; transition: opacity 0.2s; }
 .pdock-toast.is-shown { opacity: 1; }
+
+/* Post type picker -------------------------------------------------- */
+.pdock-meta { margin-top: 8px; }
+.pdock-meta summary { cursor: pointer; color: var(--pd-brand); font-weight: 500; font-size: 12px; }
+.pdock-meta__table { margin-top: 6px; border-collapse: collapse; }
+.pdock-meta__table td { padding: 3px 10px 3px 0; border: 0; }
+.pdock-meta__table select { min-width: 170px; }

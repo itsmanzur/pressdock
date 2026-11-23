@@ -32,6 +32,7 @@ Pressdock Connector turns supported WordPress data into a sync-ready REST API. T
 **Included**
 
 * An adapter for core posts (title, content, status).
+* Any other post type without code: switch it on under Pressdock → Data sources. Title, content, excerpt, status, slug, parent, order, featured image and taxonomies are included when the post type supports them, and you choose which custom fields to sync and how to edit them (text, number, yes/no, date, HTML). Fields holding serialized data are never offered, so they cannot be damaged.
 * Adapters for Hejazer Kafela and Hejazer Kafela Pro. They load only while those plugins are active.
 * Base classes for post-type entities and custom-table entities, so other plugins can add an adapter in a few lines.
 * An admin dashboard (Pressdock menu) with connection health, data sources, connected devices and sync history with undo.
@@ -92,7 +93,7 @@ Nothing, unless you tick "Delete all Pressdock tables and settings when the plug
 == Changelog ==
 
 = 1.0.0 =
-* First release: adapter registry, change log, pull, push with conflict detection, idempotent batches, undo, media upload, admin page, demo post adapter.
+* First release: adapter registry, change log, pull, push with conflict detection, idempotent batches, undo, media upload, admin dashboard, posts adapter, any post type without code.
 
 == Upgrade Notice ==
 

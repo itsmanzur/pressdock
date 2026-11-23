@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-23 17:55+00:00\n"
+"POT-Creation-Date: 2026-11-23 18:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Domain: pressdock\n"
@@ -20,15 +20,15 @@ msgstr ""
 msgid "WordPress core"
 msgstr ""
 
-#: adapters/core/PostAdapter.php:56
+#: adapters/core/PostAdapter.php:56 src/Adapters/GenericPostAdapter.php:110
 msgid "Title"
 msgstr ""
 
-#: adapters/core/PostAdapter.php:62
+#: adapters/core/PostAdapter.php:62 src/Adapters/GenericPostAdapter.php:118
 msgid "Content"
 msgstr ""
 
-#: adapters/core/PostAdapter.php:67 adapters/hejazer-kafela/InquiryAdapter.php:200 adapters/hejazer-kafela/pro/DepartureAdapter.php:88 src/Admin/SettingsPage.php:866
+#: adapters/core/PostAdapter.php:67 adapters/hejazer-kafela/InquiryAdapter.php:200 adapters/hejazer-kafela/pro/DepartureAdapter.php:88 src/Adapters/GenericPostAdapter.php:131 src/Admin/SettingsPage.php:1002
 msgid "Status"
 msgstr ""
 
@@ -560,6 +560,30 @@ msgstr ""
 msgid "District"
 msgstr ""
 
+#: src/Adapters/GenericPostAdapter.php:86
+msgid "Post types"
+msgstr ""
+
+#: src/Adapters/GenericPostAdapter.php:125
+msgid "Excerpt"
+msgstr ""
+
+#: src/Adapters/GenericPostAdapter.php:137
+msgid "Slug"
+msgstr ""
+
+#: src/Adapters/GenericPostAdapter.php:144
+msgid "Parent"
+msgstr ""
+
+#: src/Adapters/GenericPostAdapter.php:152
+msgid "Order"
+msgstr ""
+
+#: src/Adapters/GenericPostAdapter.php:159
+msgid "Featured image"
+msgstr ""
+
 #: src/Admin/Devices.php:34
 msgid "Browser session"
 msgstr ""
@@ -568,457 +592,526 @@ msgstr ""
 msgid "Application Password"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:67 src/Admin/SettingsPage.php:68 src/Admin/SettingsPage.php:83
+#: src/Admin/SettingsPage.php:69 src/Admin/SettingsPage.php:70 src/Admin/SettingsPage.php:85
 msgid "Pressdock"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:77 src/Admin/SettingsPage.php:110 src/Admin/SettingsPage.php:408
+#: src/Admin/SettingsPage.php:79 src/Admin/SettingsPage.php:112 src/Admin/SettingsPage.php:410
 msgid "Dashboard"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:78 src/Admin/SettingsPage.php:409 src/Admin/SettingsPage.php:494 src/Admin/SettingsPage.php:753
+#: src/Admin/SettingsPage.php:80 src/Admin/SettingsPage.php:411 src/Admin/SettingsPage.php:496 src/Admin/SettingsPage.php:755
 msgid "Data sources"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:79 src/Admin/SettingsPage.php:410
+#: src/Admin/SettingsPage.php:81 src/Admin/SettingsPage.php:412
 msgid "Devices & activity"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:80 src/Admin/SettingsPage.php:111 src/Admin/SettingsPage.php:411
+#: src/Admin/SettingsPage.php:82 src/Admin/SettingsPage.php:113 src/Admin/SettingsPage.php:413
 msgid "Settings"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:154
+#: src/Admin/SettingsPage.php:156
 msgid "You do not have permission to do this."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:232
+#: src/Admin/SettingsPage.php:234
 msgid "Other"
 msgstr ""
 
 #. translators: %s: human time difference, e.g. "5 mins".
-#: src/Admin/SettingsPage.php:315
+#: src/Admin/SettingsPage.php:317
 msgid "%s ago"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:343
+#: src/Admin/SettingsPage.php:345
 msgid "Pressdock Connector"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:344
+#: src/Admin/SettingsPage.php:346
 msgid "Work on your WordPress plugin data offline in the Pressdock app — then sync it back safely."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:349
+#: src/Admin/SettingsPage.php:351
 msgid "Ready to connect"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:349
+#: src/Admin/SettingsPage.php:351
 msgid "Needs attention"
 msgstr ""
 
 #. translators: %s: plugin version.
-#: src/Admin/SettingsPage.php:354
+#: src/Admin/SettingsPage.php:356
 msgid "v%s"
 msgstr ""
 
 #. translators: %s: API version.
-#: src/Admin/SettingsPage.php:360
+#: src/Admin/SettingsPage.php:362
 msgid "API %s"
 msgstr ""
 
 #. translators: 1: restored count, 2: failed count.
-#: src/Admin/SettingsPage.php:386
+#: src/Admin/SettingsPage.php:388
 msgid "Undo finished: %1$d restored, %2$d failed."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:394
+#: src/Admin/SettingsPage.php:396
 msgid "Settings saved."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:413
+#: src/Admin/SettingsPage.php:415
 msgid "Pressdock sections"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:461
+#: src/Admin/SettingsPage.php:463
 msgid "Copy"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:462
+#: src/Admin/SettingsPage.php:464
 msgid "Copied"
 msgstr ""
 
 #. translators: 1: entity types, 2: plugins.
-#: src/Admin/SettingsPage.php:497
+#: src/Admin/SettingsPage.php:499
 msgid "%1$d entity type from %2$d plugin"
 msgid_plural "%1$d entity types from %2$d plugins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Admin/SettingsPage.php:501
+#: src/Admin/SettingsPage.php:503
 msgid "Devices"
 msgstr ""
 
 #. translators: %d: devices active in the last 7 days.
-#: src/Admin/SettingsPage.php:504
+#: src/Admin/SettingsPage.php:506
 msgid "%d active in the last 7 days"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:508
+#: src/Admin/SettingsPage.php:510
 msgid "Syncs (7 days)"
 msgstr ""
 
 #. translators: %d: applied changes.
-#: src/Admin/SettingsPage.php:511
+#: src/Admin/SettingsPage.php:513
 msgid "%d change applied"
 msgid_plural "%d changes applied"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Admin/SettingsPage.php:515
+#: src/Admin/SettingsPage.php:517
 msgid "Conflicts (7 days)"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:517
+#: src/Admin/SettingsPage.php:519
 msgid "Resolved in the app, nothing overwritten"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:517
+#: src/Admin/SettingsPage.php:519
 msgid "No edits collided"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:527
+#: src/Admin/SettingsPage.php:529
 msgid "Connect a device"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:532
+#: src/Admin/SettingsPage.php:534
 msgid "Create an Application Password"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:533
+#: src/Admin/SettingsPage.php:535
 msgid "In your profile, name it after the device (e.g. \"Office laptop\"). Each device gets its own, so you can revoke one without touching the others."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:535
+#: src/Admin/SettingsPage.php:537
 msgid "Create Application Password"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:539
+#: src/Admin/SettingsPage.php:541
 msgid "Open the Pressdock app"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:540
+#: src/Admin/SettingsPage.php:542
 msgid "Desktop app for Windows, macOS and Linux, or the installable web app."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:542
+#: src/Admin/SettingsPage.php:544
 msgid "Get the app"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:546
+#: src/Admin/SettingsPage.php:548
 msgid "Add this site"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:547
+#: src/Admin/SettingsPage.php:549
 msgid "Paste these into \"Add site\", together with your username and the Application Password."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:549
+#: src/Admin/SettingsPage.php:551
 msgid "Site URL"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:550
+#: src/Admin/SettingsPage.php:552
 msgid "Username"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:560
+#: src/Admin/SettingsPage.php:562
 msgid "Connected plugins"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:561
+#: src/Admin/SettingsPage.php:563
 msgid "Manage"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:565
+#: src/Admin/SettingsPage.php:567
 msgid "No plugin data is available yet. Activate a supported plugin or register an adapter."
 msgstr ""
 
 #. translators: 1: enabled count, 2: total count.
-#: src/Admin/SettingsPage.php:579 src/Admin/SettingsPage.php:777
+#: src/Admin/SettingsPage.php:581 src/Admin/SettingsPage.php:779
 msgid "%1$d of %2$d syncing"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:620
+#: src/Admin/SettingsPage.php:622
 msgid "Secure connection (HTTPS)"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:620
+#: src/Admin/SettingsPage.php:622
 msgid "Passwords and data travel encrypted."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:622
+#: src/Admin/SettingsPage.php:624
 msgid "Local HTTP allowed"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:622
+#: src/Admin/SettingsPage.php:624
 msgid "Fine for a local test site. Use HTTPS on a live site."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:624
+#: src/Admin/SettingsPage.php:626
 msgid "HTTPS required"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:624
+#: src/Admin/SettingsPage.php:626
 msgid "The API refuses plain-HTTP connections. Enable HTTPS, or allow local HTTP in Settings on a development site."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:628
+#: src/Admin/SettingsPage.php:630
 msgid "Application Passwords available"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:628
+#: src/Admin/SettingsPage.php:630
 msgid "Devices sign in without your main password."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:629
+#: src/Admin/SettingsPage.php:631
 msgid "Application Passwords unavailable"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:629
+#: src/Admin/SettingsPage.php:631
 msgid "They are turned off on this site (often by a security plugin or because HTTPS is missing)."
 msgstr ""
 
 #. translators: %d: number of entity types.
-#: src/Admin/SettingsPage.php:635
+#: src/Admin/SettingsPage.php:637
 msgid "%d data source enabled"
 msgid_plural "%d data sources enabled"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Admin/SettingsPage.php:636
+#: src/Admin/SettingsPage.php:638
 msgid "WordPress capabilities are still checked on every request."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:638
+#: src/Admin/SettingsPage.php:640
 msgid "No data source enabled"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:638
+#: src/Admin/SettingsPage.php:640
 msgid "Enable at least one in Data sources."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:649
+#: src/Admin/SettingsPage.php:651
 msgid "Connection health"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:660
+#: src/Admin/SettingsPage.php:662
 msgid "API endpoint"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:678
+#: src/Admin/SettingsPage.php:680
 msgid "Recent syncs"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:679
+#: src/Admin/SettingsPage.php:681
 msgid "View all"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:682
+#: src/Admin/SettingsPage.php:684
 msgid "No sync yet. Changes made in the app show up here."
 msgstr ""
 
 #. translators: %d: number of changes.
-#: src/Admin/SettingsPage.php:696
+#: src/Admin/SettingsPage.php:698
 msgid "%d change"
 msgid_plural "%d changes"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %d: number of conflicts.
-#: src/Admin/SettingsPage.php:702
+#: src/Admin/SettingsPage.php:704
 msgid "%d conflict"
 msgid_plural "%d conflicts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Admin/SettingsPage.php:727
+#: src/Admin/SettingsPage.php:729
 msgid "Connect any plugin"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:730
+#: src/Admin/SettingsPage.php:732
 msgid "Pressdock is universal: any plugin can expose its data with a small adapter that describes fields and maps reads and writes. Custom post types and custom tables have ready-made base classes."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:756
+#: src/Admin/SettingsPage.php:758
 msgid "Choose which data the Pressdock app can see. Switching a source off hides it from every device; WordPress capabilities still decide what each user may read or change."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:759
+#: src/Admin/SettingsPage.php:761
 msgid "No entities are registered."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:764
+#: src/Admin/SettingsPage.php:766 src/Admin/SettingsPage.php:865
 msgid "Sync"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:765
+#: src/Admin/SettingsPage.php:767
 msgid "Data"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:766
+#: src/Admin/SettingsPage.php:768
 msgid "Key"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:767
+#: src/Admin/SettingsPage.php:769 src/Admin/SettingsPage.php:868
 msgid "Fields"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:768
+#: src/Admin/SettingsPage.php:770
 msgid "You can"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:802
+#: src/Admin/SettingsPage.php:804
 msgid "no access"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:817
+#: src/Admin/SettingsPage.php:819
 msgid "Save data sources"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:833
-msgid "view"
+#: src/Admin/SettingsPage.php:838
+msgid "— do not sync —"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:834
-msgid "add"
+#: src/Admin/SettingsPage.php:839
+msgid "Text (one line)"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:835
-msgid "edit"
+#: src/Admin/SettingsPage.php:840
+msgid "Text (multi-line)"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:836
-msgid "delete"
+#: src/Admin/SettingsPage.php:841
+msgid "HTML"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:853
-msgid "Connected devices"
+#: src/Admin/SettingsPage.php:842
+msgid "Whole number"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:843
+msgid "Number"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:844
+msgid "Yes / no"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:845
+msgid "Date (YYYY-MM-DD)"
 msgstr ""
 
 #: src/Admin/SettingsPage.php:854
-msgid "Manage Application Passwords"
+msgid "Add any post type"
 msgstr ""
 
 #: src/Admin/SettingsPage.php:857
+msgid "Sync a post type from any plugin or theme without code. Title, content, excerpt, status, slug, featured image and taxonomies are included automatically when the post type supports them. Choose extra custom fields below and how they should be edited."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:860
+msgid "No other post types found on this site."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:866
+msgid "Post type"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:867
+msgid "Items"
+msgstr ""
+
+#. translators: 1: chosen custom fields, 2: available custom fields.
+#: src/Admin/SettingsPage.php:918
+msgid "Custom fields: %1$d of %2$d selected"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:942
+msgid "✓ marks the suggested type. Fields that store lists or objects (serialized data) are hidden so they cannot be damaged."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:953
+msgid "Save post types"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:954
+msgid "New post types appear in the app after its next sync. Each user still needs the normal WordPress permissions for that post type."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:969
+msgid "view"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:970
+msgid "add"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:971
+msgid "edit"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:972
+msgid "delete"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:989
+msgid "Connected devices"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:990
+msgid "Manage Application Passwords"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:993
 msgid "No device has connected yet."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:862
+#: src/Admin/SettingsPage.php:998
 msgid "Device"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:863 src/Admin/SettingsPage.php:916
+#: src/Admin/SettingsPage.php:999 src/Admin/SettingsPage.php:1052
 msgid "User"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:864
+#: src/Admin/SettingsPage.php:1000
 msgid "Last download"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:865
+#: src/Admin/SettingsPage.php:1001
 msgid "Last upload"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:881
+#: src/Admin/SettingsPage.php:1017
 msgid "Active"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:881
+#: src/Admin/SettingsPage.php:1017
 msgid "Idle"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:894
+#: src/Admin/SettingsPage.php:1030
 msgid "Sync history"
 msgstr ""
 
 #. translators: %d: days snapshots are kept.
-#: src/Admin/SettingsPage.php:902
+#: src/Admin/SettingsPage.php:1038
 msgid "Each upload from a device is one batch. \"Undo\" restores every record the batch changed, using snapshots kept for %d days."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:910
+#: src/Admin/SettingsPage.php:1046
 msgid "No sync activity yet."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:915
+#: src/Admin/SettingsPage.php:1051
 msgid "When"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:917
+#: src/Admin/SettingsPage.php:1053
 msgid "Changes"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:918
+#: src/Admin/SettingsPage.php:1054
 msgid "Applied"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:919
+#: src/Admin/SettingsPage.php:1055
 msgid "Conflicts"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:920
+#: src/Admin/SettingsPage.php:1056
 msgid "Batch"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:941
+#: src/Admin/SettingsPage.php:1077
 msgid "Restore every record this batch changed?"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:945
+#: src/Admin/SettingsPage.php:1081
 msgid "Undo"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:978
+#: src/Admin/SettingsPage.php:1114
 msgid "Connection"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:982
+#: src/Admin/SettingsPage.php:1118
 msgid "Allow HTTP on local development hosts"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:983
+#: src/Admin/SettingsPage.php:1119
 msgid "Only for localhost, 127.0.0.1, *.local, *.test and *.localhost. Live sites always need HTTPS."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:985
+#: src/Admin/SettingsPage.php:1121
 msgid "This site is not a local host — the option has no effect here."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:998
+#: src/Admin/SettingsPage.php:1134
 msgid "Safety & storage"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:1002
+#: src/Admin/SettingsPage.php:1138
 msgid "Keep undo snapshots for"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:1003
+#: src/Admin/SettingsPage.php:1139
 msgid "How long a sync batch can be undone. Older snapshots are removed daily."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:1007
+#: src/Admin/SettingsPage.php:1143
 msgid "days"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:1012
+#: src/Admin/SettingsPage.php:1148
 msgid "Delete data on uninstall"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:1013
+#: src/Admin/SettingsPage.php:1149
 msgid "Removes all Pressdock tables and settings when the plugin is deleted. Your plugin data itself is never touched."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:1021
+#: src/Admin/SettingsPage.php:1157
 msgid "Save settings"
 msgstr ""
 

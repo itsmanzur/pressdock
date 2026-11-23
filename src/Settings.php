@@ -29,6 +29,7 @@ final class Settings {
 			'allow_local_http'    => 0,
 			'snapshot_days'       => 14,
 			'delete_on_uninstall' => 0,
+			'post_types'          => array(),
 		);
 	}
 
@@ -86,12 +87,20 @@ final class Settings {
 			'delete_on_uninstall' => empty( $input['delete_on_uninstall'] ) ? 0 : 1,
 		);
 
-		// The admin screens save one section at a time; keep the values of the other section.
+		// The admin screens save one section at a time; keep the values of the other sections.
 		$section = isset( $input['_section'] ) ? sanitize_key( $input['_section'] ) : '';
+		if ( 'post_types' === $section || ( '' === $section && isset( $input['post_types'] ) ) ) {
+			$out['post_types'] = Adapters\PostTypes::sanitize( isset( $input['post_types'] ) ? $input['post_types'] : array() );
+		} else {
+			$out['post_types'] = '' === $section ? array() : (array) self::get( 'post_types' );
+		}
+
 		if ( 'sources' === $section ) {
 			$out = array_merge( self::all(), array( 'disabled_entities' => $disabled ) );
 		} elseif ( 'options' === $section ) {
 			$out['disabled_entities'] = (array) self::get( 'disabled_entities' );
+		} elseif ( 'post_types' === $section ) {
+			$out = array_merge( self::all(), array( 'post_types' => $out['post_types'] ) );
 		}
 		return $out;
 	}

@@ -7,6 +7,8 @@
 
 namespace Pressdock\Admin;
 
+use Pressdock\Adapters\GenericPostAdapter;
+use Pressdock\Adapters\PostTypes;
 use Pressdock\Registry;
 use Pressdock\Rest\Controller;
 use Pressdock\Settings;
@@ -819,7 +821,141 @@ final class SettingsPage {
 			</div>
 		</form>
 		<?php
+		self::render_post_types();
 		self::render_developer();
+	}
+
+	/**
+	 * "Add any post type" card: switch post types on and pick the meta keys to sync.
+	 *
+	 * @return void
+	 */
+	private static function render_post_types() {
+		$opt        = Settings::OPTION;
+		$eligible   = PostTypes::eligible();
+		$configured = PostTypes::configured();
+		$types      = array(
+			''       => __( '— do not sync —', 'pressdock' ),
+			'string' => __( 'Text (one line)', 'pressdock' ),
+			'text'   => __( 'Text (multi-line)', 'pressdock' ),
+			'html'   => __( 'HTML', 'pressdock' ),
+			'int'    => __( 'Whole number', 'pressdock' ),
+			'float'  => __( 'Number', 'pressdock' ),
+			'bool'   => __( 'Yes / no', 'pressdock' ),
+			'date'   => __( 'Date (YYYY-MM-DD)', 'pressdock' ),
+		);
+		?>
+		<form method="post" action="options.php">
+			<?php settings_fields( 'pdock_settings_group' ); ?>
+			<input type="hidden" name="<?php echo esc_attr( $opt ); ?>[_section]" value="post_types">
+			<div class="pdock-card">
+				<div class="pdock-card__head">
+					<span class="dashicons dashicons-admin-post" aria-hidden="true"></span>
+					<h2><?php esc_html_e( 'Add any post type', 'pressdock' ); ?></h2>
+				</div>
+				<div class="pdock-card__body">
+					<p class="pdock-muted"><?php esc_html_e( 'Sync a post type from any plugin or theme without code. Title, content, excerpt, status, slug, featured image and taxonomies are included automatically when the post type supports them. Choose extra custom fields below and how they should be edited.', 'pressdock' ); ?></p>
+				</div>
+				<?php if ( array() === $eligible ) : ?>
+					<div class="pdock-empty"><span class="dashicons dashicons-admin-post" aria-hidden="true"></span><?php esc_html_e( 'No other post types found on this site.', 'pressdock' ); ?></div>
+				<?php else : ?>
+					<div class="pdock-table-wrap">
+						<table class="pdock-table">
+							<thead><tr>
+								<th style="width:70px"><?php esc_html_e( 'Sync', 'pressdock' ); ?></th>
+								<th><?php esc_html_e( 'Post type', 'pressdock' ); ?></th>
+								<th class="pdock-num"><?php esc_html_e( 'Items', 'pressdock' ); ?></th>
+								<th><?php esc_html_e( 'Fields', 'pressdock' ); ?></th>
+							</tr></thead>
+							<tbody>
+							<?php foreach ( $eligible as $slug => $object ) : ?>
+								<?php
+								$cfg     = isset( $configured[ $slug ] ) ? $configured[ $slug ] : array();
+								$on      = ! empty( $cfg['on'] );
+								$chosen  = isset( $cfg['meta'] ) && is_array( $cfg['meta'] ) ? $cfg['meta'] : array();
+								$adapter = new GenericPostAdapter( $slug, $chosen );
+								$counts  = wp_count_posts( $slug );
+								$total   = 0;
+								foreach ( array( 'publish', 'draft', 'pending', 'private', 'future' ) as $status ) {
+									$total += isset( $counts->$status ) ? (int) $counts->$status : 0;
+								}
+								$builtin = array_filter(
+									$adapter->fields(),
+									static function ( $field ) {
+										return ! isset( $field['storage']['meta'] );
+									}
+								);
+								$base    = $opt . '[post_types][' . $slug . ']';
+								$id      = 'pdock-pt-' . $slug;
+								?>
+								<tr>
+									<td>
+										<label class="pdock-switch" for="<?php echo esc_attr( $id ); ?>">
+											<input type="checkbox" id="<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( $base ); ?>[on]" value="1" <?php checked( $on ); ?>>
+											<span class="pdock-switch__ui"></span>
+											<span class="screen-reader-text"><?php echo esc_html( $object->labels->name ); ?></span>
+										</label>
+									</td>
+									<td>
+										<strong><?php echo esc_html( $object->labels->name ); ?></strong>
+										<div><code><?php echo esc_html( $slug ); ?></code> → <code><?php echo esc_html( GenericPostAdapter::key_for( $slug ) ); ?></code></div>
+									</td>
+									<td class="pdock-num"><?php echo esc_html( number_format_i18n( $total ) ); ?></td>
+									<td>
+										<div class="pdock-chips">
+											<?php foreach ( $builtin as $field ) : ?>
+												<span class="pdock-pill"><?php echo esc_html( $field['label'] ); ?></span>
+											<?php endforeach; ?>
+										</div>
+										<?php $candidates = PostTypes::meta_candidates( $slug ); ?>
+										<?php if ( array() !== $candidates ) : ?>
+											<details class="pdock-meta" <?php echo array() !== $chosen ? 'open' : ''; ?>>
+												<summary>
+													<?php
+													echo esc_html(
+														sprintf(
+															/* translators: 1: chosen custom fields, 2: available custom fields. */
+															__( 'Custom fields: %1$d of %2$d selected', 'pressdock' ),
+															count( $chosen ),
+															count( $candidates )
+														)
+													);
+													?>
+												</summary>
+												<table class="pdock-meta__table">
+													<?php foreach ( $candidates as $meta_key => $suggested ) : ?>
+														<?php $current = isset( $chosen[ $meta_key ] ) ? $chosen[ $meta_key ] : ''; ?>
+														<tr>
+															<td><code><?php echo esc_html( $meta_key ); ?></code></td>
+															<td>
+																<select name="<?php echo esc_attr( $base . '[meta][' . $meta_key . ']' ); ?>" aria-label="<?php echo esc_attr( $meta_key ); ?>">
+																	<?php foreach ( $types as $value => $label ) : ?>
+																		<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $current, $value ); ?>>
+																			<?php echo esc_html( $label ); ?><?php echo ( '' !== $value && $value === $suggested && '' === $current ) ? ' ✓' : ''; ?>
+																		</option>
+																	<?php endforeach; ?>
+																</select>
+															</td>
+														</tr>
+													<?php endforeach; ?>
+												</table>
+												<p class="pdock-muted pdock-small"><?php esc_html_e( '✓ marks the suggested type. Fields that store lists or objects (serialized data) are hidden so they cannot be damaged.', 'pressdock' ); ?></p>
+											</details>
+										<?php endif; ?>
+									</td>
+								</tr>
+							<?php endforeach; ?>
+							</tbody>
+						</table>
+					</div>
+				<?php endif; ?>
+				<div class="pdock-card__foot pdock-savebar">
+					<?php submit_button( __( 'Save post types', 'pressdock' ), 'primary', 'submit', false ); ?>
+					<span class="pdock-muted pdock-small"><?php esc_html_e( 'New post types appear in the app after its next sync. Each user still needs the normal WordPress permissions for that post type.', 'pressdock' ); ?></span>
+				</div>
+			</div>
+		</form>
+		<?php
 	}
 
 	/**
