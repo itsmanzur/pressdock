@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import i18n, { detectLang, type Lang } from '../i18n';
 import { platform } from '../platform';
 import { listSites, openRepo, type Site } from '../sites/siteStore';
+import { peekConnectLink } from '../sites/connectLink';
 import type { SiteRepo } from '../db/repo';
 import type { Entity } from '../schema/types';
 
@@ -146,7 +147,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setRepo(r);
       await reloadMeta();
       const es = await r.listEntities();
-      setView(es.length ? { name: 'entity', key: es[0].key } : { name: 'sites' });
+      setView(es.length && !peekConnectLink() ? { name: 'entity', key: es[0].key } : { name: 'sites' });
     },
     [reloadMeta],
   );

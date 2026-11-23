@@ -5,6 +5,7 @@ import { useApp } from '../state/app';
 import { ApiError, PressdockApi, normalizeSiteUrl, type Handshake } from '../api/client';
 import { getPassword, openRepo, removeSite, saveSite, type Site } from '../sites/siteStore';
 import { platform } from '../platform';
+import { takeConnectLink, type ConnectLink } from '../sites/connectLink';
 import { FieldWrap, Modal } from './ui';
 import type { Entity } from '../schema/types';
 
@@ -41,9 +42,25 @@ export default function SitesView() {
   const { t } = useTranslation();
   const { sites, site: current, selectSite, reloadSites, reloadMeta, online, toast } = useApp();
   const [editing, setEditing] = useState<Site | 'new' | null>(null);
+  const [prefill, setPrefill] = useState<ConnectLink | null>(null);
+
+  // "Open in Pressdock" link from the WordPress dashboard: reuse a matching site, else prefill a new one
+  useEffect(() => {
+    const link = takeConnectLink();
+    if (!link) return;
+    const url = normalizeSiteUrl(link.url);
+    const existing = sites.find((s) => normalizeSiteUrl(s.url) === url && s.username.toLowerCase() === link.username.toLowerCase());
+    if (existing) setEditing(existing);
+    else {
+      setPrefill(link);
+      setEditing('new');
+    }
+    // run once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
-    if (sites.length === 0) setEditing('new');
+    if (sites.length === 0) setEditing((e) => e ?? 'new');
   }, [sites.length]);
 
   async function refreshSchema(s: Site) {
@@ -115,18 +132,32 @@ export default function SitesView() {
           ))}
         </div>
       </div>
-      {editing && <SiteDialog site={editing === 'new' ? null : editing} onClose={() => setEditing(null)} />}
+      {editing && (
+        <SiteDialog
+          site={editing === 'new' ? null : editing}
+          prefill={editing === 'new' ? prefill : null}
+          onClose={() => {
+            setEditing(null);
+            setPrefill(null);
+          }}
+        />
+      )}
     </div>
   );
 }
 
-function SiteDialog({ site, onClose }: { site: Site | null; onClose: () => void }) {
+function SiteDialog({ site, prefill, onClose }: { site: Site | null; prefill?: ConnectLink | null; onClose: () => void }) {
   const { t } = useTranslation();
   const { online, reloadSites, selectSite, site: currentSite, reloadMeta, toast } = useApp();
   const [name, setName] = useState(site?.name ?? '');
-  const [url, setUrl] = useState(site?.url ?? '');
-  const [username, setUsername] = useState(site?.username ?? '');
+  const [url, setUrl] = useState(site?.url ?? prefill?.url ?? '');
+  const [username, setUsername] = useState(site?.username ?? prefill?.username ?? '');
   const [password, setPassword] = useState('');
+  const [remember, setRemember] = useState(false);
+  useEffect(() => {
+    if (!platform.isTauri) void platform.kv.get<boolean>('remember-passwords').then((v) => setRemember(v === true));
+  }, []);
+  const insecureFromHttps = !platform.isTauri && location.protocol === 'https:' && /^http:\/\//i.test(url.trim());
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<TestResult | null>(null);
   const [error, setError] = useState<{ text: string; install?: boolean } | null>(null);
@@ -168,8 +199,10 @@ function SiteDialog({ site, onClose }: { site: Site | null; onClose: () => void 
         wpSiteName: result?.handshake.site.name ?? site?.wpSiteName,
         lastConnectedAt: result ? new Date().toISOString() : site?.lastConnectedAt,
       };
-      // password goes to the OS keychain only
-      await saveSite(record, password.trim() || undefined);
+      // desktop: password goes to the OS keychain only; web: this tab, or this browser if the user opted in
+      if (!platform.isTauri) await platform.kv.set('remember-passwords', remember);
+      const pw = password.trim() || (!platform.isTauri && site ? ((await getPassword(site.id)) ?? undefined) : undefined);
+      await saveSite(record, pw);
       if (result) {
         const repo = await openRepo(id);
         await repo.saveEntities(result.entities);
@@ -220,7 +253,18 @@ function SiteDialog({ site, onClose }: { site: Site | null; onClose: () => void 
         <FieldWrap label={t('sites.appPassword')} hint={site ? t('sites.keepPassword') : undefined}>
           <input className="input" type="password" autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="xxxx xxxx xxxx xxxx xxxx xxxx" />
         </FieldWrap>
-        <p className="text-xs text-slate-500">{platform.isTauri ? t('sites.keychainNote') : t('sites.webNote')}</p>
+        {platform.isTauri ? (
+          <p className="text-xs text-slate-500">{t('sites.keychainNote')}</p>
+        ) : (
+          <div className="space-y-1">
+            <label className="flex items-center gap-2 text-sm">
+              <input type="checkbox" className="accent-brand-600" checked={remember} onChange={(e) => setRemember(e.target.checked)} />
+              {t('sites.rememberPassword')}
+            </label>
+            <p className="text-xs text-slate-500">{remember ? t('sites.rememberNote') : t('sites.webNote')}</p>
+          </div>
+        )}
+        {insecureFromHttps && <p className="text-xs text-amber-600">{t('sites.mixedContent')}</p>}
         {!online && <p className="text-xs text-amber-600">{t('sites.offlineNote')}</p>}
 
         {error && (

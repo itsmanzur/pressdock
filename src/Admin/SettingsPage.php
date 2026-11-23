@@ -87,6 +87,38 @@ final class SettingsPage {
 	}
 
 	/**
+	 * Address of the hosted Pressdock web app.
+	 *
+	 * @return string
+	 */
+	public static function app_url() {
+		/**
+		 * Filters the Pressdock web app address (for example a self-hosted copy).
+		 *
+		 * @param string $url App URL, ending with a slash.
+		 */
+		return (string) apply_filters( 'pdock_app_url', 'https://itsmanzur.github.io/pressdock/' );
+	}
+
+	/**
+	 * Web app link that pre-fills this site and the current user. The details travel in the URL
+	 * fragment (after "#"), which browsers never send to the server that hosts the app.
+	 *
+	 * @return string
+	 */
+	public static function connect_url() {
+		return self::app_url() . '#connect?' . http_build_query(
+			array(
+				'url'  => home_url(),
+				'user' => wp_get_current_user()->user_login,
+			),
+			'',
+			'&',
+			PHP_QUERY_RFC3986
+		);
+	}
+
+	/**
 	 * Old bookmark: Tools → Pressdock (tools.php?page=pressdock) now lives under the top-level menu.
 	 *
 	 * @return void
@@ -539,14 +571,14 @@ final class SettingsPage {
 							</li>
 							<li>
 								<strong><?php esc_html_e( 'Open the Pressdock app', 'pressdock' ); ?></strong>
-								<span class="pdock-muted"><?php esc_html_e( 'Desktop app for Windows, macOS and Linux, or the installable web app.', 'pressdock' ); ?></span>
+								<span class="pdock-muted"><?php esc_html_e( 'The web app runs in any modern browser and can be installed like an app. This button fills in your site address and username for you; only the Application Password is left to paste.', 'pressdock' ); ?></span>
 								<div class="pdock-actions">
-									<a class="button" href="<?php echo esc_url( 'https://thereadscope.com/pressdock' ); ?>" target="_blank" rel="noopener noreferrer"><span class="dashicons dashicons-download" aria-hidden="true"></span><?php esc_html_e( 'Get the app', 'pressdock' ); ?></a>
+									<a class="button" href="<?php echo esc_url( self::connect_url() ); ?>" target="_blank" rel="noopener noreferrer"><span class="dashicons dashicons-external" aria-hidden="true"></span><?php esc_html_e( 'Open web app', 'pressdock' ); ?></a>
 								</div>
 							</li>
 							<li>
-								<strong><?php esc_html_e( 'Add this site', 'pressdock' ); ?></strong>
-								<span class="pdock-muted"><?php esc_html_e( 'Paste these into "Add site", together with your username and the Application Password.', 'pressdock' ); ?></span>
+								<strong><?php esc_html_e( 'Paste the Application Password and save', 'pressdock' ); ?></strong>
+								<span class="pdock-muted"><?php esc_html_e( 'Adding the site by hand (for example in the desktop app)? Use these values together with the Application Password.', 'pressdock' ); ?></span>
 								<?php
 								self::copy_field( 'pdock-site-url', __( 'Site URL', 'pressdock' ), home_url() );
 								self::copy_field( 'pdock-username', __( 'Username', 'pressdock' ), wp_get_current_user()->user_login );

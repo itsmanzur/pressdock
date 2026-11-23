@@ -45,6 +45,23 @@ cd src-tauri; cargo check
 3. In Pressdock: **Add site** → URL, username, Application Password → **Test connection**.
    The Connector requires HTTPS; for local hosts enable *Allow HTTP on local development hosts* in Pressdock → Settings (or `WP_DEBUG`).
 
+## Web app (GitHub Pages)
+
+The same app is published as a static web app at `https://itsmanzur.github.io/pressdock/` by
+`.github/workflows/pages.yml` (on every push to `main` that touches `desktop/`).
+
+* One-time setup: GitHub → repository **Settings → Pages → Source: GitHub Actions**.
+* Local build of the hosted version: `PRESSDOCK_BASE=/pressdock/ npx vite build --outDir dist-pages`
+  (in Git Bash prefix `MSYS_NO_PATHCONV=1`), then `npx vite preview --outDir dist-pages`.
+* Storage: each site database is a SQLite snapshot in IndexedDB; settings in localStorage. Passwords stay in
+  sessionStorage (this tab) unless the user ticks **Remember the password on this device** (then localStorage).
+* Only one tab may run the app at a time (Web Locks), so two tabs never overwrite each other's snapshot.
+* `public/sw.js` caches the app shell for offline start; it never intercepts requests to WordPress sites.
+* The WordPress dashboard's **Open web app** button links to `#connect?url=…&user=…`; the fragment never reaches
+  the server, and the app removes it from the address bar after reading it.
+* An HTTPS-hosted page cannot call an `http://` site (mixed content): use the site's `https://` address, or the
+  desktop app / a local build for local development sites.
+
 ## Auto-update
 
 `tauri.conf.json` contains the updater public key and endpoint template

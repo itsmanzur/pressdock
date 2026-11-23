@@ -52,7 +52,7 @@
     "appPassword": "Application Password",
     "keepPassword": "(leave empty to keep the saved one)",
     "keychainNote": "The Application Password is stored only in your operating system's secure credential store (keychain), never in the database or any file.",
-    "webNote": "Browser preview mode: the password is kept for this tab session only. Use the desktop app for keychain storage.",
+    "webNote": "Web app: the password is kept only while this tab is open. Tick \"Remember\" to keep it in this browser, or use the desktop app for the OS keychain.",
     "offlineNote": "You are offline. You can save the site now and test the connection later.",
     "test": "Test connection",
     "testing": "Testing…",
@@ -75,7 +75,10 @@
       "timeout": "The site did not answer in time.",
       "network": "Could not reach the site: {{detail}}",
       "http": "The site returned an error: {{detail}}"
-    }
+    },
+    "rememberPassword": "Remember the password on this device",
+    "rememberNote": "The password is stored in this browser's storage. Use this only on your own computer. You can revoke it any time in WordPress (Users → Profile → Application Passwords).",
+    "mixedContent": "This web app runs on HTTPS, so browsers block requests to an http:// site. Use the site's https:// address, or the desktop app for local development sites."
   },
   "grid": {
     "search": "Search…",

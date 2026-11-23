@@ -41,10 +41,10 @@ Pressdock Connector turns supported WordPress data into a sync-ready REST API. T
 
 This plugin is the server side. You edit the data in a separate Pressdock client:
 
-* Pressdock desktop app for Windows, macOS and Linux.
-* Pressdock web app (installable PWA) for any modern browser, including phones.
+* Pressdock web app: https://itsmanzur.github.io/pressdock/ . Runs in any modern browser, can be installed like an app, and keeps working offline. Your data is stored in that browser.
+* Pressdock desktop app for Windows, macOS and Linux (same app, with the password kept in the operating system keychain). Coming soon.
 
-Both talk only to your own site, using the Application Password you create. No Pressdock server sits in between. Downloads and documentation: https://thereadscope.com/pressdock
+The apps talk only to your own site, using the Application Password you create. No Pressdock server sits in between: the web app is static files, and the site address and username that the dashboard button passes to it travel in the URL fragment, which is never sent to the server that hosts it.
 
 **For developers**
 
@@ -58,7 +58,7 @@ An adapter implements `Pressdock\Contracts\EntityAdapter` or extends `Pressdock\
 
 1. Upload the plugin and activate it.
 2. Go to Users → Profile and create an Application Password named "Pressdock".
-3. Open the Pressdock desktop app (https://thereadscope.com/pressdock) and enter your site URL, your username and the Application Password.
+3. Click "Open web app" on the Pressdock dashboard (or open https://itsmanzur.github.io/pressdock/), paste the Application Password and save.
 4. Review which entities are shared under Pressdock → Data sources.
 
 == Frequently Asked Questions ==
