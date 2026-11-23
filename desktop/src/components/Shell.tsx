@@ -7,7 +7,7 @@ import { useSync } from '../state/sync';
 export function Brand() {
   return (
     <div className="flex items-center gap-2 px-4 py-3">
-      <img src="/icon.svg" alt="" className="h-7 w-7" />
+      <img src={`${import.meta.env.BASE_URL}icon.svg`} alt="" className="h-7 w-7" />
       <span className="text-base font-bold tracking-tight">Pressdock</span>
     </div>
   );

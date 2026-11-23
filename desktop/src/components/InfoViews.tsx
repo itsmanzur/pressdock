@@ -13,7 +13,7 @@ export function AboutView() {
   return (
     <div className="flex h-full items-center justify-center p-6">
       <div className="card w-full max-w-md p-8 text-center">
-        <img src="/icon.svg" alt="" className="mx-auto mb-4 h-16 w-16" />
+        <img src={`${import.meta.env.BASE_URL}icon.svg`} alt="" className="mx-auto mb-4 h-16 w-16" />
         <h1 className="text-2xl font-bold">Pressdock</h1>
         <p className="mt-1 text-slate-500">{t('about.by')}</p>
         <p className="mt-1 text-xs text-slate-400">{t('about.version', { v: APP_VERSION })}</p>
