@@ -11,3 +11,5 @@ phpcs.xml.dist
 phpunit.xml.dist
 .wp-env.json
 client/
+desktop/
+.claude/
