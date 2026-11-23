@@ -59,7 +59,20 @@ final class Changes {
 	}
 
 	/**
-	 * Rows after a cursor, oldest first.
+	 * Whether a record already has a change row.
+	 *
+	 * @param string $entity    Entity key.
+	 * @param int    $object_id Object id.
+	 * @return bool
+	 */
+	public static function has( $entity, $object_id ) {
+		global $wpdb;
+		$table = Installer::table( 'changes' );
+		return (bool) $wpdb->get_var( $wpdb->prepare( "SELECT 1 FROM {$table} WHERE entity = %s AND object_id = %d LIMIT 1", $entity, (int) $object_id ) ); // phpcs:ignore WordPress.DB
+	}
+
+	/**
+	 * Rows after a cursor, oldest first. A record shows only at its latest change row, so one cursor walk never repeats it.
 	 *
 	 * @param int      $since    Cursor.
 	 * @param string[] $entities Entity keys to include.
@@ -74,7 +87,7 @@ final class Changes {
 		$table        = Installer::table( 'changes' );
 		$placeholders = implode( ',', array_fill( 0, count( $entities ), '%s' ) );
 		$args         = array_merge( array( (int) $since ), array_values( $entities ), array( (int) $limit ) );
-		$sql          = "SELECT * FROM {$table} WHERE id > %d AND entity IN ({$placeholders}) ORDER BY id ASC LIMIT %d";
+		$sql          = "SELECT c.* FROM {$table} c WHERE c.id > %d AND c.entity IN ({$placeholders}) AND NOT EXISTS ( SELECT 1 FROM {$table} n WHERE n.entity = c.entity AND n.object_id = c.object_id AND n.id > c.id ) ORDER BY c.id ASC LIMIT %d";
 		$rows         = $wpdb->get_results( $wpdb->prepare( $sql, $args ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber
 		return is_array( $rows ) ? $rows : array();
 	}

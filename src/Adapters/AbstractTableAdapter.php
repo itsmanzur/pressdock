@@ -186,7 +186,7 @@ abstract class AbstractTableAdapter implements EntityAdapter, EnumerableAdapter 
 		$rows         = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM `{$table}` WHERE `{$pk}` IN ({$placeholders})", $ids ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber
 		$out          = array();
 		foreach ( (array) $rows as $row ) {
-			$record              = $this->build( $row );
+			$record               = $this->build( $row );
 			$out[ $record['id'] ] = $record;
 		}
 		return $out;

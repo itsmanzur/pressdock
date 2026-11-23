@@ -276,7 +276,7 @@ final class Validator {
 				$sub = self::validate( $field['properties'], $raw[ $name ], $clean[ $name ], true );
 				if ( is_wp_error( $sub ) ) {
 					foreach ( $sub->get_error_codes() as $code ) {
-						$data = $sub->get_error_data( $code );
+						$data      = $sub->get_error_data( $code );
 						$sub_field = is_array( $data ) && isset( $data['field'] ) ? $data['field'] : '';
 						$error->add( $code, $sub->get_error_message( $code ), array( 'field' => $name . '.' . $sub_field ) );
 					}

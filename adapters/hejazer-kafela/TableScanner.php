@@ -98,9 +98,9 @@ final class TableScanner {
 				if ( array() === $slugs ) {
 					return array();
 				}
-				$where = $wpdb->prepare( ' WHERE `' . $pk . '` IN (' . implode( ',', array_fill( 0, count( $slugs ), '%s' ) ) . ')', array_values( $slugs ) ); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders
+				$where = $wpdb->prepare( ' WHERE `' . $pk . '` IN (' . implode( ',', array_fill( 0, count( $slugs ), '%s' ) ) . ')', array_values( $slugs ) ); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders, WordPress.DB.PreparedSQL.NotPrepared
 			} else {
-				$where = $wpdb->prepare( ' WHERE `' . $pk . '` IN (' . implode( ',', array_fill( 0, count( $only ), '%d' ) ) . ')', array_map( 'intval', $only ) ); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders
+				$where = $wpdb->prepare( ' WHERE `' . $pk . '` IN (' . implode( ',', array_fill( 0, count( $only ), '%d' ) ) . ')', array_map( 'intval', $only ) ); // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders, WordPress.DB.PreparedSQL.NotPrepared
 			}
 		}
 

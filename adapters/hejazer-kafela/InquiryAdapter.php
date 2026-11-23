@@ -408,11 +408,11 @@ final class InquiryAdapter extends AbstractTableAdapter implements RestorableAda
 			$formats[]     = '%s';
 		}
 		if ( array_key_exists( 'package_id', $data ) && (int) $data['package_id'] !== (int) $current['package_id'] ) {
-			list( $slug, $title )      = $this->package_columns( $data['package_id'] );
-			$values['package_id']      = $slug;
-			$values['package_title']   = $title; // Snapshot, refreshed only when the package changes.
-			$formats[]                 = '%s';
-			$formats[]                 = '%s';
+			list( $slug, $title )    = $this->package_columns( $data['package_id'] );
+			$values['package_id']    = $slug;
+			$values['package_title'] = $title; // Snapshot, refreshed only when the package changes.
+			$formats[]               = '%s';
+			$formats[]               = '%s';
 		}
 		$toggled = array_key_exists( 'replied', $data ) && (bool) $data['replied'] !== (bool) $current['replied'];
 		if ( $toggled ) {
@@ -477,7 +477,7 @@ final class InquiryAdapter extends AbstractTableAdapter implements RestorableAda
 			'demo'          => ! empty( $before['demo'] ) ? 1 : 0,
 			'ref'           => ! empty( $before['ref'] ) ? (string) $before['ref'] : null,
 		);
-		$ok           = $wpdb->insert( $this->full_table(), $row, array( '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%s' ) );
+		$ok   = $wpdb->insert( $this->full_table(), $row, array( '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%s' ) );
 		\Pothik\InquiryRepository::clear_waiting_cache();
 		return false !== $ok;
 	}
@@ -520,10 +520,9 @@ final class InquiryAdapter extends AbstractTableAdapter implements RestorableAda
 			'admin_post_pothik_bulk_inquiries',
 			function () use ( $by_id ) {
 				// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-				$posted     = isset( $_POST['ids'] ) ? (array) wp_unslash( $_POST['ids'] ) : array();
-				// phpcs:ignore WordPress.Security.NonceVerification.Missing
+				$posted = isset( $_POST['ids'] ) ? (array) wp_unslash( $_POST['ids'] ) : array();
 				$this->bulk = array(
-					'op'  => isset( $_POST['op'] ) ? sanitize_key( wp_unslash( (string) $_POST['op'] ) ) : '',
+					'op'  => isset( $_POST['op'] ) ? sanitize_key( wp_unslash( (string) $_POST['op'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Missing
 					'ids' => array_values( array_filter( array_map( $by_id, array_map( 'sanitize_key', $posted ) ) ) ),
 				);
 			},

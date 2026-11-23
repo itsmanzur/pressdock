@@ -171,67 +171,67 @@ final class PackageAdapter implements EntityAdapter, EnumerableAdapter, Restorab
 		}
 
 		return array(
-			'package_id'     => array(
+			'package_id'      => array(
 				'type'        => 'string',
 				'label'       => __( 'Package id', 'pressdock' ),
 				'create_only' => true,
 				'max_length'  => 50,
 				'description' => 'Kafela package id (a-z, 0-9, _ and -). Generated when omitted. Never "sample".',
 			),
-			'position'       => array(
+			'position'        => array(
 				'type'     => 'int',
 				'label'    => __( 'Position', 'pressdock' ),
 				'readonly' => true,
 			),
-			'status'         => array(
+			'status'          => array(
 				'type'    => 'enum',
 				'label'   => __( 'Published', 'pressdock' ),
 				'options' => array( 'draft', 'published' ),
 			),
-			'title'          => $text( __( 'Package name', 'pressdock' ), 120, array( 'required' => true ) ),
-			'kicker'         => $text( __( 'Eyebrow', 'pressdock' ), 80 ),
-			'route'          => $text( __( 'Flight direction', 'pressdock' ), 80 ),
-			'group_note'     => $text( __( 'Group note', 'pressdock' ), 80 ),
-			'days'           => $int( __( 'Total days', 'pressdock' ), 365 ),
-			'nights_makkah'  => $int( __( 'Makkah nights', 'pressdock' ), 365 ),
-			'nights_madinah' => $int( __( 'Madinah nights', 'pressdock' ), 365 ),
-			'departure'      => $text( __( 'Departure month', 'pressdock' ), 20, array( 'description' => 'YYYY-MM or empty.' ) ),
-			'is_ramadan'     => array(
+			'title'           => $text( __( 'Package name', 'pressdock' ), 120, array( 'required' => true ) ),
+			'kicker'          => $text( __( 'Eyebrow', 'pressdock' ), 80 ),
+			'route'           => $text( __( 'Flight direction', 'pressdock' ), 80 ),
+			'group_note'      => $text( __( 'Group note', 'pressdock' ), 80 ),
+			'days'            => $int( __( 'Total days', 'pressdock' ), 365 ),
+			'nights_makkah'   => $int( __( 'Makkah nights', 'pressdock' ), 365 ),
+			'nights_madinah'  => $int( __( 'Madinah nights', 'pressdock' ), 365 ),
+			'departure'       => $text( __( 'Departure month', 'pressdock' ), 20, array( 'description' => 'YYYY-MM or empty.' ) ),
+			'is_ramadan'      => array(
 				'type'  => 'bool',
 				'label' => __( 'Ramadan departure', 'pressdock' ),
 			),
-			'makkah_hotel'   => $text( __( 'Makkah hotel', 'pressdock' ), 120 ),
-			'makkah_similar' => $text( __( 'Makkah: or similar', 'pressdock' ), 40 ),
-			'makkah_stars'   => $text( __( 'Makkah stars', 'pressdock' ), 40 ),
-			'makkah_meters'  => $int( __( 'Distance to the Haram (m)', 'pressdock' ) ),
-			'madinah_hotel'  => $text( __( 'Madinah hotel', 'pressdock' ), 120 ),
+			'makkah_hotel'    => $text( __( 'Makkah hotel', 'pressdock' ), 120 ),
+			'makkah_similar'  => $text( __( 'Makkah: or similar', 'pressdock' ), 40 ),
+			'makkah_stars'    => $text( __( 'Makkah stars', 'pressdock' ), 40 ),
+			'makkah_meters'   => $int( __( 'Distance to the Haram (m)', 'pressdock' ) ),
+			'madinah_hotel'   => $text( __( 'Madinah hotel', 'pressdock' ), 120 ),
 			'madinah_similar' => $text( __( 'Madinah: or similar', 'pressdock' ), 40 ),
-			'madinah_stars'  => $text( __( 'Madinah stars', 'pressdock' ), 40 ),
-			'madinah_meters' => $int( __( 'Distance to the Prophet\'s Mosque (m)', 'pressdock' ) ),
-			'prices'         => array(
+			'madinah_stars'   => $text( __( 'Madinah stars', 'pressdock' ), 40 ),
+			'madinah_meters'  => $int( __( 'Distance to the Prophet\'s Mosque (m)', 'pressdock' ) ),
+			'prices'          => array(
 				'type'       => 'object',
 				'label'      => __( 'Prices per person (BDT)', 'pressdock' ),
 				'properties' => $prices,
 			),
-			'food_note'      => $text( __( 'Food note', 'pressdock' ), 160 ),
-			'inclusions'     => $list( __( 'Included', 'pressdock' ) ),
-			'exclusions'     => $list( __( 'Not included', 'pressdock' ) ),
-			'itinerary'      => $list( __( 'Day by day', 'pressdock' ) ),
-			'docs'           => $text( __( 'Documents', 'pressdock' ), 200 ),
-			'cancel'         => array(
+			'food_note'       => $text( __( 'Food note', 'pressdock' ), 160 ),
+			'inclusions'      => $list( __( 'Included', 'pressdock' ) ),
+			'exclusions'      => $list( __( 'Not included', 'pressdock' ) ),
+			'itinerary'       => $list( __( 'Day by day', 'pressdock' ) ),
+			'docs'            => $text( __( 'Documents', 'pressdock' ), 200 ),
+			'cancel'          => array(
 				'type'       => 'text',
 				'label'      => __( 'Cancellation', 'pressdock' ),
 				'max_length' => 400,
 			),
-			'agency'         => $text( __( 'Agency name', 'pressdock' ), 80 ),
-			'phone'          => $text( __( 'Phone', 'pressdock' ), 40 ),
-			'whatsapp'       => $text( __( 'WhatsApp', 'pressdock' ), 20 ),
-			'demo'           => array(
+			'agency'          => $text( __( 'Agency name', 'pressdock' ), 80 ),
+			'phone'           => $text( __( 'Phone', 'pressdock' ), 40 ),
+			'whatsapp'        => $text( __( 'WhatsApp', 'pressdock' ), 20 ),
+			'demo'            => array(
 				'type'     => 'bool',
 				'label'    => __( 'Demo row', 'pressdock' ),
 				'readonly' => true,
 			),
-			'bn'             => array(
+			'bn'              => array(
 				'type'       => 'object',
 				'label'      => __( 'Bangla overlay', 'pressdock' ),
 				'properties' => $bn,
@@ -516,9 +516,9 @@ final class PackageAdapter implements EntityAdapter, EnumerableAdapter, Restorab
 			if ( (string) $row['id'] !== $slug ) {
 				continue;
 			}
-			$after        = $this->merge( $row, $data );
-			$after['id']  = $row['id'];
-			$after['demo'] = ! empty( $row['demo'] );
+			$after          = $this->merge( $row, $data );
+			$after['id']    = $row['id'];
+			$after['demo']  = ! empty( $row['demo'] );
 			$rows[ $index ] = $after;
 			$this->save( $rows );
 			Support::fire( 'kafela_package', 'saved', $slug, $row, $after );

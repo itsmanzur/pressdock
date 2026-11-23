@@ -32,14 +32,14 @@ final class Support {
 	 * @var array
 	 */
 	const HOOK_DEFAULTS = array(
-		'kafela_package:created'          => true,
-		'kafela_package:saved'            => true,
-		'kafela_package:deleted'          => true,
-		'kafela_inquiry:created'          => false,
-		'kafela_inquiry:reply_toggled'    => true,
-		'kafela_inquiry:deleted'          => true,
-		'kafela_receipt:saved'            => true,
-		'kafela_settings:saved'           => true,
+		'kafela_package:created'       => true,
+		'kafela_package:saved'         => true,
+		'kafela_package:deleted'       => true,
+		'kafela_inquiry:created'       => false,
+		'kafela_inquiry:reply_toggled' => true,
+		'kafela_inquiry:deleted'       => true,
+		'kafela_receipt:saved'         => true,
+		'kafela_settings:saved'        => true,
 	);
 
 	/**

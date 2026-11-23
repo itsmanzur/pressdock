@@ -86,17 +86,19 @@ final class PushProcessor {
 		}
 
 		$done  = array();
-		$order = array();
-		while ( count( $order ) < $count ) {
+		$order  = array();
+		$placed = 0;
+		while ( $placed < $count ) {
 			$progress = false;
 			foreach ( range( 0, $count - 1 ) as $i ) {
 				if ( isset( $done[ $i ] ) ) {
 					continue;
 				}
 				if ( array() === array_diff( $deps[ $i ], array_keys( $done ) ) ) {
-					$order[]     = $i;
-					$done[ $i ]  = true;
-					$progress    = true;
+					$order[]    = $i;
+					$done[ $i ] = true;
+					$progress   = true;
+					++$placed;
 				}
 			}
 			if ( ! $progress ) { // Circular references: keep the original order for the rest.
@@ -344,11 +346,11 @@ final class PushProcessor {
 		}
 		if ( (int) $op['base_revision'] !== $current || ( $row && ! empty( $row['deleted'] ) ) ) {
 			return array(
-				'op_id'    => $op_id,
-				'status'   => 'conflict',
+				'op_id'     => $op_id,
+				'status'    => 'conflict',
 				'remote_id' => $id,
-				'revision' => $current,
-				'server'   => Presenter::record( $adapter, $id ),
+				'revision'  => $current,
+				'server'    => Presenter::record( $adapter, $id ),
 			);
 		}
 		return null;
@@ -461,11 +463,11 @@ final class PushProcessor {
 		// A uniqueness violation is reported like a conflict, with the record that already holds the value.
 		if ( is_array( $data ) && ! empty( $data['unique'] ) && $adapter instanceof EntityAdapter ) {
 			$result = array(
-				'op_id'    => $op_id,
-				'status'   => 'conflict',
-				'reason'   => 'unique',
-				'field'    => isset( $data['field'] ) ? $data['field'] : null,
-				'error'    => array(
+				'op_id'  => $op_id,
+				'status' => 'conflict',
+				'reason' => 'unique',
+				'field'  => isset( $data['field'] ) ? $data['field'] : null,
+				'error'  => array(
 					'code'    => $err->get_error_code(),
 					'message' => $err->get_error_message(),
 				),

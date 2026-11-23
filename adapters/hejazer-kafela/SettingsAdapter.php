@@ -185,10 +185,10 @@ final class SettingsAdapter extends SingletonAdapter {
 	 */
 	public function update( $id, array $data ) {
 		unset( $id );
-		$before = \Pothik\Admin\Settings::get_all();
-		$merged = array_merge( $before, array_intersect_key( $data, $this->schema() ) ); // Complete object, see class doc.
+		$before                        = \Pothik\Admin\Settings::get_all();
+		$merged                        = array_merge( $before, array_intersect_key( $data, $this->schema() ) ); // Complete object, see class doc.
 		$merged['delete_on_uninstall'] = ! empty( $before['delete_on_uninstall'] );
-		$after  = \Pothik\Admin\Settings::sanitize( $merged );
+		$after                         = \Pothik\Admin\Settings::sanitize( $merged );
 		update_option( self::OPTION, $after, false );
 		Support::fire( 'kafela_settings', 'saved', $before, $after );
 	}

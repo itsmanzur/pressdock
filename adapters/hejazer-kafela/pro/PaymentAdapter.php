@@ -117,11 +117,14 @@ final class PaymentAdapter implements EntityAdapter, EnumerableAdapter {
 	/**
 	 * Per-record rule for the only update there is: a void. Same test as Payments::void().
 	 *
-	 * @param string $action update|delete.
+	 * @param string $action read|update|delete.
 	 * @param int    $id     Object id.
 	 * @return bool
 	 */
 	public function can_object( $action, $id ) {
+		if ( 'read' === $action ) {
+			return true;
+		}
 		if ( 'update' !== $action ) {
 			return false;
 		}
@@ -276,8 +279,8 @@ final class PaymentAdapter implements EntityAdapter, EnumerableAdapter {
 				array_merge(
 					$row,
 					array(
-						'paid_on'    => substr( (string) $row['paid_on'], 0, 10 ),
-						'voided_at'  => (string) $row['voided_at'],
+						'paid_on'     => substr( (string) $row['paid_on'], 0, 10 ),
+						'voided_at'   => (string) $row['voided_at'],
 						'void_reason' => (string) $row['void_reason'],
 					)
 				),

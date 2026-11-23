@@ -10,6 +10,7 @@ namespace Pressdock\Sync;
 
 use Pressdock\Contracts\EntityAdapter;
 use Pressdock\Contracts\EnumerableAdapter;
+use Pressdock\Store\Changes;
 use Pressdock\Tracker;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -78,7 +79,10 @@ final class Baseline {
 				break;
 			}
 			foreach ( $ids as $id ) {
-				Tracker::touch( $key, $id, 'upsert', 'other' );
+				// Records that already have a change row keep it (no duplicate, no revision bump); only older ones get a first change row.
+				if ( ! Changes::has( $key, $id ) ) {
+					Tracker::touch( $key, $id, 'upsert', 'other' );
+				}
 				$last = $id;
 			}
 		}

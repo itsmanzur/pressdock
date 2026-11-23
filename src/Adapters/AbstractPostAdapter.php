@@ -315,7 +315,7 @@ abstract class AbstractPostAdapter implements EntityAdapter, RestorableAdapter, 
 	 */
 	public function create( array $data ) {
 		list( $postarr, $meta, $thumbnail ) = $this->split( $data );
-		$postarr['post_type'] = $this->post_type();
+		$postarr['post_type']               = $this->post_type();
 		if ( empty( $postarr['post_status'] ) ) {
 			$postarr['post_status'] = 'draft';
 		}

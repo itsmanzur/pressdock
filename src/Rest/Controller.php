@@ -328,7 +328,7 @@ final class Controller {
 		$next_cursor = $since;
 		$latest      = array();
 		foreach ( $rows as $row ) {
-			$next_cursor                                    = (int) $row['id'];
+			$next_cursor                                        = (int) $row['id'];
 			$latest[ $row['entity'] . ':' . $row['object_id'] ] = $row;
 		}
 

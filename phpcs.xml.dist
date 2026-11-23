@@ -10,6 +10,11 @@
 	<config name="minimum_supported_wp_version" value="6.0"/>
 	<config name="testVersion" value="7.4-"/>
 	<rule ref="WordPress"/>
+	<!-- Methods documented with {@inheritdoc} implement the EntityAdapter contract. -->
+	<rule ref="Squiz.Commenting.FunctionComment">
+		<exclude name="Squiz.Commenting.FunctionComment.MissingParamTag"/>
+		<exclude name="Squiz.Commenting.FunctionComment.InvalidNoReturn"/>
+	</rule>
 	<rule ref="PHPCompatibilityWP"/>
 	<rule ref="WordPress.WP.I18n">
 		<properties><property name="text_domain" type="array"><element value="pressdock"/></property></properties>
