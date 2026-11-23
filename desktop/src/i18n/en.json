@@ -16,7 +16,9 @@
     "settings": "Settings",
     "about": "About",
     "other": "Other",
-    "noEntities": "No data types cached for this site. Open Sites and use “Test connection” or refresh the schema while online."
+    "noEntities": "No data types cached for this site. Open Sites and use “Test connection” or refresh the schema while online.",
+    "conflicts": "Conflicts",
+    "history": "Sync history"
   },
   "top": {
     "online": "Online",
@@ -26,7 +28,9 @@
     "pending": "Pending changes: {{count}}",
     "conflicts": "Conflicts: {{count}}",
     "sync": "Sync",
-    "syncSoon": "The sync engine arrives in the next release"
+    "syncSoon": "The sync engine arrives in the next release",
+    "syncing": "Syncing…",
+    "lastSync": "Last sync {{date}}"
   },
   "status": {
     "synced": "Synced",
@@ -156,11 +160,68 @@
     "updateFound": "Version {{v}} is available.",
     "installUpdate": "Download and install version {{v}} now? The app will restart.",
     "updateFailed": "Update check failed: {{detail}}",
-    "desktopOnly": "Available in the desktop app."
+    "desktopOnly": "Available in the desktop app.",
+    "autoSync": "Automatic sync",
+    "autoSyncOn": "Sync automatically when online",
+    "everyMinutes": "Every {{count}} min"
   },
   "about": {
     "by": "Pressdock by thereadscope",
     "version": "Version {{v}}",
     "tagline": "Manage your WordPress plugin data offline-first, from your desktop."
+  },
+  "sync": {
+    "cancelled": "Sync cancelled. Nothing was sent.",
+    "needsConfirm": "Changes (deletes or more than 20) are waiting. Press Sync to review and confirm.",
+    "failed": "Sync stopped: {{detail}}",
+    "summary": "Sync done — pushed {{pushed}}, pulled {{pulled}}, conflicts {{conflicts}}, errors {{errors}}",
+    "previewTitle": "Review changes before sending",
+    "previewIntro": "About to send {{creates}} new, {{updates}} edited and {{deletes}} deleted record(s) to the site.",
+    "confirmPush": "Send {{count}} change(s)",
+    "andMore": "{{count}} more",
+    "deleteNote": "Deleted records are moved to the trash on the site where WordPress supports it. An admin can undo a whole batch from Sync history.",
+    "op": {
+      "create": "new",
+      "update": "edit",
+      "delete": "delete"
+    }
+  },
+  "conflicts": {
+    "title": "Conflicts",
+    "none": "No conflicts.",
+    "pick": "Pick a conflict on the left to compare local and server versions.",
+    "mine": "Mine",
+    "server": "Server",
+    "manual": "Edit",
+    "keep": "Keep",
+    "serverOwned": "set by the server",
+    "allMine": "Keep all mine",
+    "allServer": "Keep all server",
+    "applyChoices": "Apply choices",
+    "resolved": "Conflict resolved — the result will be sent on the next sync",
+    "deletedOnServer": "deleted on server",
+    "deletedLocally": "you deleted it",
+    "msgServerDeleted": "This record was deleted on the site, but you edited it here.",
+    "msgLocalDeleted": "You deleted this record here, but it was changed on the site.",
+    "recreate": "Keep mine (re-create it)",
+    "acceptDelete": "Accept the deletion",
+    "deleteAnyway": "Delete it anyway",
+    "keepServerRecord": "Keep the server version",
+    "unique": "“{{field}}” already belongs to another record"
+  },
+  "history": {
+    "title": "Sync history",
+    "none": "No syncs yet.",
+    "when": "When",
+    "pushed": "Pushed",
+    "pulled": "Pulled",
+    "conflicts": "Conflicts",
+    "errors": "Errors",
+    "interrupted": "interrupted",
+    "undo": "Undo this batch",
+    "wasUndone": "undone",
+    "confirmUndo": "Undo this batch on the site? Changes made on the site after this sync are overwritten. Administrators only.",
+    "undone": "Undo restored {{count}} record(s)",
+    "adminOnly": "Only WordPress administrators can undo a batch."
   }
 }

@@ -69,6 +69,8 @@ interface Props {
   onVisibility: (v: VisibilityState) => void;
   globalFilter: string;
   onCount?: (n: number) => void;
+  /** uuid -> last push error */
+  errors?: Record<string, string>;
 }
 
 interface EditingCell {
@@ -76,7 +78,7 @@ interface EditingCell {
   key: string;
 }
 
-function DataGridInner({ entity, rows, selected, onSelect, onOpen, onInlineEdit, visibility, onVisibility, globalFilter, onCount }: Props) {
+function DataGridInner({ entity, rows, selected, onSelect, onOpen, onInlineEdit, visibility, onVisibility, globalFilter, onCount, errors }: Props) {
   const { t } = useTranslation();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [colFilters, setColFilters] = useState<ColumnFiltersState>([]);
@@ -274,6 +276,11 @@ function DataGridInner({ entity, rows, selected, onSelect, onOpen, onInlineEdit,
                 </button>
                 <div className="flex items-center px-2">
                   <span className={`badge no-underline ${STATUS_STYLE[r.status]}`}>{t(`status.${r.status}`)}</span>
+                  {errors?.[r.uuid] && (
+                    <span className="ml-1 cursor-help text-red-600 no-underline" title={errors[r.uuid]} data-testid="row-error">
+                      ⚠
+                    </span>
+                  )}
                 </div>
                 {visibleCols.map((c) => {
                   const def = (c.columnDef.meta as { def: FieldDef }).def;

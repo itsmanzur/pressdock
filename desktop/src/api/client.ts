@@ -1,5 +1,6 @@
 import type { Entity, EntityActions, EntitySchema } from '../schema/types';
 import { platform } from '../platform';
+import type { PullResponse, PushOp, PushResponse, SyncApi } from '../sync/types';
 
 export type ApiErrorKind =
   | 'network' // offline, DNS, TLS, refused
@@ -67,7 +68,7 @@ const utf8b64 = (s: string) => {
 const TIMEOUT_MS = 20_000;
 
 /** Thin typed wrapper over the pressdock/v1 REST API (contract: docs/api-contract.md). */
-export class PressdockApi {
+export class PressdockApi implements SyncApi {
   private readonly base: string;
   private readonly auth: string;
 
@@ -95,14 +96,18 @@ export class PressdockApi {
   }
 
   /** Try pretty permalinks first, then the `?rest_route=` form for sites without them. */
-  private async request<T>(route: string, query: Record<string, string | number> = {}): Promise<T> {
+  private async request<T>(route: string, query: Record<string, string | number> = {}, post?: unknown): Promise<T> {
     const qs = new URLSearchParams(Object.entries(query).map(([k, v]) => [k, String(v)])).toString();
+    const init: RequestInit =
+      post === undefined ? {} : { method: 'POST', body: JSON.stringify(post), headers: { 'Content-Type': 'application/json' } };
     const pretty = `${this.base}/wp-json/pressdock/v1/${route}${qs ? '?' + qs : ''}`;
-    let res = await this.raw(pretty);
+    let res = await this.raw(pretty, init);
     let body = await this.readBody(res);
-    if (res.status === 404 && (body.json as { code?: string } | null)?.code !== 'pdock_unknown_entity') {
+    const code = (body.json as { code?: string } | null)?.code;
+    // no pretty permalinks: retry through ?rest_route=
+    if (res.status === 404 && (body.json === null || code === 'rest_no_route')) {
       const ugly = `${this.base}/?rest_route=${encodeURIComponent('/pressdock/v1/' + route)}${qs ? '&' + qs : ''}`;
-      res = await this.raw(ugly);
+      res = await this.raw(ugly, init);
       body = await this.readBody(res);
     }
     return this.interpret<T>(res, body);
@@ -134,6 +139,18 @@ export class PressdockApi {
     if (j?.code === 'pdock_insecure_transport') throw new ApiError('insecure', msg, res.status, j.code);
     if (res.status === 403) throw new ApiError('forbidden', msg, res.status, j?.code);
     throw new ApiError('http', msg, res.status, j?.code);
+  }
+
+  push(batchId: string, ops: PushOp[]): Promise<PushResponse> {
+    return this.request<PushResponse>('push', {}, { batch_id: batchId, ops });
+  }
+
+  pull(entity: string, since: number, limit: number): Promise<PullResponse> {
+    return this.request<PullResponse>('pull', { entity, since, limit });
+  }
+
+  undo(batchId: string): Promise<{ restored: number; errors: unknown[] }> {
+    return this.request('undo', {}, { batch_id: batchId });
   }
 
   handshake(): Promise<Handshake> {

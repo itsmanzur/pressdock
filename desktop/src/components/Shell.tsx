@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AlertTriangle, ChevronDown, ChevronRight, CloudOff, Globe, Info, Moon, RefreshCw, Settings as Cog, Sun, Wifi } from 'lucide-react';
+import { AlertTriangle, ChevronDown, History, ChevronRight, CloudOff, Globe, Info, Moon, RefreshCw, Settings as Cog, Sun, Wifi } from 'lucide-react';
 import { useApp } from '../state/app';
-import { syncEngine } from '../sync';
+import { useSync } from '../state/sync';
 
 export function Brand() {
   return (
@@ -15,7 +15,7 @@ export function Brand() {
 
 export function Sidebar() {
   const { t } = useTranslation();
-  const { sites, site, entities, counts, view, navigate, selectSite } = useApp();
+  const { sites, site, entities, counts, view, navigate, selectSite, conflicts } = useApp();
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
 
   const groups = useMemo(() => {
@@ -71,6 +71,13 @@ export function Sidebar() {
         ))}
       </nav>
       <div className="space-y-0.5 border-t border-slate-200 p-2 dark:border-slate-800">
+        <button className={navBtn(view.name === 'conflicts')} onClick={() => navigate({ name: 'conflicts' })}>
+          <AlertTriangle size={15} /> {t('nav.conflicts')}
+          {conflicts > 0 && <span className="badge ml-auto bg-red-100 text-red-800">{conflicts}</span>}
+        </button>
+        <button className={navBtn(view.name === 'history')} onClick={() => navigate({ name: 'history' })}>
+          <History size={15} /> {t('nav.history')}
+        </button>
         <button className={navBtn(view.name === 'sites')} onClick={() => navigate({ name: 'sites' })}>
           <Globe size={15} /> {t('nav.sites')}
         </button>
@@ -87,7 +94,8 @@ export function Sidebar() {
 
 export function TopBar() {
   const { t } = useTranslation();
-  const { online, pending, conflicts, theme, setTheme, lang, setLang, site } = useApp();
+  const { pending, conflicts, theme, setTheme, lang, setLang, site } = useApp();
+  const { syncing, connected: online, syncNow, lastSyncAt } = useSync();
   const dark = document.documentElement.classList.contains('dark');
   return (
     <header className="flex h-12 shrink-0 items-center gap-3 border-b border-slate-200 bg-white px-4 dark:border-slate-800 dark:bg-slate-900">
@@ -107,8 +115,8 @@ export function TopBar() {
           <AlertTriangle size={12} /> {t('top.conflicts', { count: conflicts })}
         </span>
       )}
-      <button className="btn" disabled={!syncEngine || !online} title={syncEngine ? t('top.sync') : t('top.syncSoon')}>
-        <RefreshCw size={14} /> {t('top.sync')}
+      <button className="btn" disabled={!site || !online || syncing} onClick={() => void syncNow()} title={lastSyncAt ? t('top.lastSync', { date: new Date(lastSyncAt).toLocaleTimeString() }) : t('top.sync')}>
+        <RefreshCw size={14} className={syncing ? 'animate-spin' : ''} /> {syncing ? t('top.syncing') : t('top.sync')}
       </button>
       <button className="btn btn-ghost btn-icon" onClick={() => setLang(lang === 'en' ? 'bn' : 'en')} title={t('settings.language')}>
         <span className="text-xs font-bold">{lang === 'en' ? 'বাং' : 'EN'}</span>

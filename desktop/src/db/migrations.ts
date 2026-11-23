@@ -67,6 +67,16 @@ export const MIGRATIONS: Migration[] = [
       )`,
     ],
   },
+  {
+    // Sync engine: resume-safe batches, conflict intent, undo bookkeeping.
+    version: 2,
+    statements: [
+      `ALTER TABLE outbox ADD COLUMN batch_id TEXT`,
+      `ALTER TABLE records ADD COLUMN local_deleted INTEGER NOT NULL DEFAULT 0`,
+      `ALTER TABLE sync_log ADD COLUMN undone_at TEXT`,
+      `ALTER TABLE sync_log ADD COLUMN error TEXT`,
+    ],
+  },
 ];
 
 export const LATEST_VERSION = MIGRATIONS[MIGRATIONS.length - 1].version;

@@ -51,6 +51,18 @@ export interface Entity {
 export type RecordStatus = 'synced' | 'dirty' | 'new' | 'deleted' | 'conflict';
 export type RecordData = Record<string, unknown>;
 
+/** Server state kept next to a conflicted record. `_reason`/`_field` are set for unique-value conflicts. */
+export interface ServerSnapshot {
+  entity?: string;
+  remote_id: number | null;
+  uuid?: string;
+  revision: number;
+  deleted: boolean;
+  data: RecordData | null;
+  _reason?: string;
+  _field?: string;
+}
+
 export interface LocalRecord {
   uuid: string;
   entity: string;
@@ -59,6 +71,9 @@ export interface LocalRecord {
   base_revision: number;
   status: RecordStatus;
   updated_at: string;
+  /** user asked to delete this record when the conflict arose */
+  local_deleted?: boolean;
+  server?: ServerSnapshot | null;
 }
 
 export function enumOptions(def: FieldDef): { value: string; label: string }[] {

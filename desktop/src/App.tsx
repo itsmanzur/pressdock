@@ -5,6 +5,7 @@ import { Sidebar, TopBar } from './components/Shell';
 import SitesView from './components/SitesView';
 import EntityView from './components/EntityView';
 import RecordForm from './components/RecordForm';
+import { ConflictsView, HistoryView } from './components/SyncViews';
 import { AboutView, SettingsView } from './components/InfoViews';
 
 export default function App() {
@@ -22,6 +23,12 @@ export default function App() {
       break;
     case 'form':
       main = <RecordForm key={`${view.key}:${view.uuid ?? 'new'}`} entityKey={view.key} uuid={view.uuid} />;
+      break;
+    case 'conflicts':
+      main = <ConflictsView />;
+      break;
+    case 'history':
+      main = <HistoryView />;
       break;
     case 'settings':
       main = <SettingsView />;

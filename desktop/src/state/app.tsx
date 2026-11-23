@@ -9,6 +9,8 @@ export type View =
   | { name: 'sites' }
   | { name: 'entity'; key: string }
   | { name: 'form'; key: string; uuid: string | null }
+  | { name: 'conflicts' }
+  | { name: 'history' }
   | { name: 'settings' }
   | { name: 'about' };
 

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ExternalLink } from 'lucide-react';
 import { useApp, type Theme } from '../state/app';
 import { platform } from '../platform';
+import { useSync } from '../state/sync';
 
 export const SITE_URL = 'https://thereadscope.com/pressdock';
 export const APP_VERSION = '0.1.0';
@@ -29,6 +30,7 @@ export function AboutView() {
 export function SettingsView() {
   const { t } = useTranslation();
   const { theme, setTheme, lang, setLang } = useApp();
+  const { settings, setSettings } = useSync();
   const [upd, setUpd] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -71,6 +73,20 @@ export function SettingsView() {
             <option value="system">{t('settings.system')}</option>
             <option value="light">{t('settings.light')}</option>
             <option value="dark">{t('settings.dark')}</option>
+          </select>
+        </div>
+        <div>
+          <label className="label">{t('settings.autoSync')}</label>
+          <label className="mb-2 flex items-center gap-2">
+            <input type="checkbox" className="accent-brand-600" checked={settings.autoSync} onChange={(e) => setSettings({ ...settings, autoSync: e.target.checked })} />
+            {t('settings.autoSyncOn')}
+          </label>
+          <select className="input max-w-xs" value={settings.intervalMinutes} disabled={!settings.autoSync} onChange={(e) => setSettings({ ...settings, intervalMinutes: Number(e.target.value) })}>
+            {[1, 2, 5, 10, 15, 30, 60].map((m) => (
+              <option key={m} value={m}>
+                {t('settings.everyMinutes', { count: m })}
+              </option>
+            ))}
           </select>
         </div>
         <div>

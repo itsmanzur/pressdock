@@ -23,6 +23,7 @@ export default function EntityView({ entityKey }: { entityKey: string }) {
   const [colMenu, setColMenu] = useState(false);
   const [bulk, setBulk] = useState(false);
   const [shown, setShown] = useState(0);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const colsKey = `cols:${site?.id}:${entityKey}`;
 
@@ -47,6 +48,7 @@ export default function EntityView({ entityKey }: { entityKey: string }) {
   const load = useCallback(async () => {
     if (!repo) return;
     setRows(await repo.listRecords(entityKey, showDeleted));
+    setErrors(await repo.outboxErrors(entityKey));
     setLoading(false);
   }, [repo, entityKey, showDeleted]);
 
@@ -182,6 +184,7 @@ export default function EntityView({ entityKey }: { entityKey: string }) {
             onVisibility={onVisibility}
             globalFilter={search}
             onCount={setShown}
+            errors={errors}
           />
         )}
       </div>

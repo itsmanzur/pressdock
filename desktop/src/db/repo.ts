@@ -10,6 +10,8 @@ interface RecordRow {
   base_revision: number;
   status: RecordStatus;
   updated_at: string;
+  local_deleted?: number;
+  server_json?: string | null;
 }
 
 interface EntityRow {
@@ -31,6 +33,21 @@ export interface OutboxOp {
   created_at: string;
   attempts: number;
   last_error: string | null;
+  batch_id: string | null;
+}
+
+export interface SyncLogRow {
+  id: number;
+  started_at: string;
+  finished_at: string | null;
+  pushed: number;
+  pulled: number;
+  conflicts: number;
+  errors: number;
+  /** comma-separated batch ids pushed during this sync */
+  batch_id: string | null;
+  undone_at: string | null;
+  error: string | null;
 }
 
 const now = () => new Date().toISOString();
@@ -69,6 +86,8 @@ function toRecord(r: RecordRow): LocalRecord {
     base_revision: r.base_revision,
     status: r.status,
     updated_at: r.updated_at,
+    local_deleted: !!r.local_deleted,
+    server: r.server_json ? (JSON.parse(r.server_json) as LocalRecord["server"]) : null,
   };
 }
 
@@ -161,6 +180,38 @@ export class SiteRepo {
     return out;
   }
 
+  // ------------------------------------------------------- sync support
+
+  async getRecords(uuids: string[]): Promise<LocalRecord[]> {
+    return this.getMany(uuids);
+  }
+
+  async recordsByRemoteIds(entity: string, ids: number[]): Promise<LocalRecord[]> {
+    const out: LocalRecord[] = [];
+    for (const part of chunks(ids)) {
+      const rows = await this.db.select<RecordRow>(
+        `SELECT * FROM records WHERE entity = $1 AND remote_id IN (${part.map((_, i) => `$${i + 2}`).join(',')})`,
+        [entity, ...part],
+      );
+      out.push(...rows.map(toRecord));
+    }
+    return out;
+  }
+
+  /** Run statements in one transaction, then tell the UI. Used by the sync engine. */
+  async runTx(stmts: Stmt[]): Promise<void> {
+    await this.db.batch(stmts);
+    this.emit();
+  }
+
+  notify(): void {
+    this.emit();
+  }
+
+  async listSyncLog(limit = 200): Promise<SyncLogRow[]> {
+    return this.db.select<SyncLogRow>(`SELECT * FROM sync_log ORDER BY id DESC LIMIT ${Math.max(1, Math.floor(limit))}`);
+  }
+
   async countByEntity(): Promise<Record<string, number>> {
     const rows = await this.db.select<{ entity: string; n: number }>(
       `SELECT entity, COUNT(*) AS n FROM records WHERE status != 'deleted' GROUP BY entity`,
@@ -180,6 +231,33 @@ export class SiteRepo {
 
   async listOutbox(): Promise<OutboxOp[]> {
     return this.db.select<OutboxOp>('SELECT * FROM outbox ORDER BY rowid');
+  }
+
+  /** uuids having an op that may already be on the server (sent, outcome unknown). Never rewrite those ops. */
+  async frozenUuids(uuids: string[]): Promise<Set<string>> {
+    const out = new Set<string>();
+    for (const part of chunks(uuids)) {
+      const rows = await this.db.select<{ uuid: string }>(
+        `SELECT DISTINCT uuid FROM outbox WHERE attempts > 0 AND last_error IS NULL AND uuid IN (${part.map((_, i) => `$${i + 1}`).join(',')})`,
+        part,
+      );
+      rows.forEach((r) => out.add(r.uuid));
+    }
+    return out;
+  }
+
+  /** uuid -> last push error for records whose op was rejected by the server. */
+  async outboxErrors(entity: string): Promise<Record<string, string>> {
+    const rows = await this.db.select<{ uuid: string; last_error: string }>(
+      `SELECT uuid, last_error FROM outbox WHERE entity = $1 AND last_error IS NOT NULL`,
+      [entity],
+    );
+    return Object.fromEntries(rows.map((r) => [r.uuid, r.last_error]));
+  }
+
+  async listConflicts(): Promise<LocalRecord[]> {
+    const rows = await this.db.select<RecordRow>(`SELECT * FROM records WHERE status = 'conflict' ORDER BY entity, rowid`);
+    return rows.map(toRecord);
   }
 
   // ---------------------------------------------------------------- writes
@@ -211,7 +289,7 @@ export class SiteRepo {
     return uuid;
   }
 
-  private buildUpdate(entity: Entity, rec: LocalRecord, patch: RecordData): Stmt[] {
+  private buildUpdate(entity: Entity, rec: LocalRecord, patch: RecordData, frozen: Set<string> = new Set()): Stmt[] {
     // keep only fields that really change
     const changed: RecordData = {};
     for (const [k, v] of Object.entries(patch)) if (!sameValue(rec.data[k], v)) changed[k] = v;
@@ -220,7 +298,7 @@ export class SiteRepo {
     const ts = now();
     const stmts: Stmt[] = [];
 
-    if (rec.status === 'new') {
+    if (rec.status === 'new' && !frozen.has(rec.uuid)) {
       // Never synced: fold the edit into the still-pending create op (server must see ONE create).
       stmts.push({
         sql: `UPDATE records SET data_json = $1, updated_at = $2 WHERE uuid = $3`,
@@ -233,7 +311,7 @@ export class SiteRepo {
       return stmts;
     }
 
-    const nextStatus: RecordStatus = rec.status === 'conflict' ? 'conflict' : 'dirty';
+    const nextStatus: RecordStatus = rec.status === 'conflict' ? 'conflict' : rec.status === 'new' ? 'new' : 'dirty';
     stmts.push({
       sql: `UPDATE records SET data_json = $1, status = $2, updated_at = $3 WHERE uuid = $4`,
       params: [JSON.stringify(merged), nextStatus, ts, rec.uuid],
@@ -252,22 +330,23 @@ export class SiteRepo {
   async updateRecord(entity: Entity, uuid: string, patch: RecordData): Promise<void> {
     const rec = await this.getRecord(uuid);
     if (!rec || rec.status === 'deleted') throw new Error('Record not found');
-    await this.db.batch(this.buildUpdate(entity, rec, patch));
+    await this.db.batch(this.buildUpdate(entity, rec, patch, await this.frozenUuids([uuid])));
     this.emit();
   }
 
   /** Bulk edit: same patch for many records, one transaction. */
   async updateMany(entity: Entity, uuids: string[], patch: RecordData): Promise<number> {
     const recs = (await this.getMany(uuids)).filter((r) => r.status !== 'deleted');
-    const stmts = recs.flatMap((r) => this.buildUpdate(entity, r, patch));
+    const frozen = await this.frozenUuids(recs.map((r) => r.uuid));
+    const stmts = recs.flatMap((r) => this.buildUpdate(entity, r, patch, frozen));
     await this.db.batch(stmts);
     this.emit();
     return recs.length;
   }
 
-  private buildDelete(rec: LocalRecord): Stmt[] {
+  private buildDelete(rec: LocalRecord, frozen: Set<string> = new Set()): Stmt[] {
     if (rec.status === 'deleted') return [];
-    if (rec.status === 'new') {
+    if (rec.status === 'new' && !frozen.has(rec.uuid)) {
       // Never reached the server: remove it and its pending ops entirely.
       return [
         { sql: `DELETE FROM outbox WHERE uuid = $1`, params: [rec.uuid] },
@@ -276,7 +355,10 @@ export class SiteRepo {
     }
     return [
       // pending edits are moot once the record is deleted
-      { sql: `DELETE FROM outbox WHERE uuid = $1 AND op = 'update'`, params: [rec.uuid] },
+      {
+        sql: `DELETE FROM outbox WHERE uuid = $1 AND op = 'update' AND NOT (attempts > 0 AND last_error IS NULL)`,
+        params: [rec.uuid],
+      },
       {
         sql: `UPDATE records SET status = 'deleted', updated_at = $1 WHERE uuid = $2`,
         params: [now(), rec.uuid],
@@ -292,7 +374,8 @@ export class SiteRepo {
   /** Soft delete (status = deleted) until synced. Returns how many records were affected. */
   async deleteRecords(uuids: string[]): Promise<number> {
     const recs = await this.getMany(uuids);
-    const stmts = recs.flatMap((r) => this.buildDelete(r));
+    const frozen = await this.frozenUuids(recs.map((r) => r.uuid));
+    const stmts = recs.flatMap((r) => this.buildDelete(r, frozen));
     await this.db.batch(stmts);
     this.emit();
     return recs.length;
