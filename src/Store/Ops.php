@@ -27,9 +27,10 @@ final class Ops {
 	 * @return array|null
 	 */
 	public static function find( $op_id ) {
+		// Scoped to the caller: another user cannot replay an op id to read its stored result.
 		global $wpdb;
 		$table = Installer::table( 'ops' );
-		$json  = $wpdb->get_var( $wpdb->prepare( "SELECT result FROM {$table} WHERE op_id = %s", $op_id ) );
+		$json  = $wpdb->get_var( $wpdb->prepare( "SELECT result FROM {$table} WHERE op_id = %s AND user_id = %d", $op_id, get_current_user_id() ) );
 		if ( ! is_string( $json ) || '' === $json ) {
 			return null;
 		}

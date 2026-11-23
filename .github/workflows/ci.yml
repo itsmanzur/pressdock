@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  phpcs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+      - run: composer install --no-interaction --prefer-dist
+      - run: vendor/bin/phpcs
+
+  phpunit:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { php: '7.4', wp: '6.0' }
+          - { php: '8.1', wp: '6.5' }
+          - { php: '8.3', wp: 'latest' }
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: wptest
+        ports: [ '3306:3306' ]
+        options: >-
+          --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mysqli
+          tools: composer
+      - run: composer install --no-interaction --prefer-dist
+      - name: Install WordPress test suite
+        run: bash tests/bin/install-wp-tests.sh wptest root '' 127.0.0.1:3306 ${{ matrix.wp }}
+      - run: vendor/bin/phpunit
+        env:
+          WP_TESTS_DIR: /tmp/wordpress-tests-lib
