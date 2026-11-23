@@ -141,6 +141,13 @@ select, input[type=search], textarea {
 .pr-P2 { background: var(--info-soft); color: var(--info); }
 .pr-P3 { background: var(--gray-soft); color: var(--muted); }
 .st-done { background: var(--ok-soft); color: var(--ok); }
+.tier-Free { background: var(--ok-soft); color: var(--ok); }
+.tier-Pro { background: linear-gradient(90deg, #f59e0b, #d97706); color: #fff; }
+.tier-FreePro { background: linear-gradient(90deg, var(--ok-soft) 50%, #fde68a 50%); color: var(--ink); }
+.tier-Internal { background: var(--gray-soft); color: var(--muted); }
+.tiers td:first-child { font-weight: 500; }
+.tiers .pro { background: color-mix(in srgb, #f59e0b 10%, transparent); }
+.rule { padding-left: 18px; margin: 8px 0 0; } .rule li { margin: 4px 0; }
 .empty { padding: 30px; text-align: center; color: var(--muted); }
 .theme-group { margin: 22px 0 10px; display: flex; align-items: baseline; gap: 10px; }
 .theme-group h3 { margin: 0; font-size: 16px; }
@@ -176,6 +183,7 @@ footer { margin-top: 40px; color: var(--muted); font-size: 12.5px; }
       <a href="#market">বাজার</a>
       <a href="#compare">তুলনা</a>
       <a href="#edge">আমাদের সুবিধা</a>
+      <a href="#tiers">Free / Pro</a>
       <a href="#roadmap">রোডম্যাপ</a>
     </nav>
     <button class="btn" id="themeBtn" type="button" title="Theme">◐</button>
@@ -237,6 +245,43 @@ footer { margin-top: 40px; color: var(--muted); font-size: 12.5px; }
     </div>
   </section>
 
+  <!-- ======================== TIERS ======================== -->
+  <section id="tiers">
+    <h2>Free বনাম Pro</h2>
+    <p class="lead">মূল প্রতিশ্রুতি — অফলাইনে এডিট আর নিরাপদ সিঙ্ক — ফ্রিতেই থাকবে, যাতে বেশি মানুষ শুরু করে। আয় আসবে বেশি ডেটা সোর্স, টিম আর ব্যবসায়িক কাজ থেকে। প্রস্তাব; দাম ও সীমা চূড়ান্ত হয়নি।</p>
+    <div class="grid g2">
+      <div class="card pad">
+        <b>কাঠামোর নিয়ম</b>
+        <ol class="rule">
+          <li><b>Pro = আলাদা প্লাগিন</b> (<code>Pressdock Pro</code>)। WordPress.org-এর নিয়মে ফ্রি প্লাগিনের ভেতরে লাইসেন্স দিয়ে ফিচার আটকানো যায় না। Pro প্লাগিন hook দিয়ে ফিচার যোগ করবে — Hejazer Kafela / Kafela Pro-র মতো।</li>
+          <li><b>লাইসেন্স সাইটে, অ্যাপে নয়।</b> Pro সক্রিয় ও বৈধ হলে <code>/handshake</code> ফিচার ফ্ল্যাগ পাঠায়; অ্যাপ ও PWA সেই অনুযায়ী Pro অংশ খোলে। একটাই অ্যাপ বিল্ড।</li>
+          <li><b>আসল সুরক্ষা সার্ভারে।</b> Pro adapter, অনুমতি, অডিট, Undo-র মেয়াদ, webhooks থাকে Pro প্লাগিনের PHP-তে। অ্যাপের UI-ফ্ল্যাগ (রিপোর্ট, ভিউ) হালকা সুরক্ষা — এটা মেনে নেওয়া যায়।</li>
+          <li><b>নিরাপত্তা কখনো পেওয়ালে নয়।</b> conflict সমাধান, ডিভাইস revoke, ব্যাকআপ ফ্রিতে।</li>
+          <li><b>লাইসেন্স সার্ভার নিজে নয়।</b> Freemius / Lemon Squeezy / EDD Software Licensing — পেমেন্ট, অ্যাক্টিভেশন, আপডেট তারাই সামলায়।</li>
+        </ol>
+      </div>
+      <div class="card tablewrap">
+        <table class="tiers">
+          <thead><tr><th>ফিচার</th><th class="c">Free</th><th class="c pro">Pro</th></tr></thead>
+          <tbody>
+            <tr><td>সাইট সংখ্যা</td><td class="c">১</td><td class="c pro">একাধিক / এজেন্সি</td></tr>
+            <tr><td>ডেটা সোর্স</td><td class="c">Posts, Pages, Generic CPT, Hejazer Kafela (ফ্রি)</td><td class="c pro">+ ACF, JetEngine, Pods, WooCommerce, Kafela Pro, Adapter Builder</td></tr>
+            <tr><td>অফলাইন এডিট, সিঙ্ক, conflict</td><td class="c"><span class="y">●</span></td><td class="c pro"><span class="y">●</span></td></tr>
+            <tr><td>Undo রাখার মেয়াদ</td><td class="c">৩ দিন</td><td class="c pro">৩৬৫ দিন পর্যন্ত</td></tr>
+            <tr><td>ইমপোর্ট / এক্সপোর্ট</td><td class="c">CSV</td><td class="c pro">+ XLSX, টেমপ্লেট, নির্ধারিত, URL থেকে ছবি</td></tr>
+            <tr><td>বাল্ক এডিট</td><td class="c">মান বসানো, ক্লিয়ার</td><td class="c pro">+ find &amp; replace</td></tr>
+            <tr><td>সেভ ভিউ, রিপোর্ট, চার্ট, PDF</td><td class="c"><span class="n">—</span></td><td class="c pro"><span class="y">●</span></td></tr>
+            <tr><td>টিম: রোল/ফিল্ড অনুমতি, অডিট লগ, রেকর্ড হিস্ট্রি</td><td class="c"><span class="n">—</span></td><td class="c pro"><span class="y">●</span></td></tr>
+            <tr><td>Sheets সিঙ্ক, পুশ নোটিফিকেশন, webhooks</td><td class="c"><span class="n">—</span></td><td class="c pro"><span class="y">●</span></td></tr>
+            <tr><td>ডিভাইস revoke, লোকাল ব্যাকআপ</td><td class="c"><span class="y">●</span></td><td class="c pro"><span class="y">●</span></td></tr>
+            <tr><td>সাপোর্ট</td><td class="c">ফোরাম</td><td class="c pro">অগ্রাধিকার</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="grid g3" style="margin-top:14px" id="tierBars"></div>
+  </section>
+
   <!-- ======================== ROADMAP ======================== -->
   <section id="roadmap">
     <h2>ফিচার রোডম্যাপ</h2>
@@ -246,6 +291,7 @@ footer { margin-top: 40px; color: var(--muted); font-size: 12.5px; }
       <input type="search" id="q" placeholder="খুঁজুন… (নাম, বিবরণ, ফাইল)" aria-label="খুঁজুন">
       <select id="fPart" aria-label="অংশ"><option value="">সব অংশ</option><option>Plugin</option><option>App</option><option>PWA</option></select>
       <select id="fStatus" aria-label="স্ট্যাটাস"><option value="">সব স্ট্যাটাস</option></select>
+      <select id="fTier" aria-label="Free/Pro"><option value="">Free + Pro</option><option value="Free">Free</option><option value="Pro">Pro</option><option value="FreePro">Free + Pro দুটোতে</option><option value="Internal">Internal</option></select>
       <select id="fPri" aria-label="অগ্রাধিকার"><option value="">সব অগ্রাধিকার</option><option>P0</option><option>P1</option><option>P2</option><option>P3</option></select>
       <select id="sort" aria-label="সাজানো"><option value="theme">থিম অনুযায়ী</option><option value="pri">অগ্রাধিকার অনুযায়ী</option><option value="status">স্ট্যাটাস অনুযায়ী</option></select>
       <button class="btn" id="exportBtn" type="button">⬇ Export JSON</button>
@@ -487,9 +533,31 @@ const FEATURES = [
     ['অ্যাপ ডাউনলোড করে <code>POST /media</code>; বড় ফাইলে কিউ।']],
 
   // --- Business -------------------------------------------------------------------------------
-  ['B-01', 'ব্যবসা ও বিতরণ', 'Free বনাম Pro ভাগ ও লাইসেন্স', ['Plugin', 'App'], 'P1', 'M', 'idea',
-    'Free: ১টি সাইট, core + ১-২ adapter, সাধারণ সিঙ্ক। Pro: মাল্টি-সাইট, ACF/Woo adapter, রিপোর্ট, শিট সিঙ্ক, টিম অনুমতি।', 'টেকসই আয়।',
-    ['লাইসেন্স কী প্লাগিনে (সাইট-ভিত্তিক); অ্যাপ সাইটের <code>/handshake</code> থেকে ফিচার ফ্ল্যাগ পড়ে — অ্যাপে আলাদা লাইসেন্স লাগবে না।']],
+  ['B-01', 'Pro ও আয়', 'Free/Pro ভাগ, দাম ও প্ল্যান চূড়ান্ত করা', ['Plugin', 'App'], 'P0', 'S', 'planned',
+    'কোন ফিচার কোন দিকে (উপরের "Free বনাম Pro" টেবিল), প্ল্যান (যেমন Personal ১ সাইট / Business ৫ / Agency সীমাহীন) ও বার্ষিক দাম।',
+    'কোড কোথায় থাকবে তা এই সিদ্ধান্তে ঠিক হয় — তাই সবার আগে।',
+    ['টেবিল রিভিউ করে চূড়ান্ত করুন; প্রতিটি কার্ডের Free/Pro ট্যাগ মিলিয়ে নিন।', 'প্রতিযোগীদের দাম দেখুন (যেমন Admin Columns Pro প্রায় $79/বছর থেকে)।', 'বাংলাদেশি বাজারের জন্য BDT দাম / লোকাল পেমেন্ট বিবেচনা।']],
+  ['B-06', 'Pro ও আয়', 'Pressdock Pro প্লাগিনের কাঠামো', ['Plugin'], 'P0', 'M', 'idea',
+    'আলাদা প্লাগিন <code>pressdock-pro</code>: ফ্রি Connector সক্রিয় না থাকলে নোটিস দেয়; hook দিয়ে Pro adapter ও ফিচার যোগ করে।',
+    'WordPress.org-এর নিয়ম মানা (ফ্রি প্লাগিনে লক করা ফিচার নয়) আর আসল সুরক্ষা সার্ভারে রাখা।',
+    ['ফ্রি Connector-এ এক্সটেনশন পয়েন্ট যোগ: <code>pdock_features</code> ফিল্টার, <code>pdock_snapshot_days_max</code>, <code>pdock_max_sites</code> ইত্যাদি; ডিফল্টে Free সীমা।',
+     'Pro প্লাগিন এগুলো বাড়ায় এবং <code>adapters/</code> (ACF, Woo, JetEngine…) রেজিস্টার করে।',
+     'অ্যাডমিন ড্যাশবোর্ডে "Pro" ট্যাব: লাইসেন্স স্ট্যাটাস; ফ্রিতে আপগ্রেড কার্ড (বিরক্তিকর নয়, ড্যাশবোর্ডেই সীমাবদ্ধ)।']],
+  ['B-07', 'Pro ও আয়', 'লাইসেন্স সেবা যুক্ত করা (Freemius / Lemon Squeezy / EDD)', ['Plugin'], 'P0', 'M', 'idea',
+    'লাইসেন্স কী অ্যাক্টিভেশন, সাইট-লিমিট, আপডেট, মেয়াদ শেষে Pro ফিচার বন্ধ (ডেটা কখনো লক নয়)।',
+    'নিজে লাইসেন্স সার্ভার বানালে নিরাপত্তা ও রক্ষণাবেক্ষণের ঝামেলা।',
+    ['সেবা বেছে SDK শুধু Pro প্লাগিনে; লাইসেন্স চেক cache করে (দিনে একবার), অফলাইনে grace period।',
+     'মেয়াদ শেষে: Pro adapter শুধু-পড়া (read-only) হয়ে যায়, যাতে ব্যবহারকারীর ডেটা আটকে না থাকে।']],
+  ['B-08', 'Pro ও আয়', '<code>/handshake</code>-এ ফিচার ফ্ল্যাগ ও অ্যাপে Pro গেটিং', ['Plugin', 'App', 'PWA'], 'P0', 'M', 'idea',
+    'সাইট জানায় কোন ফিচার চালু (<code>features: ["xlsx","reports","views",…]</code>, <code>limits</code>); অ্যাপ সেই অনুযায়ী মেনু/বোতাম দেখায় বা "Pro" ব্যাজ দেয়।',
+    'একটাই অ্যাপ বিল্ড; ব্যবহারকারীকে অ্যাপে আলাদা লাইসেন্স দিতে হয় না।',
+    ['প্লাগিন: <code>Controller::handshake</code>-এ <code>features</code>/<code>limits</code> (ফ্রিতে ডিফল্ট, Pro ফিল্টার দিয়ে বাড়ায়); <code>docs/api-contract.md</code> আপডেট।',
+     'অ্যাপ: <code>useFeature("xlsx")</code> হুক; F-04-এর XLSX/টেমপ্লেট/find-replace এর আওতায়; লক অবস্থায় আপগ্রেড লিংক।',
+     'মাল্টি-সাইট সীমা: ফ্রিতে দ্বিতীয় সাইট যোগ করলে "একটি সাইট Pro ছাড়া" বার্তা — শুধু UI-সীমা, সৎভাবে লেখা।',
+     'টেস্ট: ফ্ল্যাগ ছাড়া পুরোনো সাইট = Free আচরণ (পশ্চাৎ-সামঞ্জস্য)।']],
+  ['B-09', 'Pro ও আয়', 'ওয়েবসাইট, চেকআউট ও Pro ডকুমেন্টেশন', ['Plugin', 'App'], 'P1', 'M', 'idea',
+    'প্রাইসিং পেজ, তুলনা টেবিল, ডেমো ভিডিও, Pro ইনস্টল গাইড, রিফান্ড নীতি।', 'বিক্রির জন্য দরকার।',
+    ['thereadscope.com/pressdock-এ পেজ; প্লাগিন ড্যাশবোর্ড ও অ্যাপের আপগ্রেড লিংক এখানে।']],
   ['B-02', 'ব্যবসা ও বিতরণ', 'WordPress.org-এ প্রকাশ', ['Plugin'], 'P1', 'M', 'planned',
     'readme, স্ক্রিনশট, ব্যানার, অনুবাদ-প্রস্তুত (bn_BD)।', 'আবিষ্কারযোগ্যতা ও বিশ্বাস।',
     ['Plugin Check টুল পাস; <code>.distignore</code> আছে; bn_BD .po ফাইল।']],
@@ -514,6 +582,21 @@ const FEATURES = [
     'ব্যবহারকারীর অনুমতিতে এরর লগ পাঠানো, ব্যক্তিগত ডেটা ছাড়া।', 'বাস্তব সমস্যা দ্রুত ধরা।',
     ['Settings-এ টগল; লগ লোকালে, "Send report" বোতাম দিয়ে পাঠানো।']]
 ];
+
+// Free / Pro / FreePro (basic in Free, more in Pro) / Internal (not a user feature)
+const TIER = {
+  'F-01': 'Free', 'F-02': 'Free', 'F-03': 'Free', 'F-04': 'FreePro', 'F-05': 'Free',
+  'U-01': 'Free', 'U-02': 'Pro', 'U-03': 'Pro', 'U-04': 'Pro', 'U-05': 'Free',
+  'A-01': 'Pro', 'A-02': 'Pro', 'A-03': 'Pro', 'A-04': 'Pro', 'A-05': 'Free', 'A-06': 'Pro', 'A-07': 'Pro', 'A-08': 'Free',
+  'S-01': 'Pro', 'S-02': 'Free', 'S-03': 'Pro', 'S-04': 'Pro', 'S-05': 'Free', 'S-06': 'Free',
+  'M-01': 'Free', 'M-02': 'Pro', 'M-03': 'Pro', 'M-04': 'FreePro',
+  'D-01': 'Pro', 'D-02': 'Pro', 'D-03': 'Pro', 'D-04': 'Pro',
+  'B-01': 'Internal', 'B-02': 'Internal', 'B-03': 'Internal', 'B-04': 'Pro', 'B-05': 'Free',
+  'B-06': 'Internal', 'B-07': 'Internal', 'B-08': 'Internal', 'B-09': 'Internal',
+  'Q-01': 'Internal', 'Q-02': 'Internal', 'Q-03': 'Internal'
+};
+const TIER_LABEL = { Free: 'Free', Pro: '★ Pro', FreePro: 'Free + Pro', Internal: 'Internal' };
+const tierOf = (f) => TIER[f[0]] || 'Internal';
 
 /* ---------------------------------------------------------------- storage */
 const KEY = 'pressdock-roadmap-v1';
@@ -590,6 +673,17 @@ function summary() {
     return `<div><div style="display:flex;justify-content:space-between"><b>${p}</b><span class="note">${bnNum(d)}/${bnNum(items.length)}</span></div>
       <div class="bar"><span class="done" style="width:${w(d)}%"></span><span class="prog" style="width:${w(g)}%"></span></div></div>`;
   }).join('');
+  const tierLine = (label, list) => {
+    const d = list.filter((f) => statusOf(f) === 'done').length;
+    const g = list.filter((f) => statusOf(f) === 'progress').length;
+    const w = (x) => (list.length ? (x / list.length) * 100 : 0);
+    return `<div class="card pad"><div style="display:flex;justify-content:space-between"><b>${label}</b><span class="note">${bnNum(d)}/${bnNum(list.length)} Done</span></div>
+      <div class="bar"><span class="done" style="width:${w(d)}%"></span><span class="prog" style="width:${w(g)}%"></span></div></div>`;
+  };
+  $('#tierBars').innerHTML =
+    tierLine('Free ফিচার', live.filter((f) => tierOf(f) === 'Free' || tierOf(f) === 'FreePro')) +
+    tierLine('★ Pro ফিচার', live.filter((f) => tierOf(f) === 'Pro' || tierOf(f) === 'FreePro')) +
+    tierLine('Pro চালুর কাজ (B-01, B-06–B-09)', live.filter((f) => ['B-01', 'B-06', 'B-07', 'B-08', 'B-09'].includes(f[0])));
 }
 
 function card(f) {
@@ -599,6 +693,7 @@ function card(f) {
     <div class="row"><h3>${esc(title)}</h3><span class="id">${id}</span></div>
     <div class="row">
       <span class="chip pr-${pri}">${pri}</span>
+      <span class="chip tier-${tierOf(f)}" title="Free/Pro">${TIER_LABEL[tierOf(f)]}</span>
       ${parts.map((p) => `<span class="chip brand">${p}</span>`).join('')}
       <span class="chip" title="কাজের আকার">Size ${size}</span>
       ${st === 'done' ? '<span class="chip st-done">✓ Done</span>' : ''}
@@ -616,10 +711,10 @@ function card(f) {
 
 function render() {
   const q = $('#q').value.trim().toLowerCase();
-  const part = $('#fPart').value, fst = $('#fStatus').value, pri = $('#fPri').value, sort = $('#sort').value;
+  const part = $('#fPart').value, fst = $('#fStatus').value, pri = $('#fPri').value, sort = $('#sort').value, tier = $('#fTier').value;
   let items = FEATURES.filter((f) =>
-    (!part || f[3].includes(part)) && (!fst || statusOf(f) === fst) && (!pri || f[4] === pri) &&
-    (!q || [f[0], f[1], f[2], f[7], f[8], f[9].join(' '), noteOf(f)].join(' ').toLowerCase().includes(q)));
+    (!part || f[3].includes(part)) && (!fst || statusOf(f) === fst) && (!pri || f[4] === pri) && (!tier || tierOf(f) === tier) &&
+    (!q || [f[0], f[1], f[2], f[7], f[8], f[9].join(' '), noteOf(f), TIER_LABEL[tierOf(f)]].join(' ').toLowerCase().includes(q)));
   if (sort === 'pri') items = items.slice().sort((a, b) => PRI_ORDER[a[4]] - PRI_ORDER[b[4]] || a[0].localeCompare(b[0]));
   if (sort === 'status') items = items.slice().sort((a, b) => ST_ORDER[statusOf(a)] - ST_ORDER[statusOf(b)] || PRI_ORDER[a[4]] - PRI_ORDER[b[4]]);
 
@@ -640,7 +735,7 @@ function render() {
 }
 
 /* ---------------------------------------------------------------- events */
-['#q', '#fPart', '#fStatus', '#fPri', '#sort'].forEach((s) => $(s).addEventListener('input', render));
+['#q', '#fPart', '#fStatus', '#fPri', '#fTier', '#sort'].forEach((s) => $(s).addEventListener('input', render));
 
 $('#list').addEventListener('change', (e) => {
   const el = e.target; const id = el.dataset.id;
