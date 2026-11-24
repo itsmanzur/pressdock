@@ -109,7 +109,8 @@ export class PressdockApi implements SyncApi {
     const init: RequestInit =
       post === undefined ? {} : { method: 'POST', body: JSON.stringify(post), headers: { 'Content-Type': 'application/json' } };
     const pretty = `${this.base}/wp-json/pressdock/v1/${route}${qs ? '?' + qs : ''}`;
-    const ugly = `${this.base}/?rest_route=${encodeURIComponent('/pressdock/v1/' + route)}${qs ? '&' + qs : ''}`;
+    // index.php explicitly: some servers (nginx) refuse the CORS preflight (OPTIONS) on "/" with 405
+    const ugly = `${this.base}/index.php?rest_route=${encodeURIComponent('/pressdock/v1/' + route)}${qs ? '&' + qs : ''}`;
 
     if (routeStyle.get(this.base) === 'query') {
       const res = await this.raw(ugly, init);

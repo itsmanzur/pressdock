@@ -73,7 +73,7 @@
       "forbidden": "This user is not allowed to use Pressdock on this site.",
       "insecure": "The Connector requires HTTPS. Use an https:// address (or enable HTTP for local development hosts in Tools → Pressdock).",
       "timeout": "The site did not answer in time.",
-      "network": "Could not reach the site: {{detail}}",
+      "network": "Could not reach the site: {{detail}}. Check the address and your connection. For a site on this computer or your local network, the browser may block the web app until you allow local network access (or use the desktop app).",
       "http": "The site returned an error: {{detail}}"
     },
     "rememberPassword": "Remember the password on this device",

@@ -31,7 +31,7 @@ describe('REST URL form fallback', () => {
     await a.handshake();
     const urls = f.mock.calls.map(([u]) => String(u));
     expect(urls.filter((u) => u.includes('/wp-json/'))).toHaveLength(1); // second call goes straight to ?rest_route
-    expect(urls[1]).toContain('?rest_route=%2Fpressdock%2Fv1%2Fhandshake');
+    expect(urls[1]).toContain('/index.php?rest_route=%2Fpressdock%2Fv1%2Fhandshake');
   });
 
   it('falls back when /wp-json returns an HTML page (200) or a 404', async () => {
