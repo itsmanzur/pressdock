@@ -131,12 +131,17 @@ final class Controller {
 	}
 
 	/**
-	 * Whether the connection is secure enough: HTTPS, WP_DEBUG, or an allowed local development host.
+	 * Whether the connection is secure enough to carry an Application Password.
+	 *
+	 * HTTPS always; plain HTTP only on a site whose environment type is "local" (the same rule
+	 * WordPress core uses for Application Passwords), or when an administrator allowed local HTTP
+	 * and the site really runs on a local development host. WP_DEBUG is deliberately not a reason:
+	 * it is often left on by mistake on live sites.
 	 *
 	 * @return bool
 	 */
 	public static function transport_ok() {
-		if ( is_ssl() || ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ) {
+		if ( is_ssl() || 'local' === wp_get_environment_type() ) {
 			return true;
 		}
 		return (bool) Settings::get( 'allow_local_http' ) && self::is_local_host();

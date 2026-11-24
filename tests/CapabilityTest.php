@@ -20,14 +20,39 @@ class CapabilityTest extends Pdock_Test_Case {
 	}
 
 	/**
-	 * HTTP is refused unless WP_DEBUG, local-host setting or HTTPS applies.
+	 * Plain HTTP is refused on a non-local site, even with WP_DEBUG on (as it is in the test suite).
 	 */
 	public function test_insecure_transport_is_refused() {
 		unset( $_SERVER['HTTPS'] );
-		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-			$this->markTestSkipped( 'WP_DEBUG allows plain HTTP by design.' );
+		if ( 'local' === wp_get_environment_type() ) {
+			$this->markTestSkipped( 'The "local" environment type allows plain HTTP by design.' );
 		}
+		$this->assertTrue( defined( 'WP_DEBUG' ) && WP_DEBUG, 'The test suite runs with WP_DEBUG on.' );
+		$response = $this->call( 'GET', '/handshake' );
+		$this->assertSame( 403, $response->get_status() );
+		$this->assertSame( 'pdock_insecure_transport', $response->get_data()['code'] );
+	}
+
+	/**
+	 * The "allow local HTTP" setting only opens plain HTTP on a local development host.
+	 */
+	public function test_local_http_setting_needs_a_local_host() {
+		unset( $_SERVER['HTTPS'] );
+		if ( 'local' === wp_get_environment_type() ) {
+			$this->markTestSkipped( 'The "local" environment type allows plain HTTP by design.' );
+		}
+		update_option( Pressdock\Settings::OPTION, array_merge( Pressdock\Settings::all(), array( 'allow_local_http' => 1 ) ) );
+
+		// Test domain (example.org) is not a local host: still refused.
 		$this->assertSame( 403, $this->call( 'GET', '/handshake' )->get_status() );
+
+		$local = static function () {
+			return 'http://mysite.local';
+		};
+		add_filter( 'home_url', $local );
+		$status = $this->call( 'GET', '/handshake' )->get_status();
+		remove_filter( 'home_url', $local );
+		$this->assertSame( 200, $status );
 	}
 
 	/**
