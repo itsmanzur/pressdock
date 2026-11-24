@@ -32,14 +32,24 @@
     "homepage": "https://thereadscope.com/pressdock",
     "shortDescription": "Offline-first desktop manager for WordPress data",
     "category": "Productivity",
-    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
     "createUpdaterArtifacts": false
   },
   "plugins": {
     "updater": {
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IENBQjMxNjYyMjI1MDg5RUIKUldUcmlWQWlZaGF6eXRpQjBEQlJvTUNxL2YzRlNCeU84Y0lIUHZ5QytZSUZGUnU3WjRnN3hQa3IK",
-      "endpoints": ["https://thereadscope.com/pressdock/updates/{{target}}/{{arch}}/{{current_version}}"],
-      "windows": { "installMode": "passive" }
+      "endpoints": [
+        "https://github.com/itsmanzur/pressdock/releases/latest/download/latest.json"
+      ],
+      "windows": {
+        "installMode": "passive"
+      }
     }
   }
 }

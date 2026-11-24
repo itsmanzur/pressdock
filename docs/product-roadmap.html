@@ -435,7 +435,7 @@ const FEATURES = [
     ['<code>src/Admin/SettingsPage.php</code>, <code>assets/admin.css</code>']],
 
   // --- Universal ------------------------------------------------------------------------
-  ['U-01', 'ইউনিভার্সাল হওয়া', 'Generic CPT adapter (কোড ছাড়া যেকোনো post type)', ['Plugin'], 'P0', 'M', 'planned',
+  ['U-01', 'ইউনিভার্সাল হওয়া', 'Generic CPT adapter (কোড ছাড়া যেকোনো post type)', ['Plugin'], 'P0', 'M', 'done',
     'অ্যাডমিনে যেকোনো রেজিস্টার্ড post type বেছে নিলে তার title/content/status/taxonomy/meta নিয়ে adapter তৈরি হবে।',
     'আজ প্রতিটি প্লাগিনের জন্য কোড লাগে; এটা হলে প্রথম দিন থেকেই "ইউনিভার্সাল"।',
     ['<code>AbstractPostAdapter</code> থেকে <code>GenericPostAdapter</code> বানান; কনফিগ <code>Settings</code>-এ (post type + বাছাই করা meta key)।',
@@ -505,7 +505,7 @@ const FEATURES = [
     ['SQLite ফাইল কপি + পাসওয়ার্ড দিয়ে AES; keychain-এ পাসওয়ার্ড কখনো ব্যাকআপে নয়।']],
 
   // --- Mobile / PWA --------------------------------------------------------------------------
-  ['M-01', 'মোবাইল ও PWA', 'PWA-কে ডেস্কটপের সমান করা (বাল্ক এডিট, ইমপোর্ট, ফিল্ড-মার্জ)', ['PWA'], 'P1', 'L', 'planned',
+  ['M-01', 'মোবাইল ও PWA', 'PWA-কে ডেস্কটপের সমান করা (বাল্ক এডিট, ইমপোর্ট, ফিল্ড-মার্জ)', ['PWA'], 'P1', 'L', 'done',
     'আজ PWA-তে conflict-এ শুধু Keep mine/Use server; মিডিয়া আপলোড UI নেই; মাল্টি-সাইট নেই।', 'ফোনে পুরো কাজ।',
     ['ডেস্কটপের <code>src/io</code> ও <code>src/sync</code> লজিক শেয়ারড প্যাকেজে আনা, PWA-তে ব্যবহার।', 'অথবা PWA-কে ডেস্কটপের React কোডবেস থেকে বিল্ড করা (web platform seam আগেই আছে)।']],
   ['M-02', 'মোবাইল ও PWA', 'ক্যামেরা: ছবি/ডকুমেন্ট তোলা ও অফলাইন আপলোড কিউ', ['PWA', 'App'], 'P1', 'M', 'idea',
@@ -561,7 +561,7 @@ const FEATURES = [
   ['B-02', 'ব্যবসা ও বিতরণ', 'WordPress.org-এ প্রকাশ', ['Plugin'], 'P1', 'M', 'planned',
     'readme, স্ক্রিনশট, ব্যানার, অনুবাদ-প্রস্তুত (bn_BD)।', 'আবিষ্কারযোগ্যতা ও বিশ্বাস।',
     ['Plugin Check টুল পাস; <code>.distignore</code> আছে; bn_BD .po ফাইল।']],
-  ['B-03', 'ব্যবসা ও বিতরণ', 'অ্যাপ সাইনিং, অটো-আপডেট ও রিলিজ পাইপলাইন', ['App'], 'P0', 'M', 'planned',
+  ['B-03', 'ব্যবসা ও বিতরণ', 'অ্যাপ সাইনিং, অটো-আপডেট ও রিলিজ পাইপলাইন', ['App'], 'P0', 'M', 'progress',
     'Windows কোড সাইনিং, macOS নোটারাইজেশন, GitHub Actions-এ বিল্ড, updater endpoint।', 'SmartScreen সতর্কতা ছাড়া ইনস্টল — ব্যবহারকারীর আস্থা।',
     ['<code>desktop/src-tauri/tauri.conf.json</code> updater আছে; CI-তে <code>tauri-action</code>; <code>latest.json</code> হোস্ট।', 'প্রথমে MSVC দিয়ে <code>tauri build</code> যাচাই (এখনো হয়নি)।']],
   ['B-04', 'ব্যবসা ও বিতরণ', 'এজেন্সি প্ল্যান: অনেক ক্লায়েন্ট সাইট', ['App', 'Plugin'], 'P3', 'M', 'idea',
@@ -572,7 +572,7 @@ const FEATURES = [
     ['<code>languages/pressdock-bn_BD.po</code>; PWA-তে i18n।']],
 
   // --- Quality ----------------------------------------------------------------------------------
-  ['Q-01', 'মান ও নির্ভরযোগ্যতা', 'Tauri বিল্ড ও keychain/dialog রানটাইম যাচাই', ['App'], 'P0', 'S', 'planned',
+  ['Q-01', 'মান ও নির্ভরযোগ্যতা', 'Tauri বিল্ড ও keychain/dialog রানটাইম যাচাই', ['App'], 'P0', 'S', 'progress',
     'এখনো Rust কম্পাইল ও Tauri উইন্ডোতে টেস্ট হয়নি।', 'রিলিজের আগে বাধ্যতামূলক।',
     ['MSVC Build Tools ইনস্টল → <code>npm run tauri build</code>; keychain, plugin-sql স্ক্রিপ্ট, save dialog হাতে টেস্ট।']],
   ['Q-02', 'মান ও নির্ভরযোগ্যতা', 'End-to-end টেস্ট (প্লাগিন + অ্যাপ)', ['Plugin', 'App'], 'P1', 'M', 'idea',
