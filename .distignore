@@ -14,3 +14,4 @@ client/
 desktop/
 .claude/
 .wordpress-org/
+build/
