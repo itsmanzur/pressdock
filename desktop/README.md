@@ -43,16 +43,29 @@ cd src-tauri; cargo check
 1. Install and activate the Pressdock Connector (and, for the bundled adapters, Hejazer Kafela).
 2. WordPress → Users → Profile → **Application Passwords** → create one.
 3. In Pressdock: **Add site** → URL, username, Application Password → **Test connection**.
-   The Connector requires HTTPS; for local hosts enable *Allow HTTP on local development hosts* in Pressdock → Settings (or `WP_DEBUG`).
+   The Connector requires HTTPS; for local hosts enable *Allow HTTP on local development hosts* in Pressdock → Settings (or set `WP_ENVIRONMENT_TYPE` to `local`).
 
-## Web app (GitHub Pages)
+## Web app (https://app.thereadscope.com/)
 
-The same app is published as a static web app at `https://itsmanzur.github.io/pressdock/` by
-`.github/workflows/pages.yml` (on every push to `main` that touches `desktop/`).
+The same app is published as a static web app at **`https://app.thereadscope.com/`** by
+`.github/workflows/pages.yml` (GitHub Pages, on every push to `main` that touches `desktop/`).
 
-* One-time setup: GitHub → repository **Settings → Pages → Source: GitHub Actions**.
-* Local build of the hosted version: `PRESSDOCK_BASE=/pressdock/ npx vite build --outDir dist-pages`
-  (in Git Bash prefix `MSYS_NO_PATHCONV=1`), then `npx vite preview --outDir dist-pages`.
+**Why its own subdomain:** browser storage (localStorage, IndexedDB) is per origin. On
+`<user>.github.io/<repo>/` every project of that GitHub user shares one origin, and under
+`thereadscope.com/pressdock` every WordPress plugin script on that site would; either could read the
+site databases and a remembered Application Password. `app.thereadscope.com` serves only this app.
+
+* One-time setup:
+  1. DNS for `thereadscope.com`: `CNAME app → itsmanzur.github.io`.
+  2. GitHub → repository **Settings → Pages**: Source **GitHub Actions**, Custom domain
+     `app.thereadscope.com`, **Enforce HTTPS**. (With an Actions deployment no `CNAME` file is needed.)
+  The old `itsmanzur.github.io/pressdock/` address then redirects to the new domain.
+* Build: `npx vite build --mode web --outDir dist-pages` (served at the root), then
+  `npx vite preview --outDir dist-pages`. `--mode web` adds a strict **Content-Security-Policy** meta tag
+  (see `vite.config.ts`); the Tauri and dev builds do not get it, because Tauri talks to its core over `ipc:`
+  and Vite's dev client needs inline scripts. `frame-ancestors` cannot be set from a meta tag and GitHub Pages
+  cannot send custom headers, so clickjacking protection would need a host that can (e.g. a CDN in front).
+* `PRESSDOCK_BASE=/sub/path/` builds a copy for a sub-path, if ever needed.
 * Storage: each site database is a SQLite snapshot in IndexedDB; settings in localStorage. Passwords stay in
   sessionStorage (this tab) unless the user ticks **Remember the password on this device** (then localStorage).
 * Only one tab may run the app at a time (Web Locks), so two tabs never overwrite each other's snapshot.

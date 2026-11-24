@@ -97,7 +97,7 @@ final class SettingsPage {
 		 *
 		 * @param string $url App URL, ending with a slash.
 		 */
-		return (string) apply_filters( 'pdock_app_url', 'https://itsmanzur.github.io/pressdock/' );
+		return (string) apply_filters( 'pdock_app_url', 'https://app.thereadscope.com/' );
 	}
 
 	/**

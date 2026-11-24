@@ -41,7 +41,7 @@ Pressdock Connector turns supported WordPress data into a sync-ready REST API. T
 
 This plugin is the server side. You edit the data in a separate Pressdock client:
 
-* Pressdock web app: https://itsmanzur.github.io/pressdock/ . Runs in any modern browser, can be installed like an app, and keeps working offline. Your data is stored in that browser.
+* Pressdock web app: https://app.thereadscope.com/ . Runs in any modern browser, can be installed like an app, and keeps working offline. Your data is stored in that browser.
 * Pressdock desktop app for Windows, macOS and Linux (same app, with the password kept in the operating system keychain). Coming soon.
 
 The apps talk only to your own site, using the Application Password you create. No Pressdock server sits in between: the web app is static files, and the site address and username that the dashboard button passes to it travel in the URL fragment, which is never sent to the server that hosts it.
@@ -58,7 +58,7 @@ An adapter implements `Pressdock\Contracts\EntityAdapter` or extends `Pressdock\
 
 1. Upload the plugin and activate it.
 2. Go to Users → Profile and create an Application Password named "Pressdock".
-3. Click "Open web app" on the Pressdock dashboard (or open https://itsmanzur.github.io/pressdock/), paste the Application Password and save.
+3. Click "Open web app" on the Pressdock dashboard (or open https://app.thereadscope.com/), paste the Application Password and save.
 4. Review which entities are shared under Pressdock → Data sources.
 
 == Frequently Asked Questions ==
@@ -69,7 +69,7 @@ No. The plugin makes no outgoing requests. Only a client you authenticate with a
 
 = Why does it say my site needs HTTPS? =
 
-Application Passwords travel in an HTTP header, so the API refuses unencrypted connections. On a local development site you can enable "Allow HTTP on local development hosts" under Pressdock → Settings.
+Application Passwords travel in an HTTP header, so the API refuses unencrypted connections. Plain HTTP is accepted only on a development site: when the WordPress environment type is "local", or when you enable "Allow HTTP on local development hosts" under Pressdock → Settings and the site runs on localhost, 127.0.0.1, *.local, *.localhost or *.test. WP_DEBUG does not relax this.
 
 = What happens when two people edit the same record? =
 

@@ -7,7 +7,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-23 18:16+00:00\n"
+"POT-Creation-Date: 2026-11-24 13:36+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Domain: pressdock\n"
@@ -1115,58 +1115,58 @@ msgstr ""
 msgid "Save settings"
 msgstr ""
 
-#: src/Rest/Controller.php:170
+#: src/Rest/Controller.php:175
 msgid "Pressdock requires HTTPS."
 msgstr ""
 
-#: src/Rest/Controller.php:173
+#: src/Rest/Controller.php:178
 msgid "Authentication is required. Use an Application Password."
 msgstr ""
 
-#: src/Rest/Controller.php:189
+#: src/Rest/Controller.php:194
 msgid "Administrators only."
 msgstr ""
 
-#: src/Rest/Controller.php:205
+#: src/Rest/Controller.php:210
 msgid "You are not allowed to upload files."
 msgstr ""
 
-#: src/Rest/Controller.php:299
+#: src/Rest/Controller.php:304
 msgid "Unknown or disabled entity."
 msgstr ""
 
-#: src/Rest/Controller.php:302
+#: src/Rest/Controller.php:307
 msgid "You are not allowed to read this entity."
 msgstr ""
 
-#: src/Rest/Controller.php:411
+#: src/Rest/Controller.php:416
 msgid "batch_id must be 8-36 characters of letters, digits and dashes."
 msgstr ""
 
-#: src/Rest/Controller.php:414
+#: src/Rest/Controller.php:419
 msgid "ops must be a non-empty array."
 msgstr ""
 
-#: src/Rest/Controller.php:417
+#: src/Rest/Controller.php:422
 msgid "A batch may hold at most 100 operations."
 msgstr ""
 
-#: src/Rest/Controller.php:443
+#: src/Rest/Controller.php:448
 msgid "batch_id is required."
 msgstr ""
 
-#: src/Rest/Controller.php:447
+#: src/Rest/Controller.php:452
 msgid "No snapshots found for this batch. It may have been undone or pruned."
 msgstr ""
 
-#: src/Rest/Controller.php:464
+#: src/Rest/Controller.php:469
 msgid "Attachment not found."
 msgstr ""
 
-#: src/Rest/Controller.php:467
+#: src/Rest/Controller.php:472
 msgid "You are not allowed to read this attachment."
 msgstr ""
 
-#: src/Rest/Controller.php:480
+#: src/Rest/Controller.php:485
 msgid "Send the file as multipart field \"file\"."
 msgstr ""

@@ -1,8 +1,9 @@
 name: Web app (GitHub Pages)
 
-# Builds the Pressdock app (desktop/) as a web app and publishes it to
-# https://<owner>.github.io/pressdock/ . One-time setup in the repository:
-# Settings → Pages → Build and deployment → Source: "GitHub Actions".
+# Builds the Pressdock app (desktop/) as a web app and publishes it to https://app.thereadscope.com/
+# (its own origin: browser storage there is not shared with any other site).
+# One-time setup: Settings → Pages → Source "GitHub Actions", Custom domain app.thereadscope.com,
+# Enforce HTTPS; DNS: CNAME app → itsmanzur.github.io.
 
 on:
   push:
@@ -37,9 +38,7 @@ jobs:
       - run: npm ci
       - run: npx tsc --noEmit
       - run: npm test
-      - run: npx vite build --outDir dist-pages
-        env:
-          PRESSDOCK_BASE: /pressdock/
+      - run: npx vite build --mode web --outDir dist-pages
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
