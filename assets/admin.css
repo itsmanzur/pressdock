@@ -285,6 +285,7 @@
 	line-height: 1.6;
 	overflow-x: auto;
 	white-space: pre;
+	tab-size: 4;
 }
 .pdock-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 .pdock-actions .button { display: inline-flex; align-items: center; gap: 4px; }

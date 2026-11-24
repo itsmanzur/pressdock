@@ -753,7 +753,7 @@ final class SettingsPage {
 	 * @return void
 	 */
 	private static function render_developer() {
-		$snippet = "add_filter( 'pdock_register_entities', function ( \$adapters ) {\n\t// Implements Pressdock\\Contracts\\EntityAdapter, or extend\n\t// Pressdock\\Adapters\\AbstractPostAdapter / AbstractTableAdapter.\n\t\$adapters[] = new My_Plugin_Pressdock_Adapter();\n\treturn \$adapters;\n} );";
+		$snippet = "add_filter( 'pdock_register_entities', function ( \$adapters ) {\n\t// extends AbstractPostAdapter or AbstractTableAdapter\n\t\$adapters[] = new My_Adapter();\n\treturn \$adapters;\n} );";
 		?>
 		<div class="pdock-card">
 			<div class="pdock-card__head">

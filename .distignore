@@ -13,3 +13,4 @@ phpunit.xml.dist
 client/
 desktop/
 .claude/
+.wordpress-org/
