@@ -67,6 +67,9 @@ const utf8b64 = (s: string) => {
 
 const TIMEOUT_MS = 20_000;
 
+/** Site base URL -> which REST URL form answered with JSON (so later calls skip the failing one). */
+const routeStyle = new Map<string, 'pretty' | 'query'>();
+
 /** Thin typed wrapper over the pressdock/v1 REST API (contract: docs/api-contract.md). */
 export class PressdockApi implements SyncApi {
   private readonly base: string;
@@ -95,20 +98,44 @@ export class PressdockApi implements SyncApi {
     }
   }
 
-  /** Try pretty permalinks first, then the `?rest_route=` form for sites without them. */
+  /**
+   * Try pretty permalinks first, then the `?rest_route=` form, which works on every site, including fresh
+   * installs with plain permalinks. On those, `/wp-json/…` answers with an HTML page; in a browser that page
+   * has no CORS headers, so it surfaces as a network error rather than a 404, and must also trigger the retry.
+   * Whichever form worked is remembered per site.
+   */
   private async request<T>(route: string, query: Record<string, string | number> = {}, post?: unknown): Promise<T> {
     const qs = new URLSearchParams(Object.entries(query).map(([k, v]) => [k, String(v)])).toString();
     const init: RequestInit =
       post === undefined ? {} : { method: 'POST', body: JSON.stringify(post), headers: { 'Content-Type': 'application/json' } };
     const pretty = `${this.base}/wp-json/pressdock/v1/${route}${qs ? '?' + qs : ''}`;
-    let res = await this.raw(pretty, init);
-    let body = await this.readBody(res);
-    const code = (body.json as { code?: string } | null)?.code;
-    // no pretty permalinks: retry through ?rest_route=
-    if (res.status === 404 && (body.json === null || code === 'rest_no_route')) {
-      const ugly = `${this.base}/?rest_route=${encodeURIComponent('/pressdock/v1/' + route)}${qs ? '&' + qs : ''}`;
+    const ugly = `${this.base}/?rest_route=${encodeURIComponent('/pressdock/v1/' + route)}${qs ? '&' + qs : ''}`;
+
+    if (routeStyle.get(this.base) === 'query') {
+      const res = await this.raw(ugly, init);
+      return this.interpret<T>(res, await this.readBody(res));
+    }
+
+    let res: Response;
+    let body: { text: string; json: unknown };
+    try {
+      res = await this.raw(pretty, init);
+      body = await this.readBody(res);
+    } catch (e) {
+      if (!(e instanceof ApiError) || e.kind !== 'network') throw e;
+      // possibly a CORS-blocked HTML page: try the query form before giving up
       res = await this.raw(ugly, init);
       body = await this.readBody(res);
+      routeStyle.set(this.base, 'query');
+      return this.interpret<T>(res, body);
+    }
+    const code = (body.json as { code?: string } | null)?.code;
+    if ((res.status === 404 && (body.json === null || code === 'rest_no_route')) || (res.ok && body.json === null)) {
+      res = await this.raw(ugly, init);
+      body = await this.readBody(res);
+      if (body.json !== null) routeStyle.set(this.base, 'query');
+    } else if (body.json !== null) {
+      routeStyle.set(this.base, 'pretty');
     }
     return this.interpret<T>(res, body);
   }
