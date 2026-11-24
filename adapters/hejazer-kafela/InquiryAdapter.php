@@ -520,7 +520,7 @@ final class InquiryAdapter extends AbstractTableAdapter implements RestorableAda
 			'admin_post_pothik_bulk_inquiries',
 			function () use ( $by_id ) {
 				// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-				$posted = isset( $_POST['ids'] ) ? (array) wp_unslash( $_POST['ids'] ) : array();
+				$posted     = isset( $_POST['ids'] ) ? (array) wp_unslash( $_POST['ids'] ) : array();
 				$this->bulk = array(
 					'op'  => isset( $_POST['op'] ) ? sanitize_key( wp_unslash( (string) $_POST['op'] ) ) : '', // phpcs:ignore WordPress.Security.NonceVerification.Missing
 					'ids' => array_values( array_filter( array_map( $by_id, array_map( 'sanitize_key', $posted ) ) ) ),

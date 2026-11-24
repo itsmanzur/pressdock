@@ -85,7 +85,7 @@ final class PushProcessor {
 			}
 		}
 
-		$done  = array();
+		$done   = array();
 		$order  = array();
 		$placed = 0;
 		while ( $placed < $count ) {
